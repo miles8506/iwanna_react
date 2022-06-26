@@ -1,18 +1,16 @@
-import styled from "styled-components"
+import { styled as MUIstyled } from '@mui/material/styles'
+import Button, { buttonClasses } from "@mui/material/Button"
 
-const MSButtonWrapper = styled.div`
-  .css-sghohy-MuiButtonBase-root-MuiButton-root,
-  .css-11qr2p8-MuiButtonBase-root-MuiButton-root {
-    background-color: #1890ff;
-
-    &:hover {
-      background-color: #459ef0;
+const StyledButton = MUIstyled(Button)(({ theme }) => {
+  console.log(buttonClasses);
+  return {
+    [`&.${buttonClasses.containedPrimary}`]: {
+      backgroundColor: '#b78873',
+    },
+    [`&.${buttonClasses.root}:hover`]: {
+      opacity: .9
     }
   }
-  
-  .css-y6rp3m-MuiButton-startIcon {
-    margin-right: 3px;
-  }
-`
+})
 
-export { MSButtonWrapper }
+export { StyledButton }
