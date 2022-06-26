@@ -5,6 +5,8 @@ import { Redirect } from 'react-router-dom'
 
 const Home = React.lazy(_ => import('@/pages/home'))
 const Goods = React.lazy(_ => import('@/pages/goods'))
+const Order = React.lazy(_ => import('@/pages/order'))
+const Sorts = React.lazy(_ => import('@/pages/sorts'))
 
 export const routes = [
   {
@@ -19,5 +21,13 @@ export const routes = [
   {
     path: '/goods',
     component: Goods
+  },
+  {
+    path: '/order',
+    component: Order
+  },
+  {
+    path: '/sorts',
+    component: Sorts
   }
 ]
