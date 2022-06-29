@@ -9,7 +9,6 @@ import { renderRoutes } from 'react-router-config'
 import { AppWrapper, MainWrapper } from "./style";
 import NavList from "./components/nav-list";
 
-
 export default function App() {
   return (
     <Provider store={store}>
@@ -23,7 +22,7 @@ export default function App() {
           </MainWrapper>
         </AppWrapper>
       </HashRouter>
-    </Provider>
+    </Provider >
   );
 }
 

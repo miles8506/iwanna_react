@@ -15,7 +15,7 @@ const EnhancedTableHead = memo(function (props) {
       <TableRow>
         <StyledTableCell padding="checkbox">
           <Checkbox
-            color="primary"
+            color="brown"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}

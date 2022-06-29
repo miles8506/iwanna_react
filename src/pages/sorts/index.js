@@ -1,11 +1,16 @@
 import React, { memo } from 'react'
 
+import { ThemeProvider } from '@mui/material'
+import { useCreateMUITheme } from '../../common/theme/mui-theme'
+
 import { SortsWrapper } from './style'
 import MSButton from '../../components/ms-button'
 import AddIcon from '@mui/icons-material/Add'
 import MSTable from '@/components/ms-table'
 
-export default memo(function Sorts() {
+export default memo(function Sorts(props) {
+  const { history } = props
+
   function handleTableData() {
     const headerCells = [
       {
@@ -41,15 +46,28 @@ export default memo(function Sorts() {
       headerCells
     }
   }
+
+  const theme = useCreateMUITheme()
+
+  const goAddSortPage = () => {
+    history.push('/sorts/add')
+  }
+
   return (
     <SortsWrapper>
-      <div className="header">
-        <MSButton value="新增分類" startIcon={<AddIcon />} />
-      </div>
-      <div className="body">
-        <MSTable rows={handleTableData().rows} headerCells={handleTableData().headerCells}>
-        </MSTable>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="header">
+          <MSButton
+            value="新增分類"
+            startIcon={<AddIcon />}
+            onClick={goAddSortPage}
+          />
+        </div>
+        <div className="body">
+          <MSTable rows={handleTableData().rows} headerCells={handleTableData().headerCells}>
+          </MSTable>
+        </div>
+      </ThemeProvider>
     </SortsWrapper>
   )
 })

@@ -1,12 +1,11 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-// import Home from '@/pages/home'
-// import Goods from '@/pages/goods'
 
 const Home = React.lazy(_ => import('@/pages/home'))
 const Goods = React.lazy(_ => import('@/pages/goods'))
 const Order = React.lazy(_ => import('@/pages/order'))
 const Sorts = React.lazy(_ => import('@/pages/sorts'))
+const AddSort = React.lazy(_ => import('@/pages/sorts/c-cpns/add-sort'))
 
 export const routes = [
   {
@@ -24,10 +23,15 @@ export const routes = [
   },
   {
     path: '/order',
-    component: Order
+    component: Order,
   },
   {
     path: '/sorts',
-    component: Sorts
+    exact: true,
+    component: Sorts,
+  },
+  {
+    path: '/sorts/add',
+    component: AddSort
   }
 ]

@@ -2,7 +2,6 @@ import { styled as MUIstyled } from '@mui/material/styles'
 import Button, { buttonClasses } from "@mui/material/Button"
 
 const StyledButton = MUIstyled(Button)(({ theme }) => {
-  console.log(buttonClasses);
   return {
     [`&.${buttonClasses.containedPrimary}`]: {
       backgroundColor: '#b78873',

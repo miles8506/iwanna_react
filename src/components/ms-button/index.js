@@ -5,9 +5,9 @@ import { StyledButton } from './style'
 export default memo(function MSButton(props) {
   return (
     <StyledButton variant="contained"
+      {...props}
       disableRipple={true}
       size="small"
-      {...props}
     >
       {props.value}
     </StyledButton>
