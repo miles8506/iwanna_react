@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox'
 import { StyledTableCell } from '../../style'
 
 const EnhancedTableHead = memo(function (props) {
-  const { onSelectAllClick, numSelected, rowCount, headerCells } = props;
+  const { onSelectAllClick, numSelected, rowCount, headerCells } = props
 
   return (
     <TableHead>
@@ -31,14 +31,14 @@ const EnhancedTableHead = memo(function (props) {
           </StyledTableCell>
         ))}
       </TableRow>
-    </TableHead >
-  );
+    </TableHead>
+  )
 })
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired
 }
 
 export default EnhancedTableHead

@@ -9,9 +9,21 @@ const SortsWrapper = styled.div`
   }
 
   .body {
-    height: calc(100% - 44px);
-    margin-top: 30px;
-    overflow-y: scroll;
+    height: calc(100% - 31px);
+    margin-top: 5px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+
+    &::-webkit-scrollbar {
+      background-color: #dfc4b8;
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #909090;
+      border-radius: 10px;
+    }
   }
 `
 

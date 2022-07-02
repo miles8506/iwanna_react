@@ -1,5 +1,5 @@
-import { styled as MUIstyled } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
+import { styled as MUIstyled } from '@mui/material/styles'
+import Checkbox from '@mui/material/Checkbox'
 
 const StyledCheckbox = MUIstyled(Checkbox)(({ theme }) => ({
   // [`${checkboxClasses.checked}`]: {
@@ -19,4 +19,4 @@ const StyledCheckbox = MUIstyled(Checkbox)(({ theme }) => ({
   // },
 }))
 
-export { StyledCheckbox };
+export { StyledCheckbox }

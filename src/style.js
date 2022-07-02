@@ -10,10 +10,7 @@ const MainWrapper = styled.div`
   width: calc(100% - 200px);
   height: 100%;
   padding: 20px 10px;
-  background-color: #f9f9f9;
+  background-color: #dfc4b8;
 `
 
-export {
-  AppWrapper,
-  MainWrapper
-}
+export { AppWrapper, MainWrapper }

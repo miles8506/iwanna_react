@@ -1,7 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { ThemeProvider } from '@mui/material'
 import { useCreateMUITheme } from '../../common/theme/mui-theme'
+import { requestSortsAction } from '../../store/sorts/actionCreators'
 
 import { SortsWrapper } from './style'
 import MSButton from '../../components/ms-button'
@@ -11,41 +13,26 @@ import MSTable from '@/components/ms-table'
 export default memo(function Sorts(props) {
   const { history } = props
 
-  function handleTableData() {
-    const headerCells = [
-      {
-        id: 'sort',
-        numeric: false,
-        disablePadding: true,
-        label: '檔期',
-      }
-    ]
-    function createData(sort, id, test) {
-      return { sort, id }
+  const dispatch = useDispatch()
+  const { sorts = [] } = useSelector(
+    (state) => ({
+      sorts: state.getIn(['sorts', 'sortList'])
+    }),
+    shallowEqual
+  )
+
+  const headerCells = [
+    {
+      id: 'sort',
+      numeric: false,
+      label: '檔期'
     }
-    const rows = [
-      createData('0115', '001'),
-      createData('0123', '002'),
-      createData('0111', '003'),
-      createData('0132', '004'),
-      createData('0143', '005'),
-      createData('0153', '006'),
-      createData('0117', '007'),
-      createData('0174', '008'),
-      createData('0177', '009'),
-      createData('0192', '010'),
-      createData('0113', '011'),
-      createData('0163', '012'),
-      createData('0112', '013'),
-      createData('0168', '014'),
-      createData('0188', '015'),
-      createData('0162', '016'),
-    ]
-    return {
-      rows,
-      headerCells
-    }
-  }
+  ]
+
+  useEffect(() => {
+    // requestAddSort('sorts')
+    dispatch(requestSortsAction())
+  }, [dispatch])
 
   const theme = useCreateMUITheme()
 
@@ -64,8 +51,7 @@ export default memo(function Sorts(props) {
           />
         </div>
         <div className="body">
-          <MSTable rows={handleTableData().rows} headerCells={handleTableData().headerCells}>
-          </MSTable>
+          <MSTable rows={sorts} headerCells={headerCells} />
         </div>
       </ThemeProvider>
     </SortsWrapper>

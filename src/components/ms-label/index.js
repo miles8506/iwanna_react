@@ -1,12 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo } from 'react'
 
-import { StyledInputLabel } from './style'
+import { StyledLabel } from './style'
 
-export default memo(function MSInputLabel(props) {
-  const { children, id } = props
-  return (
-    <StyledInputLabel htmlFor={id}>
-      {children}
-    </StyledInputLabel>
-  );
+export default memo(function MSLabel(props) {
+  const { id, name } = props
+  return <StyledLabel htmlFor={id}>{name}</StyledLabel>
 })

@@ -6,7 +6,7 @@ const NavListWrapper = styled.div`
   height: 100%;
   padding: 15px 10px 15px 15px;
   vertical-align: top;
-  
+
   .nav-item {
     display: block;
     height: 40px;

@@ -1,7 +1,13 @@
-import styled from 'styled-components'
+import { styled as MUIstyled } from '@mui/material/styles'
+import Input from '@mui/material/Input'
+import inputClasses from '@mui/material/Input/inputClasses'
 
-const MSInputWrapper = styled.div`
-  
-`
+const StyledInput = MUIstyled(Input)(({ theme }) => ({
+  [`&.${inputClasses.root}`]: {
+    '&:after': {
+      borderBottom: '2px solid #b78873'
+    }
+  }
+}))
 
-export { MSInputWrapper }
+export { StyledInput }

@@ -6,12 +6,12 @@ const MSCheckbox = memo((props) => {
   return (
     <StyledCheckbox
       {...props}
-    // color="primary"
-    // onClick={(event) => handleClick(event, row.id)}
-    // checked={isItemSelected}
-    // inputProps={{
-    //   'aria-labelledby': labelId,
-    // }}
+      // color="primary"
+      // onClick={(event) => handleClick(event, row.id)}
+      // checked={isItemSelected}
+      // inputProps={{
+      //   'aria-labelledby': labelId,
+      // }}
     />
   )
 })

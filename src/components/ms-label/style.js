@@ -1,6 +1,11 @@
 import { styled as StyledMUI } from '@mui/system'
-import InputLabel from '@mui/material/InputLabel'
+import InputLabel, { inputLabelClasses } from '@mui/material/InputLabel'
 
-const StyledInputLabel = StyledMUI(InputLabel)(({ theme }) => ({}))
+const StyledLabel = StyledMUI(InputLabel)(({ theme }) => ({
+  [`&.${inputLabelClasses.root}`]: {
+    display: 'flex',
+    alignItems: 'center'
+  }
+}))
 
-export { StyledInputLabel }
+export { StyledLabel }

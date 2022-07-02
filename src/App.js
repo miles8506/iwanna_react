@@ -1,13 +1,13 @@
-import React, { Suspense } from "react";
+import React, { Suspense } from 'react'
 
-import store from "./store";
+import store from './store'
 import { routes } from '@/router'
 
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
-import { AppWrapper, MainWrapper } from "./style";
-import NavList from "./components/nav-list";
+import { AppWrapper, MainWrapper } from './style'
+import NavList from './components/nav-list'
 
 export default function App() {
   return (
@@ -22,7 +22,6 @@ export default function App() {
           </MainWrapper>
         </AppWrapper>
       </HashRouter>
-    </Provider >
-  );
+    </Provider>
+  )
 }
-
