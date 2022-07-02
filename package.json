@@ -4,12 +4,16 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.5",
+    "@mui/styled-engine-sc": "^5.8.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "antd": "^4.21.3",
     "axios": "^0.27.2",
-    "craco-less": "^2.0.0",
+    "dayjs": "^1.11.3",
     "firebase": "^8.10.0",
     "immutable": "^4.1.0",
     "normalize.css": "^8.0.1",
@@ -22,14 +26,15 @@
     "redux": "^4.2.0",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.4.1",
-    "styled-component": "^2.8.0",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
