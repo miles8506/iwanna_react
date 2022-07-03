@@ -9,10 +9,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Toolbar from '@mui/material/Toolbar'
 
 const MSToolbar = memo(function (props) {
-  const { numSelected } = props
+  const { numSelected, selected, handleDeleteRow, setSelected } = props
 
   function foo() {
     // console.log(numSelected, selected);
+    console.log('foo')
   }
 
   return (
@@ -48,8 +49,8 @@ const MSToolbar = memo(function (props) {
 
         {numSelected > 0 && (
           <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon onClick={foo(numSelected)} />
+            <IconButton onClick={e => handleDeleteRow(selected, setSelected)}>
+              <DeleteIcon />
             </IconButton>
           </Tooltip>
         )}

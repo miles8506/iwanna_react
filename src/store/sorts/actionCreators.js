@@ -11,11 +11,15 @@ export function requestSortsAction() {
     return { sort, id }
   }
   return async (dispatch) => {
-    const res = await requestGetSorts('sorts')
-    res.docs.forEach((item) => {
-      const data = createTableData(item.data().sort, item.data().sort)
-      container.push(data)
-    })
-    dispatch(getSortsAction(container))
+    try {
+      const res = await requestGetSorts('sorts')
+      res.docs.forEach((item) => {
+        const data = createTableData(item.data().sort, item.data().sort)
+        container.push(data)
+      })
+      dispatch(getSortsAction(container))
+    } catch (err) {
+      window.alert(`console: ${err}`)
+    }
   }
 }

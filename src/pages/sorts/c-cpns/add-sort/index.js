@@ -1,28 +1,44 @@
 import React, { memo, useState } from 'react'
 
+import { ALERT_DURATION } from '@/common/constants'
+import { alertEnums } from '@/enums'
+
 import { AddSortWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
-import MSSnackbar from '@/components/ms-snackbar'
-import { Alert } from '@mui/material'
+import MSCustomAlert from '@/components/ms-custom-alert'
+import { requestAddSort } from '@/service/sorts'
 
 export default memo(function AddSort(props) {
   const { history } = props
 
   const [sortVal, setSortVal] = useState('')
   const [isShowAlert, setIsShowAlert] = useState(false)
+  const [alertStatus, setAlertStatus] = useState({
+    status: 'warning',
+    message: ''
+  })
 
-  function confirmClick() {
+  async function confirmClick() {
     if (sortVal.trim() === '') {
+      setAlertStatus({ status: alertEnums.warning, message: '檔期名稱不得為空' })
       setIsShowAlert(true)
       return
+    }
+    try {
+      await requestAddSort('sorts', sortVal, { sort: sortVal })
+      history.push('/sorts')
+    } catch (err) {
+      setAlertStatus({ status: alertEnums.error, message: `連線異常, console:${err}` })
+      setIsShowAlert(true)
     }
   }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
+    setAlertStatus({ status: 'warning', message: '' })
     setIsShowAlert(false)
-  };
+  }
 
   return (
     <AddSortWrapper>
@@ -50,16 +66,16 @@ export default memo(function AddSort(props) {
           onClick={confirmClick}
         />
       </div>
-      <MSSnackbar
+      <MSCustomAlert
         open={isShowAlert}
-        autoHideDuration={2000}
+        autoHideDuration={ALERT_DURATION}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={handleClose}
+        severity={alertStatus.status}
+        sx={{ width: '100%' }}
       >
-        <Alert severity='warning' sx={{ width: '100%' }}>
-          檔期名稱不得為空
-        </Alert>
-      </MSSnackbar>
+        {alertStatus.message}
+      </MSCustomAlert>
     </AddSortWrapper>
   )
 })
