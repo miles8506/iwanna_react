@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 
 import { StyledButton } from './style'
 
-export default memo(function MSButton(props) {
+const MSButton = memo(function (props) {
   return (
     <StyledButton
       variant="contained"
@@ -14,3 +14,5 @@ export default memo(function MSButton(props) {
     </StyledButton>
   )
 })
+
+export default MSButton

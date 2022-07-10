@@ -14,5 +14,9 @@ export const navList = [
   {
     path: '/sorts',
     name: '檔期種類列表'
+  },
+  {
+    path: '/colors',
+    name: '顏色列表'
   }
 ]

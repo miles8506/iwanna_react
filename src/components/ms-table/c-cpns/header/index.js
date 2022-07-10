@@ -9,7 +9,6 @@ import { StyledTableCell } from '../../style'
 
 const EnhancedTableHead = memo(function (props) {
   const { onSelectAllClick, numSelected, rowCount, headerCells } = props
-
   return (
     <TableHead>
       <TableRow>

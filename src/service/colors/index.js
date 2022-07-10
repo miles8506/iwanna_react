@@ -7,7 +7,7 @@ const db = Firebase.firestore()
  * @param {string} collectionName
  * @returns {void}
  */
-export function requestGetSorts(collectionName) {
+export function requestGetColors(collectionName) {
   return new Promise((resolve, reject) => {
     const ref = db.collection(collectionName)
     ref
@@ -15,7 +15,7 @@ export function requestGetSorts(collectionName) {
       .then((doc) => {
         resolve(doc)
       })
-      .catch((err) => {
+      .catch(err => {
         reject(err)
       })
   })
@@ -28,7 +28,7 @@ export function requestGetSorts(collectionName) {
  * @param {{sort: string}} data
  * @returns {void}
  */
-export function requestAddSort(collectionName, doc, data) {
+export function requestAddColor(collectionName, doc, data) {
   return new Promise((resolve, reject) => {
     db.collection(collectionName)
       .doc(doc)
@@ -48,7 +48,7 @@ export function requestAddSort(collectionName, doc, data) {
  * @param {string} id
  * @returns {void}
  */
-export function requestDelSort(collectionName, id) {
+export function requestDelColor(collectionName, id) {
   return new Promise((resolve, reject) => {
     db.collection(collectionName).doc(id).delete()
       .then(res => {
@@ -59,3 +59,4 @@ export function requestDelSort(collectionName, id) {
       })
   })
 }
+
