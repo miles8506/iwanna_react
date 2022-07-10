@@ -1,61 +1,61 @@
 import React, { memo, useState } from 'react'
 
 import { ALERT_DURATION } from '@/common/constants'
-import { requestAddSort, requestGetSorts } from '@/service/sorts'
 import { alertEnums } from '@/enums'
+import { requestAddColor, requestGetColors } from '@/service/colors'
 
-import { AddSortWrapper } from './style'
+import { AddColorWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
 import MSCustomAlert from '@/components/ms-custom-alert'
 
-export default memo(function AddSort(props) {
+const addColor = memo((props) => {
   const { history } = props
 
-  const [sortVal, setSortVal] = useState('')
+  const [colorVal, setColorVal] = useState('');
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertStatus, setAlertStatus] = useState({
-    status: 'warning',
+    status: alertEnums.warning,
     message: ''
   })
 
-  async function confirmClick() {
-    if (sortVal.trim() === '') {
-      setAlertStatus({ ...alertStatus, message: '檔期名稱不得為空' })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return
+    setAlertStatus({ status: alertEnums.warning, message: '' })
+    setIsShowAlert(false)
+  }
+
+  const confirmClick = async () => {
+    if (colorVal.trim() === '') {
+      setAlertStatus({ status: alertEnums.warning, message: '顏色名稱不得為空' })
       setIsShowAlert(true)
       return
     }
     try {
-      const allSort = await requestGetSorts('sorts')
-      const isSomeSortVal = allSort.docs.some(item => item.data().sort === sortVal)
-      if (isSomeSortVal) {
-        setAlertStatus({ status: alertEnums.warning, message: `已有<${sortVal}>種類名稱，請重新輸入其他種類名稱` })
+      const allColor = await requestGetColors('colors')
+      const isSomeColorVal = allColor.docs.some(item => item.data().color === colorVal)
+      if (isSomeColorVal) {
+        setAlertStatus({ status: alertEnums.warning, message: `已有<${colorVal}>顏色名稱，請重新輸入其他顏色名稱` })
         setIsShowAlert(true)
         return
       }
-      await requestAddSort('sorts', sortVal, { sort: sortVal })
-      history.push('/sorts')
+      await requestAddColor('colors', colorVal, { color: colorVal })
+      history.push('/colors')
     } catch (err) {
       setAlertStatus({ status: alertEnums.error, message: `連線異常, console:${err}` })
       setIsShowAlert(true)
     }
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return
-    setAlertStatus({ status: 'warning', message: '' })
-    setIsShowAlert(false)
-  }
-
   return (
-    <AddSortWrapper>
-      <h2 className="header">增加檔期</h2>
+    <AddColorWrapper>
+      <h2 className='header'>增加顏色</h2>
       <div className="body">
         <MSLabelInput
-          value={sortVal}
-          setvalue={setSortVal}
+          value={colorVal}
+          setvalue={setColorVal}
           id="sort-id"
-          name={<h4>檔期名稱:</h4>}
+          name={<h4>顏色名稱:</h4>}
         />
       </div>
       <div className="footer">
@@ -64,7 +64,7 @@ export default memo(function AddSort(props) {
           variant="outlined"
           color="error"
           value="cancel"
-          onClick={e => history.push('/sorts')}
+          onClick={e => history.push('/colors')}
         />
         <MSButton
           variant="outlined"
@@ -83,6 +83,8 @@ export default memo(function AddSort(props) {
       >
         {alertStatus.message}
       </MSCustomAlert>
-    </AddSortWrapper>
+    </AddColorWrapper>
   )
 })
+
+export default addColor

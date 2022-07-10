@@ -1,19 +1,56 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 
-import { ToolbarWrapper, TypograhpyWrapper } from './style'
+import { ToolbarWrapper } from './style'
 import Typography from '@mui/material/Typography'
-import { alpha } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Toolbar from '@mui/material/Toolbar'
+import MSDialog from '@/components/ms-dialog'
+import MSButton from '@/components/ms-button'
 
 const MSToolbar = memo(function (props) {
-  const { numSelected } = props
+  const {
+    numSelected,
+    selected,
+    title,
+    handleDeleteRow
+  } = props
 
-  function foo() {
-    // console.log(numSelected, selected);
+  const [isShowDialog, setIsShowDialog] = useState(false)
+
+  const handleWarningAlert = () => {
+    setIsShowDialog(true)
   }
+  const closeDialog = () => {
+    setIsShowDialog(false)
+  }
+
+  const footer = (
+    <div>
+      <MSButton
+        value="取消"
+        color="error"
+        style={{
+          marginRight: '10px',
+          border: '1px solid rgba(255, 255, 255, .5)',
+          color: 'rgba(255, 255, 255, .5)'
+        }}
+        variant="outlined"
+        onClick={closeDialog}
+      />
+      <MSButton
+        value="確定"
+        color="info"
+        variant="outlined"
+        style={{
+          border: '1px solid #bd4c4c',
+          color: '#bd4c4c'
+        }}
+        onClick={e => handleDeleteRow(selected, closeDialog)}
+      />
+    </div>
+  )
 
   return (
     <ToolbarWrapper>
@@ -42,18 +79,25 @@ const MSToolbar = memo(function (props) {
             id="tableTitle"
             component="div"
           >
-            Sort List
+            {title}
           </Typography>
         )}
 
         {numSelected > 0 && (
           <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon onClick={foo(numSelected)} />
+            <IconButton onClick={handleWarningAlert}>
+              <DeleteIcon />
             </IconButton>
           </Tooltip>
         )}
       </Toolbar>
+      <MSDialog
+        isShowDialog={isShowDialog}
+        title="Warning"
+        content="確定要刪除該檔期種類？"
+        footer={footer}
+        fullWidth={true}
+      />
     </ToolbarWrapper>
   )
 })

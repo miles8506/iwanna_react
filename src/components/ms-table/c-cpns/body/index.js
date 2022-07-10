@@ -8,7 +8,6 @@ import MSCheckbox from '../../../ms-checkbox'
 const MSBody = memo((props) => {
   const { rows, headerCells, page, rowsPerPage, selected, setSelected } =
     props.payload
-
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
