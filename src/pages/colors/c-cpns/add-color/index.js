@@ -4,6 +4,7 @@ import { ALERT_DURATION } from '@/common/constants'
 import { alertEnums } from '@/enums'
 import { requestAddColor, requestGetColors } from '@/service/colors'
 
+import AddPageLayout from '@/layout/add-page'
 import { AddColorWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
@@ -49,30 +50,33 @@ const addColor = memo((props) => {
 
   return (
     <AddColorWrapper>
-      <h2 className='header'>增加顏色</h2>
-      <div className="body">
-        <MSLabelInput
-          value={colorVal}
-          setvalue={setColorVal}
-          id="sort-id"
-          name={<h4>顏色名稱:</h4>}
-        />
-      </div>
-      <div className="footer">
-        <MSButton
-          style={{ marginRight: '10px' }}
-          variant="outlined"
-          color="error"
-          value="cancel"
-          onClick={e => history.push('/colors')}
-        />
-        <MSButton
-          variant="outlined"
-          color="success"
-          value="confirm"
-          onClick={confirmClick}
-        />
-      </div>
+      <AddPageLayout>
+        <h2 slot='header'>增加顏色</h2>
+        <div slot="body">
+          <MSLabelInput
+            value={colorVal}
+            setvalue={setColorVal}
+            id="sort-id"
+            name={<h4>顏色名稱:</h4>}
+          />
+        </div>
+        <div slot="footer">
+          <MSButton
+            style={{ marginRight: '10px' }}
+            variant="outlined"
+            color="error"
+            value="cancel"
+            onClick={e => history.push('/colors')}
+          />
+          <MSButton
+            variant="outlined"
+            color="success"
+            value="confirm"
+            onClick={confirmClick}
+          />
+        </div>
+
+      </AddPageLayout>
       <MSCustomAlert
         open={isShowAlert}
         autoHideDuration={ALERT_DURATION}

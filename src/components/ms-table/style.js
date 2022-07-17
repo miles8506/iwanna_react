@@ -10,7 +10,8 @@ const MSTableWrapper = styled.div`
 const StyledTableCell = MUIstyled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#d7d0c5',
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    padding: '10px'
   },
   [`&.${tableCellClasses.root}`]: {
     fontSize: 14

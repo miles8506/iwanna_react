@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { StyledTableBody } from './style'
+import { StyledTableBody, StyledTableCell } from './style'
 import { StyledTableRow } from '../../style'
 import TableCell from '@mui/material/TableCell'
 import MSCheckbox from '../../../ms-checkbox'
@@ -47,7 +47,7 @@ const MSBody = memo((props) => {
               key={row.id}
               selected={isItemSelected}
             >
-              <TableCell padding="checkbox">
+              <StyledTableCell padding="checkbox">
                 <MSCheckbox
                   color="brown"
                   onClick={(event) => handleClick(event, row.id)}
@@ -56,16 +56,23 @@ const MSBody = memo((props) => {
                     'aria-labelledby': labelId
                   }}
                 />
-              </TableCell>
+              </StyledTableCell>
               {headerCells.map((item) => {
                 return (
-                  <TableCell
+                  <StyledTableCell
                     align="left"
                     key={item.id}
-                    sx={{ width: item.width }}
+                    sx={{ width: item.width, minWidth: item.minWidth }}
                   >
-                    {row[item.id]}
-                  </TableCell>
+                    <div style={
+                      {
+                        width: item.width,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }
+                    }>{row[item.id]}</div>
+                  </StyledTableCell>
                 )
               })}
             </StyledTableRow>

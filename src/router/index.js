@@ -1,13 +1,14 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-const Home = React.lazy((_) => import('@/pages/home'))
-const Goods = React.lazy((_) => import('@/pages/goods'))
-const Order = React.lazy((_) => import('@/pages/order'))
-const Sorts = React.lazy((_) => import('@/pages/sorts'))
-const AddSort = React.lazy((_) => import('@/pages/sorts/c-cpns/add-sort'))
-const Colors = React.lazy((_) => import('@/pages/colors'))
-const AddColor = React.lazy((_) => import('@/pages/colors/c-cpns/add-color'))
+const Home = React.lazy(_ => import('@/pages/home'))
+const Goods = React.lazy(_ => import('@/pages/goods'))
+const AddGoods = React.lazy(_ => import('@/pages/goods/c-cpns/add-good'))
+const Order = React.lazy(_ => import('@/pages/order'))
+const Sorts = React.lazy(_ => import('@/pages/sorts'))
+const AddSort = React.lazy(_ => import('@/pages/sorts/c-cpns/add-sort'))
+const Colors = React.lazy(_ => import('@/pages/colors'))
+const AddColor = React.lazy(_ => import('@/pages/colors/c-cpns/add-color'))
 
 export const routes = [
   {
@@ -21,7 +22,12 @@ export const routes = [
   },
   {
     path: '/goods',
+    exact: true,
     component: Goods
+  },
+  {
+    path: '/goods/add',
+    component: AddGoods
   },
   {
     path: '/order',

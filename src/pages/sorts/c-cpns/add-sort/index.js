@@ -4,6 +4,7 @@ import { ALERT_DURATION } from '@/common/constants'
 import { requestAddSort, requestGetSorts } from '@/service/sorts'
 import { alertEnums } from '@/enums'
 
+import AddPageLayout from '@/layout/add-page'
 import { AddSortWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
@@ -49,30 +50,32 @@ export default memo(function AddSort(props) {
 
   return (
     <AddSortWrapper>
-      <h2 className="header">增加檔期</h2>
-      <div className="body">
-        <MSLabelInput
-          value={sortVal}
-          setvalue={setSortVal}
-          id="sort-id"
-          name={<h4>檔期名稱:</h4>}
-        />
-      </div>
-      <div className="footer">
-        <MSButton
-          style={{ marginRight: '10px' }}
-          variant="outlined"
-          color="error"
-          value="cancel"
-          onClick={e => history.push('/sorts')}
-        />
-        <MSButton
-          variant="outlined"
-          color="success"
-          value="confirm"
-          onClick={confirmClick}
-        />
-      </div>
+      <AddPageLayout>
+        <h2 slot="header">增加檔期</h2>
+        <div slot="body">
+          <MSLabelInput
+            value={sortVal}
+            setvalue={setSortVal}
+            id="sort-id"
+            name={<h4>檔期名稱:</h4>}
+          />
+        </div>
+        <div slot="footer">
+          <MSButton
+            style={{ marginRight: '10px' }}
+            variant="outlined"
+            color="error"
+            value="cancel"
+            onClick={e => history.push('/sorts')}
+          />
+          <MSButton
+            variant="outlined"
+            color="success"
+            value="confirm"
+            onClick={confirmClick}
+          />
+        </div>
+      </AddPageLayout>
       <MSCustomAlert
         open={isShowAlert}
         autoHideDuration={ALERT_DURATION}
