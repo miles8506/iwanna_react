@@ -8,6 +8,14 @@ const GoodsWrapper = styled.div`
   .function-bar {
     display: flex;
     justify-content: space-between;
+
+    .filter {
+      display: flex;
+
+      .search-btn {
+        margin-left: 10px;
+      }
+    }
   }
 
   .goods-content {

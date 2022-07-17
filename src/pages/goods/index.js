@@ -49,7 +49,7 @@ export default memo(function Goods(props) {
               setValue={setFilterValue}
               options={sortsList}
             />
-            <MSButton value="Search"></MSButton>
+            <MSButton value="Search" className="search-btn"></MSButton>
           </div>
           <MSButton
             value="新增商品"
