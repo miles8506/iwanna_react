@@ -6,22 +6,22 @@ export const AddPageLayoutWrapper = styled.div`
   gap: 20px;
   height: 100%;
 
-  .header {
+  [slot="header"] {
     color: rgba(0, 0, 0, 0.6);
   }
 
-  .body {
+  [slot="body"] {
     flex: 1;
   }
 
-  .footer {
+  [slot="footer"] {
     display: flex;
     justify-content: flex-end;
   }
 
-  .header,
-  .body,
-  .footer {
+  [slot="header"],
+  [slot="body"],
+  [slot="footer"] {
     padding: 10px 15px;
     background-color: #fff;
     border-radius: 10px;

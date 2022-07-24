@@ -1,5 +1,7 @@
 import React, { memo, useState } from 'react'
 
+import { CANCEL_BUTTON_STYLE, CONFIRM_BUTTON_STYLE } from '@/common/constants'
+
 import { ToolbarWrapper } from './style'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -13,6 +15,7 @@ const MSToolbar = memo(function (props) {
   const {
     numSelected,
     selected,
+    setSelected,
     title,
     handleDeleteRow
   } = props
@@ -26,28 +29,26 @@ const MSToolbar = memo(function (props) {
     setIsShowDialog(false)
   }
 
+  const handleRow = async () => {
+    await handleDeleteRow(selected, closeDialog)
+    setSelected([])
+  }
+
   const footer = (
     <div>
       <MSButton
-        value="取消"
+        value="Cancel"
         color="error"
-        style={{
-          marginRight: '10px',
-          border: '1px solid rgba(255, 255, 255, .5)',
-          color: 'rgba(255, 255, 255, .5)'
-        }}
+        style={CANCEL_BUTTON_STYLE}
         variant="outlined"
         onClick={closeDialog}
       />
       <MSButton
-        value="確定"
+        value="Confirm"
         color="info"
         variant="outlined"
-        style={{
-          border: '1px solid #bd4c4c',
-          color: '#bd4c4c'
-        }}
-        onClick={e => handleDeleteRow(selected, closeDialog)}
+        style={CONFIRM_BUTTON_STYLE}
+        onClick={handleRow}
       />
     </div>
   )

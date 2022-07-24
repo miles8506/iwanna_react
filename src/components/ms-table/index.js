@@ -42,6 +42,7 @@ export default function EnhancedTable(props) {
       <MSToolbar
         numSelected={selected.length}
         selected={selected}
+        setSelected={setSelected}
         handleWarningAlert={handleWarningAlert}
         title={title}
         handleDeleteRow={handleDeleteRow}

@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
 
-import { StyledInput } from './style'
+import { MSTextFieldWrapper, StyledInput } from './style'
 
 const MSTextField = memo((props) => {
-  const { setValue, detail = [], status, iid, ...elseProps } = props
-
+  const { setValue, detail = [], status, iid, children, ...elseProps } = props
   const changeDetail = (e, iid) => {
     let key = null
     for (const k in detail) {
@@ -18,13 +17,19 @@ const MSTextField = memo((props) => {
   }
 
   return (
-    <StyledInput
-      {...elseProps}
-      required={status ? true : false}
-      error={!status ? true : false}
-      onChange={e => changeDetail(e, iid)}
-      value={detail.value}
-    />
+    <MSTextFieldWrapper>
+      <StyledInput
+        {...elseProps}
+        required={status ? true : false}
+        error={!status ? true : false}
+        onChange={e => changeDetail(e, iid)}
+        value={detail.value}
+        variant="standard"
+        id="standard-required"
+        autoComplete="off"
+      />
+      {children}
+    </MSTextFieldWrapper>
   )
 })
 

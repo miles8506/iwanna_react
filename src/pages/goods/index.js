@@ -5,6 +5,7 @@ import { headerCells } from './config'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 import { requestGoodListAction } from '@/store/goods'
 import { requestSortsAction } from '@/store/sorts'
+import { requestDelGood } from '@/service/goods'
 
 import { ThemeProvider } from '@mui/material'
 import { GoodsWrapper } from './style'
@@ -15,13 +16,13 @@ import MSSelect from '@/components/ms-select'
 export default memo(function Goods(props) {
   const { history } = props
 
-  const [filterValue, setFilterValue] = useState('All')
-
   const dispatch = useDispatch()
   const { goodsList, sortsList } = useSelector(state => ({
     goodsList: state.getIn(['goods', 'goodsList']),
     sortsList: state.getIn(['sorts', 'sortList'])
   }), shallowEqual)
+
+  const [filterValue, setFilterValue] = useState('All')
 
   const theme = useCreateMUITheme()
 
@@ -32,6 +33,14 @@ export default memo(function Goods(props) {
 
   const goAddGoodPage = () => {
     history.push('/goods/add')
+  }
+
+  const handleDeleteRow = async (delGoods, closeDialog) => {
+    for (const factoryNum of delGoods) {
+      await requestDelGood('goods', factoryNum)
+    }
+    dispatch(requestGoodListAction(controlButton))
+    closeDialog()
   }
 
   useEffect(() => {
@@ -48,6 +57,9 @@ export default memo(function Goods(props) {
               value={filterValue}
               setValue={setFilterValue}
               options={sortsList}
+              isShowAllValue={true}
+              label={'檔期種類'}
+              renderKey="sort"
             />
             <MSButton value="Search" className="search-btn"></MSButton>
           </div>
@@ -58,8 +70,10 @@ export default memo(function Goods(props) {
         </div>
         <div className="goods-content">
           <MSTable
+            title="Goods List"
             rows={goodsList}
             headerCells={headerCells}
+            handleDeleteRow={handleDeleteRow}
           />
         </div>
       </ThemeProvider>

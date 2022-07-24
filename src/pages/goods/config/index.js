@@ -20,14 +20,14 @@ export const headerCells = [
   {
     id: 'sort',
     numeric: false,
-    label: '商品檔期種類',
-    minWidth: '110px'
+    label: '檔期',
+    minWidth: '90px'
   },
   {
     id: 'colors',
     numeric: false,
     label: '顏色',
-    minWidth: '140px'
+    minWidth: '210px'
   },
   {
     id: 'sizes',
@@ -39,13 +39,13 @@ export const headerCells = [
     id: 'basePrice',
     numeric: false,
     label: '成本',
-    minWidth: '100px'
+    minWidth: '80px'
   },
   {
     id: 'officialPrice',
     numeric: false,
     label: '售價',
-    minWidth: '110px'
+    minWidth: '80px'
   },
   {
     id: 'control',

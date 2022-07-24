@@ -37,7 +37,6 @@ const MSBody = memo((props) => {
         .map((row, index) => {
           const isItemSelected = isSelected(row.id)
           const labelId = `enhanced-table-checkbox-${index}`
-
           return (
             <StyledTableRow
               hover

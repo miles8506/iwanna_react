@@ -3,11 +3,23 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
 import { StyledSelect, MSSelectWrapper } from './style'
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
+
+const ITEM_HEIGHT = 170;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export default memo(function MSSelect(props) {
-  const { value, setValue, options = [] } = props
+  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey } = props
 
   const handleChange = (e) => {
     setValue(e.target.value)
@@ -16,26 +28,42 @@ export default memo(function MSSelect(props) {
     <MSSelectWrapper>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="simple-select-label">{label}</InputLabel>
           <StyledSelect
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="simple-select-label"
+            id="simple-select"
             value={value}
-            label="Age"
+            label={'sort'}
             onChange={handleChange}
-            style={{ padding: '0' }}
+            input={<OutlinedInput label={label} />}
+            multiple={multiple}
+            renderValue={(selected) => {
+              if (!(Array.isArray(selected))) return selected
+              return (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )
+            }}
+            MenuProps={MenuProps}
           >
-            <MenuItem
-              value="All"
-            >All
-            </MenuItem>
+            {
+              isShowAllValue && (
+                <MenuItem
+                  value="All"
+                >All
+                </MenuItem>
+              )
+            }
             {
               options.map(item => (
                 <MenuItem
-                  value={item.sort}
+                  value={item[renderKey]}
                   key={item.id}
                 >
-                  {item.sort}
+                  {item[renderKey]}
                 </MenuItem>
               ))
             }
@@ -43,6 +71,6 @@ export default memo(function MSSelect(props) {
         </FormControl>
       </Box>
 
-    </MSSelectWrapper>
+    </MSSelectWrapper >
   )
 })
