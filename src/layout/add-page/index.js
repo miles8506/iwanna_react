@@ -20,9 +20,9 @@ const AddPageLayout = memo((props) => {
   }, [children])
   return (
     <AddPageLayoutWrapper>
-      <div className="header">{slots.header}</div>
-      <div className="body">{slots.body}</div>
-      <div className="footer">{slots.footer}</div>
+      {slots.header}
+      {slots.body}
+      {slots.footer}
     </AddPageLayoutWrapper>
   )
 })

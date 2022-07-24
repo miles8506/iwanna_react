@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 const GoodsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   height: 100%;
 
   .function-bar {
@@ -12,6 +10,19 @@ const GoodsWrapper = styled.div`
     .filter {
       display: flex;
 
+      .MuiOutlinedInput-notchedOutline {
+        border-color: #b78873;
+      }
+
+      .Mui-focused {
+        color: #b78873;
+      }
+
+      .MuiInputLabel-root,
+      .MuiSelect-select {
+        color: #545454;
+      }
+
       .search-btn {
         margin-left: 10px;
       }
@@ -19,7 +30,8 @@ const GoodsWrapper = styled.div`
   }
 
   .goods-content {
-    flex: 1;
+    height: calc(100% - 48px);
+    overflow-y: auto;
     background-color: #fff;
   }
 `
