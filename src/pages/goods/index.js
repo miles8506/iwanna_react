@@ -23,6 +23,12 @@ export default memo(function Goods(props) {
   }), shallowEqual)
 
   const [filterValue, setFilterValue] = useState('All')
+  const [goodsListState, setGoodsListState] = useState([]);
+
+  function filterGoodsList(goodsList = []) {
+    if (filterValue === 'All') return goodsList
+    return goodsList.filter(item => item.sort === filterValue)
+  }
 
   const theme = useCreateMUITheme()
 
@@ -43,10 +49,22 @@ export default memo(function Goods(props) {
     closeDialog()
   }
 
+  const onFilterGoodsList = () => {
+    if (filterValue === 'All') {
+      setGoodsListState([...goodsList])
+      return
+    }
+    setGoodsListState([...goodsList.filter(item => item.sort === filterValue)])
+  }
+
   useEffect(() => {
     dispatch(requestGoodListAction(controlButton))
     dispatch(requestSortsAction())
   }, [dispatch])
+
+  useEffect(() => {
+    setGoodsListState([...goodsList])
+  }, [goodsList])
 
   return (
     <GoodsWrapper>
@@ -61,7 +79,11 @@ export default memo(function Goods(props) {
               label={'檔期種類'}
               renderKey="sort"
             />
-            <MSButton value="Search" className="search-btn"></MSButton>
+            <MSButton
+              value="Search"
+              className="search-btn"
+              onClick={onFilterGoodsList}
+            />
           </div>
           <MSButton
             value="新增商品"
@@ -71,7 +93,7 @@ export default memo(function Goods(props) {
         <div className="goods-content">
           <MSTable
             title="Goods List"
-            rows={goodsList}
+            rows={goodsListState}
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
           />

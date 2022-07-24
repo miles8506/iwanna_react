@@ -3,20 +3,14 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { ALERT_DURATION } from '@/common/constants'
 import { checkEmptyString } from '@/utils/validate'
-import { computedBasePrice, computedOfficialPrice } from '@/utils/price'
 import { requestSortsAction } from '@/store/sorts'
 import { requestColorsAction } from '@/store/colors'
-import { sizeList } from '@/common/config'
 import { requestGoods, requestAddGood } from '@/service/goods'
 
 import { AddGoodWrapper } from './style'
 import AddPageLayout from '@/layout/add-page'
-import MSTextField from '@/components/ms-text-field'
 import MSButton from '@/components/ms-button'
-import MSSelect from '@/components/ms-select'
 import MSCustomAlert from '@/components/ms-custom-alert'
-import MSDialog from '@/components/ms-dialog'
-import DisplayInfoBox from './c-cpns/display-price-box'
 import GoodsBody from './c-cpns/goods-body'
 
 const AddGood = memo((props) => {
@@ -71,7 +65,6 @@ const AddGood = memo((props) => {
   const [colorsSelect, setColorsSelect] = useState([])
   const [sizeSelect, setSizeSelect] = useState([]);
   const [isShowAlert, setIsShowAlert] = useState(false)
-  // const [isShowDialog, setIsShowDialog] = useState(false);
   const [alertStatus, setAlertStatus] = useState({
     status: 'warning',
     message: ''
@@ -166,43 +159,15 @@ const AddGood = memo((props) => {
     setIsShowAlert(false)
   }
 
-  // const confirmBasePrice = () => {
-  //   setIsShowDialog(false)
-  //   setGoodsDetailInput({
-  //     ...goodsDetailInput,
-  //     basePrice: { ...goodsDetailInput.basePrice, isDisabled: true },
-  //     officialPrice: { ...goodsDetailInput.officialPrice, isShow: true }
-  //   })
-  // }
-
   useEffect(() => {
     dispatch(requestSortsAction())
     dispatch(requestColorsAction())
   }, [dispatch])
 
-  // const dialogFooter = () => {
-  //   return (
-  //     <>
-  //       <MSButton
-  //         variant="outlined"
-  //         color="error"
-  //         value="cancel"
-  //         onClick={e => setIsShowDialog(false)}
-  //       />
-  //       <MSButton
-  //         variant="outlined"
-  //         color="success"
-  //         value="confirm"
-  //         onClick={confirmBasePrice}
-  //       />
-  //     </>
-  //   )
-  // }
-
   return (
     <AddGoodWrapper>
       <AddPageLayout>
-        <div slot="header">header</div>
+        <div slot="header" style={{ fontSize: '24px' }}>新增商品</div>
         <div slot="body" className='layout-style'>
           <GoodsBody
             goodsDetailInput={goodsDetailInput}
@@ -216,86 +181,6 @@ const AddGood = memo((props) => {
             sizeSelect={sizeSelect}
             setSizeSelect={setSizeSelect}
           />
-          {/* <MSTextField
-            iid={goodsDetailInput.factoryNum.iid}
-            label="廠商貨號"
-            detail={goodsDetailInput}
-            setValue={setGoodsDetailInput}
-            status={goodsDetailInput.factoryNum.status}
-            helperText={goodsDetailInput.factoryNum.message}
-          />
-          <MSTextField
-            iid={goodsDetailInput.goodsNum.iid}
-            label="商品貨號"
-            detail={goodsDetailInput}
-            setValue={setGoodsDetailInput}
-            status={goodsDetailInput.goodsNum.status}
-            helperText={goodsDetailInput.goodsNum.message}
-          />
-          <MSTextField
-            iid={goodsDetailInput.goodsName.iid}
-            label="商品名稱"
-            detail={goodsDetailInput}
-            setValue={setGoodsDetailInput}
-            status={goodsDetailInput.goodsName.status}
-            helperText={goodsDetailInput.goodsName.message}
-          />
-          <MSTextField
-            iid={goodsDetailInput.basePrice.iid}
-            label="成本價(人民幣)"
-            detail={goodsDetailInput}
-            setValue={setGoodsDetailInput}
-            status={goodsDetailInput.basePrice.status}
-            helperText={goodsDetailInput.basePrice.message}
-            disabled={goodsDetailInput.basePrice.isDisabled}
-          >
-            <MSButton
-              variant="outlined"
-              color="info"
-              value="confirm"
-              style={{ marginLeft: '20px' }}
-              onClick={verifyPrice}
-              disabled={goodsDetailInput.basePrice.isDisabled}
-            />
-          </MSTextField>
-          {
-            goodsDetailInput.basePrice.isDisabled && <DisplayInfoBox price={goodsDetailInput.basePrice.value} />
-          }
-          {
-            goodsDetailInput.officialPrice.isShow && (
-              <MSTextField
-                iid={goodsDetailInput.officialPrice.iid}
-                label="售價"
-                detail={goodsDetailInput}
-                setValue={setGoodsDetailInput}
-                status={goodsDetailInput.officialPrice.status}
-                helperText={goodsDetailInput.officialPrice.message}
-              />
-            )
-          }
-          <MSSelect
-            value={sortSelect}
-            setValue={setSortSelect}
-            options={sortList}
-            label='檔期種類'
-            renderKey="sort"
-          />
-          <MSSelect
-            value={colorsSelect}
-            setValue={setColorsSelect}
-            options={colorList}
-            label="顏色"
-            multiple={true}
-            renderKey="color"
-          />
-          <MSSelect
-            value={sizeSelect}
-            setValue={setSizeSelect}
-            options={sizeList}
-            label="尺寸"
-            multiple={true}
-            renderKey="size"
-          /> */}
         </div>
 
         <div slot="footer">
@@ -324,11 +209,6 @@ const AddGood = memo((props) => {
       >
         {alertStatus.message}
       </MSCustomAlert>
-      {/* <MSDialog
-        isShowDialog={isShowDialog}
-        content="確認成本價為xxx，確定後即不得再更改。"
-        footer={dialogFooter()}
-      /> */}
     </AddGoodWrapper>
   )
 })
