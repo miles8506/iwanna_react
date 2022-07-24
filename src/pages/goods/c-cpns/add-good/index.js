@@ -167,7 +167,7 @@ const AddGood = memo((props) => {
   return (
     <AddGoodWrapper>
       <AddPageLayout>
-        <div slot="header">header</div>
+        <div slot="header" style={{ fontSize: '24px' }}>新增商品</div>
         <div slot="body" className='layout-style'>
           <GoodsBody
             goodsDetailInput={goodsDetailInput}
