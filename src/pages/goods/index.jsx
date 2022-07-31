@@ -27,14 +27,7 @@ export default memo(function Goods(props) {
 
   const theme = useCreateMUITheme()
 
-  const handleEdit = (factoryNum) => {
-    history.push(`goods/${factoryNum}`)
-  }
-  const controlButton = (id) => <MSButton value="編輯" onClick={e => handleEdit(id)} />
-
-  const goAddGoodPage = () => {
-    history.push('/goods/add')
-  }
+  const controlButton = (factoryNum) => <MSButton value="編輯" onClick={e => history.push(`goods/${factoryNum}`)} />
 
   const handleDeleteRow = async (delGoods, closeDialog) => {
     for (const factoryNum of delGoods) {
@@ -82,7 +75,7 @@ export default memo(function Goods(props) {
           </div>
           <MSButton
             value="新增商品"
-            onClick={goAddGoodPage}
+            onClick={e => history.push('/goods/add')}
           />
         </div>
         <div className="goods-content">

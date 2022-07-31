@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { styled as StyledMUI } from "@mui/material"
-import Select, { selectClasses } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 
 export const StyledSelect = StyledMUI(Select)(({ theme }) => ({
 
