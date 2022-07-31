@@ -1,5 +1,5 @@
 import { styled as MUIstyled } from '@mui/material/styles'
-import Dialog, { dialogClasses } from '@mui/material/Dialog'
+import Dialog from '@mui/material/Dialog'
 import DialogTitle, { dialogTitleClasses } from '@mui/material/DialogTitle'
 import DialogContent, { dialogContentClasses } from '@mui/material/DialogContent'
 import DialogActions, { dialogActionsClasses } from '@mui/material/DialogActions'

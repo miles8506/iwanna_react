@@ -5,3 +5,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* *::-webkit-scrollbar {
+  background-color: #dfc4b8;
+  width: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #909090;
+  border-radius: 10px;
+} */

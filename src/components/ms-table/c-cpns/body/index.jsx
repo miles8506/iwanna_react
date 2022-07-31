@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 
 import { StyledTableBody, StyledTableCell } from './style'
 import { StyledTableRow } from '../../style'
-import TableCell from '@mui/material/TableCell'
 import MSCheckbox from '../../../ms-checkbox'
 
 const MSBody = memo((props) => {

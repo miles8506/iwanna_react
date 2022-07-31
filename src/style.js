@@ -9,7 +9,6 @@ const AppWrapper = styled.div`
 
 const MainWrapper = styled.div`
   display: inline-block;
-  /* width: calc(100% - 200px); */
   flex: 1;
   min-width: 1000px;
   height: 100%;

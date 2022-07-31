@@ -8,7 +8,7 @@ export const navList = [
     name: '商品列表'
   },
   {
-    path: '/order',
+    path: '/orders',
     name: '訂單列表'
   },
   {

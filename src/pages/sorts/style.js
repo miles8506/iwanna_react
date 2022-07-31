@@ -14,16 +14,6 @@ const SortsWrapper = styled.div`
     overflow-y: auto;
     background-color: #fff;
     border-radius: 10px;
-
-    &::-webkit-scrollbar {
-      background-color: #dfc4b8;
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #909090;
-      border-radius: 10px;
-    }
   }
 `
 
