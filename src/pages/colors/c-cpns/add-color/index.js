@@ -4,7 +4,7 @@ import { ALERT_DURATION } from '@/common/constants'
 import { alertEnums } from '@/enums'
 import { requestAddColor, requestGetColors } from '@/service/colors'
 
-import AddPageLayout from '@/layout/add-page'
+import BaseLayout from '@/layout/base-page'
 import { AddColorWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
@@ -50,7 +50,7 @@ const addColor = memo((props) => {
 
   return (
     <AddColorWrapper>
-      <AddPageLayout>
+      <BaseLayout>
         <h2 slot='header'>增加顏色</h2>
         <div slot="body">
           <MSLabelInput
@@ -76,7 +76,7 @@ const addColor = memo((props) => {
           />
         </div>
 
-      </AddPageLayout>
+      </BaseLayout>
       <MSCustomAlert
         open={isShowAlert}
         autoHideDuration={ALERT_DURATION}

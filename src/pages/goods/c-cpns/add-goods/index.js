@@ -6,9 +6,10 @@ import { checkEmptyString } from '@/utils/validate'
 import { requestSortsAction } from '@/store/sorts'
 import { requestColorsAction } from '@/store/colors'
 import { requestGoods, requestAddGood } from '@/service/goods'
+import { computedBasePrice, computedOfficialPrice, computedSuggestPrice } from '@/utils/price'
 
 import { AddGoodWrapper } from './style'
-import AddPageLayout from '@/layout/add-page'
+import BaseLayout from '@/layout/base-page'
 import MSButton from '@/components/ms-button'
 import MSCustomAlert from '@/components/ms-custom-alert'
 import GoodsBody from './c-cpns/goods-body'
@@ -137,11 +138,18 @@ const AddGood = memo((props) => {
           factoryNum: goodsDetailInput.factoryNum.value,
           goodsNum: goodsDetailInput.goodsNum.value,
           goodsName: goodsDetailInput.goodsName.value,
-          basePrice: goodsDetailInput.basePrice.value,
-          officialPrice: goodsDetailInput.officialPrice.value,
+          // basePrice: goodsDetailInput.basePrice.value,
+          // officialPrice: goodsDetailInput.officialPrice.value,
           sort: sortSelect,
           colors: colorsSelect,
-          sizes: sizeSelect
+          sizes: sizeSelect,
+          price: {
+            basePriceRMB: goodsDetailInput.basePrice.value,
+            basePriceTW: computedBasePrice(goodsDetailInput.basePrice.value),
+            lowestPrice: computedOfficialPrice(goodsDetailInput.basePrice.value),
+            suggestPrice: computedSuggestPrice(goodsDetailInput.basePrice.value),
+            officialPrice: goodsDetailInput.officialPrice.value
+          }
         }
         await requestAddGood('goods', data.factoryNum, data)
         history.push('/goods')
@@ -166,7 +174,7 @@ const AddGood = memo((props) => {
 
   return (
     <AddGoodWrapper>
-      <AddPageLayout>
+      <BaseLayout>
         <div slot="header" style={{ fontSize: '24px' }}>新增商品</div>
         <div slot="body" className='layout-style'>
           <GoodsBody
@@ -198,7 +206,7 @@ const AddGood = memo((props) => {
             onClick={handleSubmit}
           />
         </div>
-      </AddPageLayout>
+      </BaseLayout>
       <MSCustomAlert
         open={isShowAlert}
         autoHideDuration={ALERT_DURATION}

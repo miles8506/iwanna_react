@@ -25,15 +25,10 @@ export default memo(function Goods(props) {
   const [filterValue, setFilterValue] = useState('All')
   const [goodsListState, setGoodsListState] = useState([]);
 
-  function filterGoodsList(goodsList = []) {
-    if (filterValue === 'All') return goodsList
-    return goodsList.filter(item => item.sort === filterValue)
-  }
-
   const theme = useCreateMUITheme()
 
-  const handleEdit = (id) => {
-    console.log(id);
+  const handleEdit = (factoryNum) => {
+    history.push(`goods/${factoryNum}`)
   }
   const controlButton = (id) => <MSButton value="編輯" onClick={e => handleEdit(id)} />
 

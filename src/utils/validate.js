@@ -1,3 +1,3 @@
 export function checkEmptyString(val) {
-  return val.trim().length > 0 ? false : true
+  return val.toString().trim().length > 0 ? false : true
 }
