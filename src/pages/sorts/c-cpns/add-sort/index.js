@@ -4,7 +4,7 @@ import { ALERT_DURATION } from '@/common/constants'
 import { requestAddSort, requestGetSorts } from '@/service/sorts'
 import { alertEnums } from '@/enums'
 
-import AddPageLayout from '@/layout/add-page'
+import BaseLayout from '@/layout/base-page'
 import { AddSortWrapper } from './style'
 import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
@@ -50,7 +50,7 @@ export default memo(function AddSort(props) {
 
   return (
     <AddSortWrapper>
-      <AddPageLayout>
+      <BaseLayout>
         <h2 slot="header">增加檔期</h2>
         <div slot="body">
           <MSLabelInput
@@ -75,7 +75,7 @@ export default memo(function AddSort(props) {
             onClick={confirmClick}
           />
         </div>
-      </AddPageLayout>
+      </BaseLayout>
       <MSCustomAlert
         open={isShowAlert}
         autoHideDuration={ALERT_DURATION}

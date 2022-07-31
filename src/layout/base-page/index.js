@@ -1,8 +1,8 @@
 import React, { memo, useState, useEffect } from 'react'
 
-import { AddPageLayoutWrapper } from './style'
+import { BasePageLayoutWrapper } from './style'
 
-const AddPageLayout = memo((props) => {
+const BaseLayout = memo((props) => {
   const { children } = props
   const [slots, setSlots] = useState({
     header: null,
@@ -19,12 +19,12 @@ const AddPageLayout = memo((props) => {
     setSlots({ ...slots, ...updatedState })
   }, [children])
   return (
-    <AddPageLayoutWrapper>
+    <BasePageLayoutWrapper>
       {slots.header}
       {slots.body}
       {slots.footer}
-    </AddPageLayoutWrapper>
+    </BasePageLayoutWrapper>
   )
 })
 
-export default AddPageLayout
+export default BaseLayout

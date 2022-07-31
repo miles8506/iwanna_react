@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const AddPageLayoutWrapper = styled.div`
+export const BasePageLayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -12,6 +12,7 @@ export const AddPageLayoutWrapper = styled.div`
 
   [slot="body"] {
     flex: 1;
+    overflow-y: auto;
   }
 
   [slot="footer"] {

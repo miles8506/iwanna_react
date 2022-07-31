@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom'
 
 const Home = React.lazy(_ => import('@/pages/home'))
 const Goods = React.lazy(_ => import('@/pages/goods'))
-const AddGoods = React.lazy(_ => import('@/pages/goods/c-cpns/add-good'))
+const AddGoods = React.lazy(_ => import('@/pages/goods/c-cpns/add-goods'))
+const EditGoods = React.lazy(_ => import('@/pages/goods/c-cpns/edit-goods'))
 const Order = React.lazy(_ => import('@/pages/order'))
 const Sorts = React.lazy(_ => import('@/pages/sorts'))
 const AddSort = React.lazy(_ => import('@/pages/sorts/c-cpns/add-sort'))
@@ -28,6 +29,10 @@ export const routes = [
   {
     path: '/goods/add',
     component: AddGoods
+  },
+  {
+    path: '/goods/:factoryNum',
+    component: EditGoods
   },
   {
     path: '/order',
