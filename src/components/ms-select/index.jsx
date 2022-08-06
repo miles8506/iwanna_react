@@ -19,7 +19,7 @@ const MenuProps = {
 };
 
 export default memo(function MSSelect(props) {
-  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey } = props
+  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey, idName, getIdName } = props
 
   const handleChange = (e) => {
     setValue(e.target.value)
@@ -33,7 +33,7 @@ export default memo(function MSSelect(props) {
             labelId="simple-select-label"
             id="simple-select"
             value={value}
-            label={'sort'}
+            // label={'sort'}
             onChange={handleChange}
             input={<OutlinedInput label={label} />}
             multiple={multiple}
@@ -58,10 +58,10 @@ export default memo(function MSSelect(props) {
               )
             }
             {
-              options.map(item => (
+              options.map((item, index) => (
                 <MenuItem
                   value={item[renderKey]}
-                  key={item.id}
+                  key={item.id ?? index}
                 >
                   {item[renderKey]}
                 </MenuItem>

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
 import { MSDatePickerWrapper } from '@/components/ms-date-picker/style'
 import TextField from '@mui/material/TextField';
@@ -7,14 +7,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const MSDatePicker = memo((props) => {
-  const { label, views = ['year', 'month', 'day'], dateState, setDateState } = props
+  const { label, views = ['year', 'month', 'day'], dateState, setDateState, ...elseProps } = props
+
   return (
     <MSDatePickerWrapper>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         views={views}
         label={label}
-        value={dateState}
+        value={dateState.value}
         onChange={(newValue) => {
           setDateState({...dateState, value: newValue});
         }}
@@ -23,6 +24,7 @@ const MSDatePicker = memo((props) => {
           params.helperText = dateState.message
           return (<TextField {...params}/>)
         }}
+        {...elseProps}
       />
     </LocalizationProvider>
 
