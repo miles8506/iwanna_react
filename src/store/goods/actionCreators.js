@@ -1,8 +1,9 @@
-import { GET_GOOD_LIST } from './index'
+import { GET_GOOD_LIST, GET_ORIGIN_GOODS_LIST } from './index'
 import { requestGoods } from '@/service/goods'
 
 // action
-export const getGoodListAction = (res) => ({ type: GET_GOOD_LIST, res })
+export const getGoodListAction = res => ({ type: GET_GOOD_LIST, res })
+export const getOriginGoodsListAction = res => ({ type: GET_ORIGIN_GOODS_LIST, res })
 
 // thunk
 export function requestGoodListAction(controlButton) {
@@ -43,6 +44,21 @@ export function requestGoodListAction(controlButton) {
         container.push({ ...obj, control: controlButton(obj.id) })
       })
       dispatch(getGoodListAction(container))
+    } catch (err) {
+      window.alert(new Error(err))
+    }
+  }
+}
+
+export function requestOriginGoodsListAction() {
+  const container = []
+  return async dispatch => {
+    try {
+      const res = await requestGoods('goods')
+      for (const item of res.docs) {
+        container.push(item.data())
+      }
+      dispatch(getOriginGoodsListAction(container))
     } catch (err) {
       window.alert(new Error(err))
     }

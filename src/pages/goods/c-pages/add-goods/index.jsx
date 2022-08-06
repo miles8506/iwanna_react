@@ -131,7 +131,12 @@ const AddGood = memo((props) => {
           if (goodsItem.factoryNum + '' === goodsDetailInput.factoryNum.value + '') {
             setAlertStatus({ status: 'warning', message: '該商品已被創建，請重新輸入廠商貨號' })
             setIsShowAlert(true)
-            return;
+            return
+          }
+          if (goodsItem.goodsName === goodsDetailInput.goodsName.value && goodsItem.sort == sortSelect) {
+            setAlertStatus({ status: 'warning', message: `該商品已於${sortSelect}檔期中被創建，請重新輸入商品名稱` })
+            setIsShowAlert(true)
+            return
           }
         }
         const data = {

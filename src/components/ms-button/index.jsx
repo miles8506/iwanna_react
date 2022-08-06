@@ -6,9 +6,9 @@ const MSButton = memo(function (props) {
   return (
     <StyledButton
       variant="contained"
-      {...props}
       disableRipple={true}
       size="small"
+      {...props}
     >
       {props.value}
     </StyledButton>
