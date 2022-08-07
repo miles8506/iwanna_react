@@ -8,9 +8,9 @@ export const AddOrderWrapper = styled.div`
   }
 
   .add-order-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: fixed;
+    top: 95px;
+    right: 30px;
 
     .order-count {
       display: inline-block;
