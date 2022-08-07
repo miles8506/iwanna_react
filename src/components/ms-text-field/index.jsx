@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import { MSTextFieldWrapper, StyledInput } from './style'
 
 const MSTextField = memo((props) => {
-  const { setValue, detail = [], status, iid, children, ...elseProps } = props
+  const { setValue, detail = [], status, iid, children, required = true, ...elseProps } = props
 
   const findKey = (detail) => {
     for (const key in detail) {
@@ -21,7 +21,7 @@ const MSTextField = memo((props) => {
     <MSTextFieldWrapper>
       <StyledInput
         {...elseProps}
-        required={status ? true : false}
+        required={required}
         error={!status ? true : false}
         onChange={e => changeDetail(e, iid)}
         value={detail[findKey(detail)]?.value}

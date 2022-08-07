@@ -26,39 +26,39 @@ const OrderDialog = memo((props) => {
 
   return (
     <Dialog
-    fullScreen
-    open={openDialog}
-    onClose={handleClose}
-    TransitionComponent={Transition}
-  >
-    <AppBar sx={{ position: 'relative' }}>
-      <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          onClick={handleClose}
-          aria-label="close"
-        >
-          <CloseIcon />
-        </IconButton>
-        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-          Order List
-        </Typography>
-      </Toolbar>
-    </AppBar>
-    <List>
-      {/* <ListItem button>
-        <ListItemText primary="Phone ringtone" secondary="Titania" />
-      </ListItem>
-      <Divider />
-      <ListItem button>
-        <ListItemText
-          primary="Default notification ringtone"
-          secondary="Tethys"
-        />
-      </ListItem> */}
-    </List>
-  </Dialog>
+      fullScreen
+      open={openDialog}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
+      <AppBar sx={{ position: 'relative' }}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            Order List
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <List>
+        {/* <ListItem button>
+          <ListItemText primary="Phone ringtone" secondary="Titania" />
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemText
+            primary="Default notification ringtone"
+            secondary="Tethys"
+          />
+        </ListItem> */}
+      </List>
+    </Dialog>
   )
 })
 

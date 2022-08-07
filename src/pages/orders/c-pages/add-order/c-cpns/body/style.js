@@ -5,6 +5,12 @@ export const AddOrderBodyWrapper = styled.div`
   flex-direction: column;
   gap: 25px 0;
 
+  .factory-num-search {
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+  }
+
   .factory-num {
     &-label,
     &-text {

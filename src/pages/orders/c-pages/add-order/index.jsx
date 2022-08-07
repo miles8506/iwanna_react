@@ -49,6 +49,26 @@ const AddOrder = memo(() => {
     message: ''
   })
 
+  const [goodsFactoryNum, setGoodsFactoryNum] = useState({
+    goodsFactoryNum: {
+      iid: 0,
+      name: '商品貨號查詢',
+      status: true,
+      value: '',
+      message: ''
+    },
+  });
+
+  const [goodsCount, setGoodsCount] = useState({
+    goodsCount: {
+      iid: 0,
+      name: '數量',
+      status: true,
+      value: '',
+      message: ''
+    },
+  });
+
   const [goodsName, setGoodsName] = useState('')
   const [sortSelect, setSortSelect] = useState('')
   const [colorsSelect, setColorsSelect] = useState([])
@@ -58,8 +78,9 @@ const AddOrder = memo(() => {
     status: 'warning',
     message: ''
   })
-
+  const [orderList, setOrderList] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [orderCount, setOrderCount] = useState(0);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
@@ -69,6 +90,36 @@ const AddOrder = memo(() => {
 
   const handleDialog = () => {
     setOpenDialog(true)
+  }
+
+  const pushOrderToOrderList = (order) => {
+    setOrderList([...orderList, order])
+    setOrderCount(orderCount + 1)
+    setGoodsName('')
+    setSortSelect('')
+    setColorsSelect([])
+    setSizesSelect([])
+    setIsShowAlert(true)
+    setGoodsFactoryNum({
+      goodsFactoryNum: {
+        ...goodsFactoryNum.goodsFactoryNum,
+        status: true,
+        value: '',
+        message: ''
+      }
+    })
+    setGoodsCount({
+      goodsCount: {
+        ...goodsCount.goodsCount,
+        status: true,
+        value: '',
+        message: ''
+      }
+    })
+    setAlertStatus({
+      status: 'success',
+      message: '已將該商品加入訂單列表中'
+    })
   }
 
   useEffect(() => {
@@ -84,7 +135,7 @@ const AddOrder = memo(() => {
         <div slot='body'>
           <div className="add-order-icon">
             <IconButton onClick={handleDialog}>
-              <span className='order-count'>0</span>
+              <span className='order-count'>{ orderCount }</span>
               <ViewListOutlinedIcon sx={{ fontSize: 35 }} color="action"/>
             </IconButton>
           </div>
@@ -104,6 +155,11 @@ const AddOrder = memo(() => {
             setSizesSelect={setSizesSelect}
             setIsShowAlert={setIsShowAlert}
             setAlertStatus={setAlertStatus}
+            pushOrderToOrderList={pushOrderToOrderList}
+            goodsFactoryNum={goodsFactoryNum}
+            setGoodsFactoryNum={setGoodsFactoryNum}
+            goodsCount={goodsCount}
+            setGoodsCount={setGoodsCount}
           />
         </div>
         <div slot='footer'>
