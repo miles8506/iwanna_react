@@ -71,8 +71,8 @@ const AddOrder = memo(() => {
 
   const [goodsName, setGoodsName] = useState('')
   const [sortSelect, setSortSelect] = useState('')
-  const [colorsSelect, setColorsSelect] = useState([])
-  const [sizesSelect, setSizesSelect] = useState([])
+  const [colorsSelect, setColorsSelect] = useState('')
+  const [sizesSelect, setSizesSelect] = useState('')
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertStatus, setAlertStatus] = useState({
     status: 'warning',
@@ -97,8 +97,8 @@ const AddOrder = memo(() => {
     setOrderCount(orderCount + 1)
     setGoodsName('')
     setSortSelect('')
-    setColorsSelect([])
-    setSizesSelect([])
+    setColorsSelect('')
+    setSizesSelect('')
     setIsShowAlert(true)
     setGoodsFactoryNum({
       goodsFactoryNum: {
