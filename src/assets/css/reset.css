@@ -15,3 +15,7 @@
   background-color: #909090;
   border-radius: 10px;
 } */
+.MuiPaper-root .MuiAppBar-root {
+  background-color: #dfc4b8;
+  color: #404040;
+}

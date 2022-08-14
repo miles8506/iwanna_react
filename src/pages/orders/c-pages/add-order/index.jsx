@@ -3,6 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { requestSortsAction } from '@/store/sorts/actionCreators'
 import { ALERT_DURATION } from '@/common/constants'
+import { requestAddOrder } from '@/service/order/index'
 
 import { AddOrderWrapper } from './style'
 import BasePageLayout from '@/layout/base-page'
@@ -11,8 +12,12 @@ import OrderDialog from './c-cpns/order-dialog'
 import MSCustomAlert from '@/components/ms-custom-alert'
 import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined'
 import IconButton from '@mui/material/IconButton';
+import MSButton from '@/components/ms-button'
+import dayjs from 'dayjs'
 
-const AddOrder = memo(() => {
+const AddOrder = memo((props) => {
+  const { history } = props
+
   const dispatch = useDispatch()
   const { sortList } = useSelector(state => ({
     sortList: state.getIn(['sorts', 'sortList'])
@@ -73,14 +78,15 @@ const AddOrder = memo(() => {
   const [sortSelect, setSortSelect] = useState('')
   const [colorsSelect, setColorsSelect] = useState('')
   const [sizesSelect, setSizesSelect] = useState('')
+  const [remark, setRemark] = useState('');
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertStatus, setAlertStatus] = useState({
     status: 'warning',
     message: ''
   })
-  const [orderList, setOrderList] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [orderCount, setOrderCount] = useState(0);
+  const [orderList, setOrderList] = useState([])
+  const [openDialog, setOpenDialog] = useState(false)
+  const [orderCount, setOrderCount] = useState(0)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
@@ -92,13 +98,17 @@ const AddOrder = memo(() => {
     setOpenDialog(true)
   }
 
-  const pushOrderToOrderList = (order) => {
+  const addOrderToOrderCart = (order) => {
     setOrderList([...orderList, order])
     setOrderCount(orderCount + 1)
+  }
+
+  const resetForm = () => {
     setGoodsName('')
     setSortSelect('')
     setColorsSelect('')
     setSizesSelect('')
+    setRemark('')
     setIsShowAlert(true)
     setGoodsFactoryNum({
       goodsFactoryNum: {
@@ -116,10 +126,53 @@ const AddOrder = memo(() => {
         message: ''
       }
     })
+  }
+
+  const pushOrderToOrderList = (order) => {
+    addOrderToOrderCart(order)
+    resetForm()
     setAlertStatus({
       status: 'success',
       message: '已將該商品加入訂單列表中'
     })
+  }
+
+  // in cart order
+  const delOrder = (delOrders, closeDialog) => {
+    const copyOrderList = [...orderList]
+    delOrders.forEach(item => {
+      const targetIndex = copyOrderList.findIndex(orderItem => orderItem.id === item)
+      copyOrderList.splice(targetIndex, 1)
+    })
+    setOrderList([...copyOrderList])
+    setOrderCount(copyOrderList.length)
+    closeDialog()
+  }
+
+  const submitOrder = async () => {
+    if (orderList.length === 0) return
+    const { orderNumber, shopeeOrderNumber, buyerAccount } = baseOrdersDetailInput
+    const orderTotal = orderList.reduce((previousVal, currentVal) => {
+      return previousVal += Number(currentVal.goodsTotal)
+    }, 0)
+    const order = {
+      id: dayjs().valueOf(),
+      buyerAccount: buyerAccount.value,
+      lastShipmentDate: dayjs(lastDateTime.value).valueOf(),
+      orderCurryStatus: 0,
+      orderList,
+      orderNumber: orderNumber.value,
+      orderTotal,
+      placeOrderStatus: false,
+      shopeeOrderNumber: shopeeOrderNumber.value,
+      remark: remark.trim()
+    }
+    try {
+      await requestAddOrder('orders', order.id + '', order)
+      history.push('/orders')
+    } catch (err) {
+      window.alert(err)
+    }
   }
 
   useEffect(() => {
@@ -160,10 +213,24 @@ const AddOrder = memo(() => {
             setGoodsFactoryNum={setGoodsFactoryNum}
             goodsCount={goodsCount}
             setGoodsCount={setGoodsCount}
+            remark={remark}
+            setRemark={setRemark}
           />
         </div>
         <div slot='footer'>
-          footer
+          <MSButton
+            style={{ marginRight: '10px' }}
+            value="cancel"
+            variant="outlined"
+            color="error"
+            onClick={e => history.push('/orders')}
+          />
+          <MSButton
+            value="confirm"
+            variant="outlined"
+            color="success"
+            onClick={submitOrder}
+          />
         </div>
       </BasePageLayout>
       <MSCustomAlert
@@ -174,9 +241,14 @@ const AddOrder = memo(() => {
         severity={alertStatus.status}
         sx={{ width: '100%' }}
       >
-        {alertStatus.message}
+        { alertStatus.message }
       </MSCustomAlert>
-      <OrderDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
+      <OrderDialog
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        orderList={orderList}
+        delOrder={delOrder}
+      />
     </AddOrderWrapper>
   )
 })

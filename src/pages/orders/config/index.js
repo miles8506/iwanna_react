@@ -37,6 +37,13 @@ export const headerCells = [
   {
     id: 'control',
     numeric: false,
+    width: 150,
     label: '操作'
+  },
+  {
+    id: 'icon',
+    numeric: false,
+    label: 'remark',
+    width: 45
   }
 ]

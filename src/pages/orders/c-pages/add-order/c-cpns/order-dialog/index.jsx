@@ -1,64 +1,64 @@
 import React, { memo, useState } from 'react'
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
+import { headerCells } from './config'
+import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
+
+import { ThemeProvider } from '@mui/material'
+import MSTable from '@/components/ms-table'
+import Dialog from '@mui/material/Dialog'
+import List from '@mui/material/List'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import Slide from '@mui/material/Slide'
+import { OrderDialogWrapper } from './style'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const OrderDialog = memo((props) => {
-  const { openDialog, setOpenDialog } = props
+  const { openDialog, setOpenDialog, orderList, delOrder } = props
+
+  const theme = useCreateMUITheme()
 
   const handleClose = () => {
     setOpenDialog(false);
   };
 
   return (
-    <Dialog
-      fullScreen
-      open={openDialog}
-      onClose={handleClose}
-      TransitionComponent={Transition}
-    >
-      <AppBar sx={{ position: 'relative' }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            Order List
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <List>
-        {/* <ListItem button>
-          <ListItemText primary="Phone ringtone" secondary="Titania" />
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemText
-            primary="Default notification ringtone"
-            secondary="Tethys"
-          />
-        </ListItem> */}
-      </List>
-    </Dialog>
+    <OrderDialogWrapper style={{backgroundColor: 'red'}}>
+      <ThemeProvider theme={theme}>
+        <Dialog
+          fullScreen
+          open={openDialog}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar sx={{ position: 'relative' }}>
+            <Toolbar>
+              <IconButton
+                edge="end"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <List sx={{ flex: 1, padding: '30px', backgroundColor: '#f1f1f1' }}>
+            <MSTable
+              title="Order List"
+              rows={orderList}
+              headerCells={headerCells}
+              handleDeleteRow={delOrder}
+            ></MSTable>
+          </List>
+        </Dialog>
+      </ThemeProvider>
+    </OrderDialogWrapper>
   )
 })
 
