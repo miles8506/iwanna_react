@@ -1,5 +1,6 @@
 import React, { memo, useState, useEffect } from 'react'
 
+import dayjs from 'dayjs'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import { requestOriginGoodsListAction } from '@/store/goods'
 import { checkEmptyString } from '@/utils/validate'
@@ -8,7 +9,7 @@ import MSDatePicker from '@/components/ms-date-picker'
 import MSTextField from '@/components/ms-text-field'
 import MSButton from '@/components/ms-button'
 import MSSelect from '@/components/ms-select'
-import TextField from '@mui/material/TextField';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { AddOrderBodyWrapper } from './style'
 
 const AddOrderBody = memo((props) => {
@@ -17,11 +18,11 @@ const AddOrderBody = memo((props) => {
     originGoodsList: state.getIn(['goods', 'originGoodsList'])
   }), shallowEqual)
 
-  const { baseOrdersDetailInput, setBaseOrderDetailInput, lastDateTime, setLastDateTime, sortSelect, setSortSelect, sortOptions, goodsName, setGoodsName,colorsSelect, setColorsSelect, sizesSelect, setSizesSelect, setIsShowAlert, setAlertStatus, pushOrderToOrderList, goodsFactoryNum, setGoodsFactoryNum,  goodsCount, setGoodsCount } = props
+  const { baseOrdersDetailInput, setBaseOrderDetailInput, lastDateTime, setLastDateTime, sortSelect, setSortSelect, sortOptions, goodsName, setGoodsName,colorsSelect, setColorsSelect, sizesSelect, setSizesSelect, setIsShowAlert, setAlertStatus, pushOrderToOrderList, goodsFactoryNum, setGoodsFactoryNum,  goodsCount, setGoodsCount, remark, setRemark } = props
 
-  const [isShowMainWrapper, setIsShowMainWrapper] = useState(true);
-  const [currentGoods, setCurrentGoods] = useState({});
-  const [isSearchFactoryNum, setIsSearchFactoryNum] = useState(false);
+  const [isShowMainWrapper, setIsShowMainWrapper] = useState(false)
+  const [currentGoods, setCurrentGoods] = useState({})
+  const [isSearchFactoryNum, setIsSearchFactoryNum] = useState(false)
 
   const verifyBaseInfo = () => {
     let isShowMainOrderWrap = true
@@ -82,30 +83,26 @@ const AddOrderBody = memo((props) => {
       })
       return
     }
+
     const { price, factoryNum } = currentGoods;
-    // const { orderNumber, shopeeOrderNumber, buyerAccount } = baseOrdersDetailInput
     pushOrderToOrderList({
-      // id: dayjs().valueOf(),
-      // orderNumber: orderNumber.value,
-      // shopeeOrderNumber: shopeeOrderNumber.value,
-      // buyerAccount: buyerAccount.value,
-      // lastShipmentDate: dayjs(lastDateTime.value).valueOf(),
+      id: dayjs().valueOf(),
       goodsName,
       sort: sortSelect,
       colors: colorsSelect,
       sizes: sizesSelect,
       status: false,
       suggestPrice: price.suggestPrice,
-      count: goodsCount,
+      count: goodsCount.goodsCount.value,
       factoryNum,
+      goodsTotal: Number(price.suggestPrice) * Number(goodsCount.goodsCount.value),
+      remark
     })
-    console.log(123);
-    console.log(currentGoods)
     setCurrentGoods({})
   }
 
   const searchGoods = () => {
-    const result = originGoodsList.find(item => item.factoryNum === goodsFactoryNum.goodsFactoryNum.value)
+    const result = originGoodsList.find(item => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value)
     if (!result) {
       setGoodsFactoryNum({
         goodsFactoryNum: {
@@ -136,7 +133,7 @@ const AddOrderBody = memo((props) => {
     }
 
     if (isSearchFactoryNum) {
-      const result = originGoodsList.find(item => item.factoryNum === goodsFactoryNum.goodsFactoryNum.value)
+      const result = originGoodsList.find(item => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value)
       result && setGoodsName(result.goodsName)
       setIsSearchFactoryNum(false)
     } else {
@@ -259,14 +256,12 @@ const AddOrderBody = memo((props) => {
               required={false}
               type="number"
             />
-            {/* <MSSelect
-              value={goodsCount}
-              setValue={setSizesSelect}
-              options={formatSizesOptions(currentGoods?.sizes)}
-              label='尺寸'
-              multiple={true}
-              renderKey="size"
-            /> */}
+            <TextareaAutosize
+              placeholder="remark"
+              style={{ width: '35%', height: '100px' }}
+              onChange={e => setRemark(e.target.value)}
+              value={remark}
+            />
             <div className="add-order-btn">
               <MSButton
                 value="Add Order"
