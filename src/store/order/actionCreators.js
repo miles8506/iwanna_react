@@ -42,7 +42,7 @@ export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
           item.data().placeOrderStatus ? '已叫貨' : '未叫貨',
           orderCurryStatusEnum[item.data().orderCurryStatus],
           dayjs(item.data().lastShipmentDate).format('YYYY/MM/DD'),
-          controlButtonsJsx(item.data().id),
+          controlButtonsJsx(item.data().id, item.data()),
           isShowRemarkIcon ? ChatIcon() : null,
           item.data().id
         )
