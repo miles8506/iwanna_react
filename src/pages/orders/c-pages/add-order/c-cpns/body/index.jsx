@@ -9,7 +9,7 @@ import MSDatePicker from '@/components/ms-date-picker'
 import MSTextField from '@/components/ms-text-field'
 import MSButton from '@/components/ms-button'
 import MSSelect from '@/components/ms-select'
-import TextareaAutosize from '@mui/base/TextareaAutosize';
+import TextareaAutosize from '@mui/base/TextareaAutosize'
 import { AddOrderBodyWrapper } from './style'
 
 const AddOrderBody = memo((props) => {
@@ -84,7 +84,8 @@ const AddOrderBody = memo((props) => {
       return
     }
 
-    const { price, factoryNum } = currentGoods;
+    const { price, factoryNum, goodsNum } = currentGoods;
+    console.log(currentGoods)
     pushOrderToOrderList({
       id: dayjs().valueOf(),
       goodsName,
@@ -95,6 +96,7 @@ const AddOrderBody = memo((props) => {
       suggestPrice: price.suggestPrice,
       count: goodsCount.goodsCount.value,
       factoryNum,
+      goodsNum,
       goodsTotal: Number(price.suggestPrice) * Number(goodsCount.goodsCount.value),
       remark
     })

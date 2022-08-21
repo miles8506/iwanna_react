@@ -59,3 +59,45 @@ export function requestDelOrder(collectionName, id) {
       })
   })
 }
+
+/**
+ *
+ * @param {string} collectionName
+ * @param {string} fieldPath
+ * @param {string} opStr
+ * @param {number | string} value
+ * @returns {void}
+ */
+export function requestGetOrder(collectionName, fieldPath, opStr, value) {
+  return new Promise((resolve, reject) => {
+    const ref = db.collection(collectionName)
+    ref
+      .where(fieldPath, opStr, value).get()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ *
+ * @param {string} collectionName
+ * @param {string} iid
+ * @param {any} data
+ * @returns {void}
+ */
+export function requestUpdateOrder(collectionName, iid, data) {
+  return new Promise((resolve, reject) => {
+    const ref = db.collection(collectionName).doc(iid)
+    ref.update(data)
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}

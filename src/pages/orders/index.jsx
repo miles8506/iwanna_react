@@ -12,8 +12,6 @@ import FunctionBar from './c-cpns/function-bar'
 import MSTable from '@/components/ms-table'
 import MSButton from '@/components/ms-button'
 import ChatIcon from '@mui/icons-material/Chat';
-import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined'
-import IconButton from '@mui/material/IconButton';
 
 export default memo(function Order(props) {
   const { history } = props
@@ -34,11 +32,7 @@ export default memo(function Order(props) {
     closeDialog()
   }
   const handleEditOrder = (id) => {
-    console.log('edit', id)
-  }
-
-  const handleDetailOrder = (id) => {
-    console.log(id);
+    history.push(`/orders/edit/${id}`)
   }
 
   const controlButtonsJsx = (id) => {
@@ -49,10 +43,6 @@ export default memo(function Order(props) {
           value="編輯"
           style={{ marginRight: '20px' }}
           onClick={e => handleEditOrder(id)}
-        />
-        <MSButton
-          value="詳情"
-          onClick={e => handleDetailOrder(id)}
         />
       </>
     )
