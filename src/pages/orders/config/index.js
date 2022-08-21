@@ -37,7 +37,7 @@ export const headerCells = [
   {
     id: 'control',
     numeric: false,
-    width: 150,
+    width: 80,
     label: '操作'
   },
   {
