@@ -64,7 +64,7 @@ const EditOrder = memo((props) => {
     if (!res && orderDetail.orderCurryStatus === 0) {
       await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 1 })
     } else {
-      await requestUpdateOrder('orders', iid, {orderDetail})
+      await requestUpdateOrder('orders', iid, { ...orderDetail })
     }
     history.push('/orders')
   }
@@ -94,7 +94,7 @@ const EditOrder = memo((props) => {
                   <div>
                     出貨狀態:
                     <Checkbox
-                      disabled={!orderDetail.placeOrderStatus}
+                      disabled={!orderDetail.placeOrderStatus || orderDetail.orderCurryStatus === 2}
                       checked={item.status}
                       onChange={e => changeChecked(e, item.id)}
                       style={{ padding: '5px' }}
