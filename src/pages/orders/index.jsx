@@ -24,6 +24,7 @@ export default memo(function Order(props) {
   }), shallowEqual)
 
   const [orderListState, setOrderListState] = useState([])
+  const [currentShipOrderGoods, setCurrentShipOrderGoods] = useState(null);
   const [isShowDialog, setIsShowDialog] = useState(false);
 
   const theme = useCreateMUITheme()
@@ -38,9 +39,15 @@ export default memo(function Order(props) {
     history.push(`/orders/edit/${id}`)
   }
 
+  const handleShowDialog = (orderDetail) => {
+    setCurrentShipOrderGoods(orderDetail)
+    setIsShowDialog(true)
+  }
+
   const changeOrderShipmentStatus = async (id, orderDetail) => {
     await requestUpdateOrder('orders', id.toString(), { ...orderDetail, orderCurryStatus: 2 })
     dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
+    setIsShowDialog(false)
   }
 
   const controlButtonsJsx = (id, orderDetail) => {
@@ -50,7 +57,7 @@ export default memo(function Order(props) {
           color="success"
           value="已出貨"
           style={{ marginRight: '20px' }}
-          onClick={e => setIsShowDialog(true)}
+          onClick={e => handleShowDialog(orderDetail)}
           disabled={orderDetail.orderCurryStatus === 2}
         />
         <MSButton
@@ -91,9 +98,9 @@ export default memo(function Order(props) {
           />
         </div>
       </ThemeProvider>
-      {/* <MSDialog
+      <MSDialog
         isShowDialog={isShowDialog}
-        content={<div>確定是否更改叫貨狀態?</div>}
+        content={<div>確定是否更改 <span style={{fontSize: '20px', color: '#ee5050'}}>{currentShipOrderGoods?.shopeeOrderNumber}</span> 訂單叫貨狀態?</div>}
         footer={
           <div>
             <MSButton
@@ -107,11 +114,11 @@ export default memo(function Order(props) {
               value="確定"
               variant="outlined"
               color="success"
-              onClick={e => confirmPlaceOrder(setIsShowDialog)}
+              onClick={e => changeOrderShipmentStatus(currentShipOrderGoods.id, currentShipOrderGoods)}
             />
           </div>
         }
-      ></MSDialog> */}
+      ></MSDialog>
     </OrderWrapper>
   )
 })

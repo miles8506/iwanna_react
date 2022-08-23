@@ -260,7 +260,7 @@ const AddOrderBody = memo((props) => {
             />
             <TextareaAutosize
               placeholder="remark"
-              style={{ width: '35%', height: '100px' }}
+              style={{ width: '35%', height: '100px', resize: 'none' }}
               onChange={e => setRemark(e.target.value)}
               value={remark}
             />

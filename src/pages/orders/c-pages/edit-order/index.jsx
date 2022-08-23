@@ -108,7 +108,7 @@ const EditOrder = memo((props) => {
                   <div className='item'>數量: <span>{item.count}</span></div>
                   <div className='item'>價錢: <span>{item.goodsTotal}</span></div>
                   <TextareaAutosize
-                    style={{ width: '35%', height: '100px' }}
+                    style={{ width: '35%', height: '100px', resize: 'none' }}
                     value={item.remark}
                     onChange={(e) => changeAreaValue(e, item.id)}
                   />

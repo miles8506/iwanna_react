@@ -158,7 +158,7 @@ const GoodsBody = memo((props) => {
       />
       <MSDialog
         isShowDialog={isShowDialog}
-        content={`確認成本價為${goodsDetailInput.basePrice.value}，確定後即不得再更改。`}
+        content={<div>確認成本價為<span style={{fontSize: '20px', color: '#ee5050'}}>${goodsDetailInput.basePrice.value}</span>，確定後即不得再更改。</div>}
         footer={dialogFooter()}
       />
     </GoodsBodyWrapper>
