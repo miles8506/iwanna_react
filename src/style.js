@@ -5,6 +5,15 @@ const AppWrapper = styled.div`
   height: 100vh;
   display: flex;
   overflow-x: auto;
+
+  textarea {
+    padding: 5px;
+    font-size: 14px;
+    color: #404040;
+    border-radius: 5px;
+    border-color: #a4725b;
+    outline-color: #a4725b;
+  }
 `
 
 const MainWrapper = styled.div`

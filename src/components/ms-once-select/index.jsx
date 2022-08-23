@@ -5,7 +5,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { StyledSelect, MSSelectWrapper } from './style'
 import OutlinedInput from '@mui/material/OutlinedInput';
-import Chip from '@mui/material/Chip';
 
 const ITEM_HEIGHT = 170;
 const ITEM_PADDING_TOP = 8;
@@ -19,7 +18,7 @@ const MenuProps = {
 };
 
 export default memo(function MSSelect(props) {
-  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey } = props
+  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey, valueKey } = props
 
   const handleChange = (e) => {
     setValue(e.target.value)
@@ -36,16 +35,6 @@ export default memo(function MSSelect(props) {
             onChange={handleChange}
             input={<OutlinedInput label={label} />}
             multiple={multiple}
-            renderValue={(selected) => {
-              if (!(Array.isArray(selected))) return selected
-              return (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )
-            }}
             MenuProps={MenuProps}
           >
             {
@@ -59,7 +48,7 @@ export default memo(function MSSelect(props) {
             {
               options.map((item, index) => (
                 <MenuItem
-                  value={item[renderKey]}
+                  value={valueKey ? item[valueKey] : item[renderKey]}
                   key={item.id ?? index}
                 >
                   {item[renderKey]}
