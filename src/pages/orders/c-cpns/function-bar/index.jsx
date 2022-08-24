@@ -1,60 +1,126 @@
 import React, { memo, useState } from 'react'
 
+import {
+  shipOrderOptions,
+  callGoodsOptions,
+  lastShipOrderDateOptions
+} from './config'
+import { filterOrderEnums } from '@/enums'
+
 import { FunctionBarWrapper } from './style'
 import MSButton from '@/components/ms-button'
 import MSOnceSelect from '@/components/ms-once-select'
-
-
-const shipOrderOptions = [
-  { name: 'All', id: -1 },
-  { name: '未出貨', id: 0 },
-  { name: '可出貨', id: 1 },
-  { name: '已出貨', id: 2 }
-]
-const callGoodsOptions = [
-  { name: 'All', id: -1 },
-  { name: '未叫貨', id: 0 },
-  { name: '已叫貨', id: 1 }
-]
-const lastShipOrderDateOptions = [
-  { name: '早 -> 晚', id: 0 },
-  { name: '晚 -> 早', id: 1 }
-]
+import CustomInput from '../custom-input'
 
 const FunctionBar = memo((props) => {
-  const { history } = props
+  const { history, filterSearch } = props
 
+  // status
   const [shipOrderStatus, setShipOrderStatus] = useState(-1)
   const [callGoodsStatus, setCallGoodsStatus] = useState(-1)
   const [lastShipOrderDateStatus, setLastShipOrderDateStatus] = useState(0)
 
+  const [factoryNumber, setFactoryNumber] = useState('')
+  const [goodsNumber, setGoodsNumber] = useState('')
+  const [shopeeOrder, setShopeeOrder] = useState('')
+  const [buyerAccount, setBuyerAccount] = useState('')
+
   return (
     <FunctionBarWrapper>
       <div className="filter-area">
-        <MSOnceSelect
-          value={shipOrderStatus}
-          setValue={setShipOrderStatus}
-          options={shipOrderOptions}
-          label="出貨狀態"
-          renderKey="name"
-          valueKey="id"
-        />
-        <MSOnceSelect
-          value={callGoodsStatus}
-          setValue={setCallGoodsStatus}
-          options={callGoodsOptions}
-          label="叫貨狀態"
-          renderKey="name"
-          valueKey="id"
-        />
-        <MSOnceSelect
-          value={lastShipOrderDateStatus}
-          setValue={setLastShipOrderDateStatus}
-          options={lastShipOrderDateOptions}
-          label="最晚出貨日期"
-          renderKey="name"
-          valueKey="id"
-        />
+        <div className="filter-area-status">
+          <MSOnceSelect
+            value={shipOrderStatus}
+            setValue={setShipOrderStatus}
+            options={shipOrderOptions}
+            label="出貨狀態"
+            renderKey="name"
+            valueKey="id"
+            customStyle={{ width: '150px' }}
+          />
+          <MSOnceSelect
+            value={callGoodsStatus}
+            setValue={setCallGoodsStatus}
+            options={callGoodsOptions}
+            label="叫貨狀態"
+            renderKey="name"
+            valueKey="id"
+            customStyle={{ width: '150px' }}
+          />
+          <MSOnceSelect
+            value={lastShipOrderDateStatus}
+            setValue={setLastShipOrderDateStatus}
+            options={lastShipOrderDateOptions}
+            label="最晚出貨日期"
+            renderKey="name"
+            valueKey="id"
+            customStyle={{ width: '150px' }}
+          />
+          <MSButton
+            value="Search"
+            onClick={() =>
+              filterSearch(filterOrderEnums.status, [
+                shipOrderStatus,
+                callGoodsStatus,
+                lastShipOrderDateStatus
+              ])
+            }
+          />
+        </div>
+        <div className="input-wrap">
+          <div className="filter-area-input">
+            <label htmlFor="factory-number">廠商貨號: </label>
+            <CustomInput
+              value={factoryNumber}
+              change={setFactoryNumber}
+              id="factory-number"
+            />
+            <MSButton
+              value="Search"
+              style={{ marginLeft: '10px' }}
+              onClick={() => filterSearch(filterOrderEnums.factoryNumber)}
+            />
+          </div>
+          <div className="filter-area-input">
+            <label htmlFor="goods-number">商品貨號: </label>
+            <CustomInput
+              value={goodsNumber}
+              change={setGoodsNumber}
+              id="goods-number"
+            />
+            <MSButton
+              value="Search"
+              style={{ marginLeft: '10px' }}
+              onClick={() => filterSearch(filterOrderEnums.goodsNumber)}
+            />
+          </div>
+          <div className="filter-area-input">
+            <label htmlFor="shopee-number">蝦皮訂單號: </label>
+            <CustomInput
+              value={shopeeOrder}
+              change={setShopeeOrder}
+              id="shopee-number"
+            />
+            <MSButton
+              value="Search"
+              style={{ marginLeft: '10px' }}
+              onClick={() => filterSearch(filterOrderEnums.shopeeOrder)}
+            />
+          </div>
+          <div className="filter-area-input">
+            <label htmlFor="buyer-account">賣家帳號: </label>
+            <CustomInput
+              value={buyerAccount}
+              change={setBuyerAccount}
+              id="buyer-account"
+            />
+            <MSButton
+              value="Search"
+              style={{ marginLeft: '10px' }}
+              onClick={() => filterSearch(filterOrderEnums.buyerAccount)}
+            />
+          </div>
+        </div>
       </div>
       <div className="control-area">
         <MSButton

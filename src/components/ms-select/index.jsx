@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,7 +7,7 @@ import { StyledSelect, MSSelectWrapper } from './style'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
 
-const ITEM_HEIGHT = 170;
+const ITEM_HEIGHT = 150;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
@@ -18,7 +18,7 @@ const MenuProps = {
   },
 };
 
-export default memo(function MSSelect(props) {
+export default function MSSelect(props) {
   const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey } = props
 
   const handleChange = (e) => {
@@ -72,4 +72,4 @@ export default memo(function MSSelect(props) {
 
     </MSSelectWrapper >
   )
-})
+}

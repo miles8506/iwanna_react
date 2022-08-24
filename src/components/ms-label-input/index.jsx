@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { MSLabelInputWrapper } from './style'
 import MSInput from '../ms-input'
 import MSLabel from '../ms-label'
 
-export default memo(function (props) {
+export default function MSLabelInput(props) {
   const { value, setvalue, id, name } = props
 
   return (
@@ -13,4 +13,4 @@ export default memo(function (props) {
       <MSInput value={value} setvalue={setvalue} id={id} />
     </MSLabelInputWrapper>
   )
-})
+}

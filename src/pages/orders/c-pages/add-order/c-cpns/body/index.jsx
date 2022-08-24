@@ -131,6 +131,7 @@ const AddOrderBody = memo((props) => {
 
   useEffect(() => {
     if (sortSelect.trim() === '') {
+      console.log('update')
       dispatch(requestOriginGoodsListAction())
     }
 

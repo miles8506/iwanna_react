@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { navList } from './local-data'
 
 import { NavLink } from 'react-router-dom'
 import NavListWrapper from './style'
 
-export default memo(function NavList() {
+export default function NavList() {
   return (
     <NavListWrapper>
       {navList.map((item) => {
@@ -17,4 +17,4 @@ export default memo(function NavList() {
       })}
     </NavListWrapper>
   )
-})
+}

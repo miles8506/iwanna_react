@@ -5,6 +5,14 @@ import TableRow from '@mui/material/TableRow'
 
 const MSTableWrapper = styled.div`
   position: relative;
+  height: calc(100% - 52px);
+
+  .MuiTablePagination-root {
+    position: fixed;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+  }
 `
 
 const StyledTableCell = MUIstyled(TableCell)(({ theme }) => ({

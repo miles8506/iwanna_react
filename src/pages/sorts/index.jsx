@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { useCreateMUITheme } from '../../common/theme/mui-theme'
@@ -13,7 +13,7 @@ import MSTable from '@/components/ms-table'
 
 import { requestDelSort } from '@/service/sorts'
 
-export default memo(function Sorts(props) {
+export default function Sorts(props) {
   const { history } = props
 
   const dispatch = useDispatch()
@@ -59,4 +59,4 @@ export default memo(function Sorts(props) {
       </ThemeProvider>
     </SortsWrapper>
   )
-})
+}

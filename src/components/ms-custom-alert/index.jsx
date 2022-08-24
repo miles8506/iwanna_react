@@ -1,9 +1,9 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import MSSnackbar from '@/components/ms-snackbar'
 import { Alert } from '@mui/material'
 
-export default memo(function MSCustomAlert(props) {
+export default function MSCustomAlert(props) {
   const { severity, sx, children: content, ...snackbarProps } = props
 
   return (
@@ -13,4 +13,4 @@ export default memo(function MSCustomAlert(props) {
       </Alert>
     </MSSnackbar>
   )
-})
+}
