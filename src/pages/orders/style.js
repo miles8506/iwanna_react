@@ -4,7 +4,7 @@ export const OrderWrapper = styled.div`
   height: 100%;
 
   .body {
-    height: calc(100% - 31px);
+    height: calc(100% - 197px);
     margin-top: 5px;
     overflow-y: auto;
     background-color: #fff;

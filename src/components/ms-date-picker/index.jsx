@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { MSDatePickerWrapper } from '@/components/ms-date-picker/style'
 import TextField from '@mui/material/TextField';
@@ -6,7 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-const MSDatePicker = memo((props) => {
+const MSDatePicker = (props) => {
   const { label, views = ['year', 'month', 'day'], dateState, setDateState, ...elseProps } = props
 
   return (
@@ -30,6 +30,6 @@ const MSDatePicker = memo((props) => {
 
     </MSDatePickerWrapper>
   )
-})
+}
 
 export default MSDatePicker

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, {  useState } from 'react'
 
 import { ALERT_DURATION } from '@/common/constants'
 import { requestAddSort, requestGetSorts } from '@/service/sorts'
@@ -10,7 +10,7 @@ import MSLabelInput from '@/components/ms-label-input'
 import MSButton from '@/components/ms-button'
 import MSCustomAlert from '@/components/ms-custom-alert'
 
-export default memo(function AddSort(props) {
+export default function AddSort(props) {
   const { history } = props
 
   const [sortVal, setSortVal] = useState('')
@@ -88,4 +88,4 @@ export default memo(function AddSort(props) {
       </MSCustomAlert>
     </AddSortWrapper>
   )
-})
+}

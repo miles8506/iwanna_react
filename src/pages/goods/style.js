@@ -30,7 +30,7 @@ const GoodsWrapper = styled.div`
   }
 
   .goods-content {
-    height: calc(100% - 48px);
+    height: calc(100% - 100px);
     overflow-y: auto;
     background-color: #fff;
   }

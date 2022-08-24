@@ -11,7 +11,7 @@ const ColorsWrapper = styled.div`
   }
 
   .content {
-    height: calc(100% - 31px);
+    height: calc(100% - 100px);
     overflow-y: auto;
     background-color: #fff;
   }

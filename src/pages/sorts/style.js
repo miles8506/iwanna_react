@@ -9,7 +9,7 @@ const SortsWrapper = styled.div`
   }
 
   .body {
-    height: calc(100% - 31px);
+    height: calc(100% - 100px);
     margin-top: 5px;
     overflow-y: auto;
     background-color: #fff;

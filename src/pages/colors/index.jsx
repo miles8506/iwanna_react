@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { requestColorsAction } from '@/store/colors'
@@ -12,7 +12,7 @@ import MSTable from '@/components/ms-table'
 import AddIcon from '@mui/icons-material/Add'
 import MSButton from '../../components/ms-button'
 
-const Colors = memo((props) => {
+const Colors = (props) => {
   const { history } = props
   const dispatch = useDispatch()
   const { colorList } = useSelector(state => ({
@@ -54,6 +54,6 @@ const Colors = memo((props) => {
       </ThemeProvider>
     </ColorsWrapper>
   )
-})
+}
 
 export default Colors

@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import {
   StyledDialog,
   StyledDialogTitle,
@@ -6,7 +6,7 @@ import {
   StyledDialogActions
 } from './style'
 
-export default memo(function MSDialog(props) {
+export default function MSDialog(props) {
   const { isShowDialog, fullWidth = false, title = '', content = '', footer = '' } = props
   return (
     <StyledDialog fullWidth={fullWidth} open={isShowDialog}>
@@ -15,4 +15,4 @@ export default memo(function MSDialog(props) {
       <StyledDialogActions>{footer}</StyledDialogActions>
     </StyledDialog>
   )
-})
+}

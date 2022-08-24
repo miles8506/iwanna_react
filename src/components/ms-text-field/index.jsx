@@ -1,8 +1,8 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { MSTextFieldWrapper, StyledInput } from './style'
 
-const MSTextField = memo((props) => {
+const MSTextField = (props) => {
   const { setValue, detail = [], status, iid, children, required = true, ...elseProps } = props
 
   const findKey = (detail) => {
@@ -32,6 +32,6 @@ const MSTextField = memo((props) => {
       {children}
     </MSTextFieldWrapper>
   )
-})
+}
 
 export default MSTextField

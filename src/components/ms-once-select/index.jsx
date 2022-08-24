@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,14 +17,14 @@ const MenuProps = {
   },
 };
 
-export default memo(function MSSelect(props) {
-  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey, valueKey } = props
+export default function MSSelect(props) {
+  const { value, setValue, options = [], isShowAllValue = false, label = '', multiple = false, renderKey, valueKey, customStyle = {} } = props
 
   const handleChange = (e) => {
     setValue(e.target.value)
   }
   return (
-    <MSSelectWrapper>
+    <MSSelectWrapper {...customStyle}>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="simple-select-label">{label}</InputLabel>
@@ -61,4 +61,4 @@ export default memo(function MSSelect(props) {
 
     </MSSelectWrapper >
   )
-})
+}

@@ -7,8 +7,8 @@ export const StyledSelect = StyledMUI(Select)(({ theme }) => ({
 }))
 
 export const MSSelectWrapper = styled.div`
-  width: 35%;
-  min-width: 200px;
+  display: ${props => props.display ?? 'block'};
+  width: ${props => props.width ?? '100%'};
 
   .MuiFormControl-root {
     &::before {
