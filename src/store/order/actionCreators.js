@@ -15,7 +15,7 @@ export const getOrderTotalAction = res => ({ type: GET_ORDER_LIST, res })
 // thunk
 export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
   const container = []
-  function createTableData(index, buyerAccount, shopeeOrderNumber, orderTotal, placeOrderStatus, orderCurryStatus, lastShipmentDate, control, icon, id,) {
+  function createTableData(index, buyerAccount, shopeeOrderNumber, orderTotal, placeOrderStatus, orderCurryStatus, lastShipmentDate, control, icon, id, orderList) {
     return {
       index,
       buyerAccount,
@@ -26,7 +26,8 @@ export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
       lastShipmentDate,
       control,
       icon,
-      id
+      id,
+      orderList
     }
   }
   return async dispatch => {
@@ -44,7 +45,8 @@ export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
           dayjs(item.data().lastShipmentDate).format('YYYY/MM/DD'),
           controlButtonsJsx(item.data().id, item.data()),
           isShowRemarkIcon ? ChatIcon() : null,
-          item.data().id
+          item.data().id,
+          item.data().orderList
         )
         container.push(obj)
       })

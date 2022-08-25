@@ -30,19 +30,19 @@ const FunctionBar = memo((props) => {
       <div className="filter-area">
         <div className="filter-area-status">
           <MSOnceSelect
-            value={shipOrderStatus}
-            setValue={setShipOrderStatus}
-            options={shipOrderOptions}
-            label="出貨狀態"
+            value={callGoodsStatus}
+            setValue={setCallGoodsStatus}
+            options={callGoodsOptions}
+            label="叫貨狀態"
             renderKey="name"
             valueKey="id"
             customStyle={{ width: '150px' }}
           />
           <MSOnceSelect
-            value={callGoodsStatus}
-            setValue={setCallGoodsStatus}
-            options={callGoodsOptions}
-            label="叫貨狀態"
+            value={shipOrderStatus}
+            setValue={setShipOrderStatus}
+            options={shipOrderOptions}
+            label="出貨狀態"
             renderKey="name"
             valueKey="id"
             customStyle={{ width: '150px' }}
@@ -78,7 +78,7 @@ const FunctionBar = memo((props) => {
             <MSButton
               value="Search"
               style={{ marginLeft: '10px' }}
-              onClick={() => filterSearch(filterOrderEnums.factoryNumber)}
+              onClick={() => filterSearch(filterOrderEnums.factoryNumber, [factoryNumber])}
             />
           </div>
           <div className="filter-area-input">
@@ -91,7 +91,7 @@ const FunctionBar = memo((props) => {
             <MSButton
               value="Search"
               style={{ marginLeft: '10px' }}
-              onClick={() => filterSearch(filterOrderEnums.goodsNumber)}
+              onClick={() => filterSearch(filterOrderEnums.goodsNumber, [goodsNumber])}
             />
           </div>
           <div className="filter-area-input">
@@ -104,7 +104,7 @@ const FunctionBar = memo((props) => {
             <MSButton
               value="Search"
               style={{ marginLeft: '10px' }}
-              onClick={() => filterSearch(filterOrderEnums.shopeeOrder)}
+              onClick={() => filterSearch(filterOrderEnums.shopeeOrder, [shopeeOrder])}
             />
           </div>
           <div className="filter-area-input">
@@ -117,7 +117,7 @@ const FunctionBar = memo((props) => {
             <MSButton
               value="Search"
               style={{ marginLeft: '10px' }}
-              onClick={() => filterSearch(filterOrderEnums.buyerAccount)}
+              onClick={() => filterSearch(filterOrderEnums.buyerAccount, [buyerAccount])}
             />
           </div>
         </div>
@@ -125,8 +125,13 @@ const FunctionBar = memo((props) => {
       <div className="control-area">
         <MSButton
           value="新建訂單"
-          onClick={(e) => history.push('/orders/add')}
+          onClick={() => history.push('/orders/add')}
           style={{ width: '100%' }}
+        />
+        <MSButton
+          value="待叫貨清單"
+          onClick={() => history.push('/orders/placeOrderList')}
+          style={{ width: '100%', marginTop: '10px' }}
         />
       </div>
     </FunctionBarWrapper>
