@@ -8,6 +8,7 @@ const EditGoods = React.lazy(_ => import('@/pages/goods/c-pages/edit-goods'))
 const Order = React.lazy(_ => import('@/pages/orders'))
 const AddOrder = React.lazy(_ => import('@/pages/orders/c-pages/add-order'))
 const EditOrder = React.lazy(_ => import('@/pages/orders/c-pages/edit-order'))
+const PlaceOrderList = React.lazy(_ => import('@/pages/orders/c-pages/place-order-list'))
 const Sorts = React.lazy(_ => import('@/pages/sorts'))
 const AddSort = React.lazy(_ => import('@/pages/sorts/c-pages/add-sort'))
 const Colors = React.lazy(_ => import('@/pages/colors'))
@@ -48,6 +49,10 @@ export const routes = [
   {
     path: '/orders/edit/:iid',
     component: EditOrder
+  },
+  {
+    path: '/orders/placeOrderList',
+    component: PlaceOrderList
   },
   {
     path: '/sorts',

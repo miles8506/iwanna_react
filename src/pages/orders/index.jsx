@@ -1,5 +1,6 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
+import dayjs from 'dayjs'
 
 import { headerCells } from './config'
 import { requestOrderListAction } from '@/store/order'
@@ -84,7 +85,7 @@ export default memo(function Order(props) {
       case filterOrderEnums.status:
         const [shipOrderStatus, callGoodsStatus, lastShipOrderDateStatus] =
           filterValues
-        const result = orderList
+        const statusResult = orderList
           .filter((item) => {
             if (shipOrderStatus === -1) {
               return true
@@ -95,32 +96,49 @@ export default memo(function Order(props) {
           .filter((item) => {
             if (callGoodsStatus === -1) {
               return true
-            } else if (callGoodsStatus === '未叫貨') {
-              return item.placeOrderStatus === '未叫貨'
-            } else if (callGoodsStatus === '已叫貨') {
-              return item.placeOrderStatus === '已叫貨'
+            } else {
+              return item.placeOrderStatus === callGoodsStatus
             }
           })
           .sort((a, b) => {
             if (lastShipOrderDateStatus === 0) {
-              return a.id - b.id
-            } else if (lastShipOrderDateStatus === 1) {
-              return b.id - a.id
+              return dayjs(a.lastShipmentDate).valueOf() - dayjs(b.lastShipmentDate).valueOf()
+            }
+            if (lastShipOrderDateStatus === 1) {
+              return dayjs(b.lastShipmentDate).valueOf() - dayjs(a.lastShipmentDate).valueOf()
             }
           })
-        setOrderListState([...result])
+        setOrderListState([...statusResult])
         break
       case filterOrderEnums.factoryNumber:
-        console.log('factoryNumber')
+        const [factoryNumber] = filterValues
+        const factoryResult = orderList.filter(orderDetail => {
+          for (const item of orderDetail.orderList) {
+            if (item.factoryNum === factoryNumber) return true
+          }
+          return false
+        })
+        setOrderListState([...factoryResult])
         break
       case filterOrderEnums.goodsNumber:
-        console.log('goodsNumber')
+        const [goodsNumber] = filterValues
+        const goodsNumberResult = orderList.filter(orderDetail => {
+          for (const item of orderDetail.orderList) {
+            if (item.goodsNum === goodsNumber) return true
+          }
+          return false
+        })
+        setOrderListState([...goodsNumberResult])
         break
       case filterOrderEnums.shopeeOrder:
-        console.log('shopeeOrder')
+        const [shopeeOrder] = filterValues
+        const shopeeOrderResult = orderList.filter(item => item.shopeeOrderNumber === shopeeOrder)
+        setOrderListState([...shopeeOrderResult])
         break
       case filterOrderEnums.buyerAccount:
-        console.log('buyerAccount')
+        const [buyerAccount] = filterValues
+        const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount)
+        setOrderListState([...buyerAccountResult])
         break
       default:
         return
