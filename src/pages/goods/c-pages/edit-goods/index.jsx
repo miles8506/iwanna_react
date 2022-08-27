@@ -13,6 +13,8 @@ import BaseLayout from '@/layout/base-page'
 import GoodsBody from './goods-body'
 import MSButton from '@/components/ms-button'
 import MSCustomAlert from '@/components/ms-custom-alert'
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const EditGood = memo((props) => {
   const { history } = props
@@ -195,7 +197,14 @@ const EditGood = memo((props) => {
   return (
     <EditGoodWrapper>
       <BaseLayout>
-        <div slot='header' style={{ fontSize: '24px' }}>編輯商品</div>
+        <div slot='header' style={{ fontSize: '24px' }}>
+          <IconButton
+            onClick={() => history.push('/goods')}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+          <span style={{verticalAlign: 'middle'}}>編輯商品</span>
+        </div>
         <div slot='body'>
           <GoodsBody
             goodsDetailInput={goodsDetailInput}

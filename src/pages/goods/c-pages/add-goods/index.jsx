@@ -13,6 +13,8 @@ import BaseLayout from '@/layout/base-page'
 import MSButton from '@/components/ms-button'
 import MSCustomAlert from '@/components/ms-custom-alert'
 import GoodsBody from './c-cpns/goods-body'
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const AddGood = memo((props) => {
   const { history } = props
@@ -143,8 +145,6 @@ const AddGood = memo((props) => {
           factoryNum: goodsDetailInput.factoryNum.value,
           goodsNum: goodsDetailInput.goodsNum.value,
           goodsName: goodsDetailInput.goodsName.value,
-          // basePrice: goodsDetailInput.basePrice.value,
-          // officialPrice: goodsDetailInput.officialPrice.value,
           sort: sortSelect,
           colors: colorsSelect,
           sizes: sizeSelect,
@@ -180,7 +180,14 @@ const AddGood = memo((props) => {
   return (
     <AddGoodWrapper>
       <BaseLayout>
-        <div slot="header" style={{ fontSize: '24px' }}>新增商品</div>
+        <div slot="header" style={{ fontSize: '24px' }}>
+          <IconButton
+            onClick={() => history.push('/goods')}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+          <span style={{verticalAlign: 'middle'}}>新增商品</span>
+        </div>
         <div slot="body" className='layout-style'>
           <GoodsBody
             goodsDetailInput={goodsDetailInput}
@@ -202,7 +209,7 @@ const AddGood = memo((props) => {
             variant="outlined"
             color="error"
             value="cancel"
-            onClick={e => history.push('/goods')}
+            onClick={() => history.push('/goods')}
           />
           <MSButton
             variant="outlined"

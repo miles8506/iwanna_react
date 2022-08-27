@@ -13,16 +13,16 @@ import MSOnceSelect from '@/components/ms-once-select'
 import CustomInput from '../custom-input'
 
 const FunctionBar = memo((props) => {
-  const { history, filterSearch } = props
+  const { history, filterSearch, searchQueryUrl } = props
 
   // status
   const [shipOrderStatus, setShipOrderStatus] = useState(-1)
   const [callGoodsStatus, setCallGoodsStatus] = useState(-1)
-  const [lastShipOrderDateStatus, setLastShipOrderDateStatus] = useState(0)
+  const [lastShipOrderDateStatus, setLastShipOrderDateStatus] = useState(-1)
 
   const [factoryNumber, setFactoryNumber] = useState('')
   const [goodsNumber, setGoodsNumber] = useState('')
-  const [shopeeOrder, setShopeeOrder] = useState('')
+  const [orderNumber, setOrderNumber] = useState('')
   const [buyerAccount, setBuyerAccount] = useState('')
 
   return (
@@ -95,16 +95,16 @@ const FunctionBar = memo((props) => {
             />
           </div>
           <div className="filter-area-input">
-            <label htmlFor="shopee-number">蝦皮訂單號: </label>
+            <label htmlFor="order-number">訂單編號: </label>
             <CustomInput
-              value={shopeeOrder}
-              change={setShopeeOrder}
-              id="shopee-number"
+              value={orderNumber}
+              change={setOrderNumber}
+              id="order-number"
             />
             <MSButton
               value="Search"
               style={{ marginLeft: '10px' }}
-              onClick={() => filterSearch(filterOrderEnums.shopeeOrder, [shopeeOrder])}
+              onClick={() => filterSearch(filterOrderEnums.orderNumber, [orderNumber])}
             />
           </div>
           <div className="filter-area-input">
@@ -125,6 +125,10 @@ const FunctionBar = memo((props) => {
       <div className="control-area">
         <MSButton
           value="新建訂單"
+          // onClick={() => history.push({
+          //   pathname: '/orders/add',
+          //   search: searchQueryUrl
+          // })}
           onClick={() => history.push('/orders/add')}
           style={{ width: '100%' }}
         />

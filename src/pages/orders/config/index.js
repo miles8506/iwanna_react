@@ -10,9 +10,9 @@ export const headerCells = [
     label: '買家帳號'
   },
   {
-    id: 'shopeeOrderNumber',
+    id: 'orderNumber',
     numeric: false,
-    label: '蝦皮/IG訂單編號'
+    label: '訂單編號'
   },
   {
     id: 'orderTotal',

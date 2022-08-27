@@ -54,6 +54,7 @@ export default function Sorts(props) {
             rows={sorts}
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
+            alertContent="確定要刪除該檔期種類？"
           />
         </div>
       </ThemeProvider>

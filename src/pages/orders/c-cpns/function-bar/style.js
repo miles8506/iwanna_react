@@ -14,6 +14,7 @@ export const FunctionBarWrapper = styled.div`
     .input-wrap {
       display: flex;
       margin-top: 20px;
+      padding-right: 20px;
       gap: 15px 20px;
       flex-wrap: wrap;
 

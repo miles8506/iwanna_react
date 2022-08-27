@@ -15,11 +15,11 @@ export const getOrderTotalAction = res => ({ type: GET_ORDER_LIST, res })
 // thunk
 export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
   const container = []
-  function createTableData(index, buyerAccount, shopeeOrderNumber, orderTotal, placeOrderStatus, orderCurryStatus, lastShipmentDate, control, icon, id, orderList) {
+  function createTableData(index, buyerAccount, orderNumber, orderTotal, placeOrderStatus, orderCurryStatus, lastShipmentDate, control, icon, id, orderList) {
     return {
       index,
       buyerAccount,
-      shopeeOrderNumber,
+      orderNumber,
       orderTotal,
       placeOrderStatus,
       orderCurryStatus,
@@ -38,7 +38,7 @@ export function requestOrderListAction(controlButtonsJsx, ChatIcon) {
         const obj = createTableData(
           index + 1,
           item.data().buyerAccount,
-          item.data().shopeeOrderNumber,
+          item.data().orderNumber,
           item.data().orderTotal,
           item.data().placeOrderStatus ? '已叫貨' : '未叫貨',
           orderCurryStatusEnum[item.data().orderCurryStatus],

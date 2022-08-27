@@ -85,7 +85,6 @@ const AddOrderBody = memo((props) => {
     }
 
     const { price, factoryNum, goodsNum } = currentGoods;
-    console.log(currentGoods)
     pushOrderToOrderList({
       id: dayjs().valueOf(),
       goodsName,
@@ -131,7 +130,6 @@ const AddOrderBody = memo((props) => {
 
   useEffect(() => {
     if (sortSelect.trim() === '') {
-      console.log('update')
       dispatch(requestOriginGoodsListAction())
     }
 
@@ -168,7 +166,7 @@ const AddOrderBody = memo((props) => {
         helperText={baseOrdersDetailInput.orderNumber.message}
         disabled={isShowMainWrapper}
       />
-      <MSTextField
+      {/* <MSTextField
         iid={baseOrdersDetailInput.shopeeOrderNumber.iid}
         label={baseOrdersDetailInput.shopeeOrderNumber.name}
         detail={baseOrdersDetailInput}
@@ -176,7 +174,7 @@ const AddOrderBody = memo((props) => {
         status={baseOrdersDetailInput.shopeeOrderNumber.status}
         helperText={baseOrdersDetailInput.shopeeOrderNumber.message}
         disabled={isShowMainWrapper}
-      />
+      /> */}
       <MSTextField
         iid={baseOrdersDetailInput.buyerAccount.iid}
         label={baseOrdersDetailInput.buyerAccount.name}
@@ -233,7 +231,6 @@ const AddOrderBody = memo((props) => {
               label='商品名稱'
               renderKey="goodsName"
               idName="factoryNum"
-              getIdName={id => console.log(id)}
             />
             <MSSelect
               value={colorsSelect}

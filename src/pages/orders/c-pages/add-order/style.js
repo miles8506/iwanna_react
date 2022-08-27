@@ -9,7 +9,7 @@ export const AddOrderWrapper = styled.div`
 
   .add-order-icon {
     position: fixed;
-    top: 95px;
+    top: 110px;
     right: 30px;
 
     .order-count {
