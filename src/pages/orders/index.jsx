@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo, useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import dayjs from 'dayjs'
 
@@ -7,6 +7,8 @@ import { requestOrderListAction } from '@/store/order'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 import { requestDelOrder, requestUpdateOrder } from '@/service/order'
 import { filterOrderEnums } from '@/enums'
+import analysisQueryUrl from '@/utils/analysis'
+import objectToArray from '@/utils/objectToArray'
 
 import { ThemeProvider } from '@mui/material'
 import { OrderWrapper } from './style'
@@ -17,7 +19,7 @@ import ChatIcon from '@mui/icons-material/Chat'
 import MSDialog from '@/components/ms-dialog'
 
 export default memo(function Order(props) {
-  const { history } = props
+  const { history, location } = props
 
   const dispatch = useDispatch()
   const { orderList } = useSelector(
@@ -29,23 +31,33 @@ export default memo(function Order(props) {
 
   const [orderListState, setOrderListState] = useState([])
   const [currentShipOrderGoods, setCurrentShipOrderGoods] = useState(null)
-  const [isShowDialog, setIsShowDialog] = useState(false)
+  const [isShowShipmentDialog, setIsShowShipmentDialog] = useState(false)
+  const [isShowPlaceOrderDialog, setIsShowPlaceOrderDialog] = useState(false);
+  // const [filterType, setFilterType] = useState(null);
 
   const theme = useCreateMUITheme()
   const handleDeleteRow = async (delOrders, closeDialog) => {
     for (const item of delOrders) {
       await requestDelOrder('orders', item.toString())
     }
-    dispatch(requestOrderListAction(controlButtonsJsx))
+    dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
     closeDialog()
   }
   const handleEditOrder = (id) => {
     history.push(`/orders/edit/${id}`)
   }
 
+  // const getQueryUrl = () => {
+  //   `?type=status&shipOrderStatus=${}&callGoodsStatus=-1&lastShipOrderDateStatus=-1`
+  // }
+
   const handleShowDialog = (orderDetail) => {
+    if (!orderDetail.placeOrderStatus) {
+      setIsShowPlaceOrderDialog(true)
+      return
+    }
     setCurrentShipOrderGoods(orderDetail)
-    setIsShowDialog(true)
+    setIsShowShipmentDialog(true)
   }
 
   const changeOrderShipmentStatus = async (id, orderDetail) => {
@@ -54,7 +66,7 @@ export default memo(function Order(props) {
       orderCurryStatus: 2
     })
     dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
-    setIsShowDialog(false)
+    setIsShowShipmentDialog(false)
   }
 
   const controlButtonsJsx = (id, orderDetail) => {
@@ -101,6 +113,9 @@ export default memo(function Order(props) {
             }
           })
           .sort((a, b) => {
+            if (lastShipOrderDateStatus === -1) {
+              return a
+            }
             if (lastShipOrderDateStatus === 0) {
               return dayjs(a.lastShipmentDate).valueOf() - dayjs(b.lastShipmentDate).valueOf()
             }
@@ -108,42 +123,56 @@ export default memo(function Order(props) {
               return dayjs(b.lastShipmentDate).valueOf() - dayjs(a.lastShipmentDate).valueOf()
             }
           })
+        // setFilterType(filterOrderEnums.status)
         setOrderListState([...statusResult])
         break
       case filterOrderEnums.factoryNumber:
         const [factoryNumber] = filterValues
         const factoryResult = orderList.filter(orderDetail => {
           for (const item of orderDetail.orderList) {
-            if (item.factoryNum === factoryNumber) return true
+            if (item.factoryNum === factoryNumber.trim()) return true
           }
           return false
         })
+        // setFilterType(filterOrderEnums.factoryNumber)
         setOrderListState([...factoryResult])
         break
       case filterOrderEnums.goodsNumber:
         const [goodsNumber] = filterValues
         const goodsNumberResult = orderList.filter(orderDetail => {
           for (const item of orderDetail.orderList) {
-            if (item.goodsNum === goodsNumber) return true
+            if (item.goodsNum === goodsNumber.trim()) return true
           }
           return false
         })
+        // setFilterType(filterOrderEnums.goodsNumber)
         setOrderListState([...goodsNumberResult])
         break
-      case filterOrderEnums.shopeeOrder:
-        const [shopeeOrder] = filterValues
-        const shopeeOrderResult = orderList.filter(item => item.shopeeOrderNumber === shopeeOrder)
-        setOrderListState([...shopeeOrderResult])
+      case filterOrderEnums.orderNumber:
+        const [orderNumber] = filterValues
+        const orderNumberResult = orderList.filter(item => item.orderNumber === orderNumber.trim())
+        // setFilterType(filterOrderEnums.orderNumber)
+        setOrderListState([...orderNumberResult])
         break
       case filterOrderEnums.buyerAccount:
         const [buyerAccount] = filterValues
-        const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount)
+        const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount.trim())
+        // setFilterType(filterOrderEnums.buyerAccount)
         setOrderListState([...buyerAccountResult])
         break
       default:
         return
     }
   }
+
+  const checkOrderStatus = () => currentShipOrderGoods?.orderList.some(item => item.status === false)
+
+  // const init = async () => {
+  //   await dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
+  //   if (!location.search) return
+  //   const { type, ...filterValue } = analysisQueryUrl(location.search)
+  //   filterSearch(type, objectToArray(filterValue))
+  // }
 
   useEffect(() => {
     dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
@@ -160,7 +189,8 @@ export default memo(function Order(props) {
           <FunctionBar
             history={history}
             filterSearch={filterSearch}
-          ></FunctionBar>
+            // searchQueryUrl={searchQueryUrl}
+          />
         </div>
         <div className="body">
           <MSTable
@@ -168,18 +198,20 @@ export default memo(function Order(props) {
             rows={orderListState}
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
+            alertContent="確定要刪除該訂單？"
           />
         </div>
       </ThemeProvider>
       <MSDialog
-        isShowDialog={isShowDialog}
+        isShowDialog={isShowShipmentDialog}
         content={
           <div>
-            確定是否更改{' '}
+            {checkOrderStatus() && '訂單商品尚未到期，'}
+            確定要將{' '}
             <span style={{ fontSize: '20px', color: '#ee5050' }}>
               {currentShipOrderGoods?.shopeeOrderNumber}
             </span>{' '}
-            訂單叫貨狀態?
+            狀態更改為已出貨嗎?
           </div>
         }
         footer={
@@ -189,13 +221,13 @@ export default memo(function Order(props) {
               variant="outlined"
               color="error"
               style={{ marginRight: '10px' }}
-              onClick={(e) => setIsShowDialog(false)}
+              onClick={() => setIsShowShipmentDialog(false)}
             />
             <MSButton
               value="確定"
               variant="outlined"
               color="success"
-              onClick={(e) =>
+              onClick={() =>
                 changeOrderShipmentStatus(
                   currentShipOrderGoods.id,
                   currentShipOrderGoods
@@ -205,6 +237,22 @@ export default memo(function Order(props) {
           </div>
         }
       ></MSDialog>
+      <MSDialog
+        isShowDialog={isShowPlaceOrderDialog}
+        content={<div>請確認叫貨狀態是否為已叫貨</div>}
+        footer={
+          <div>
+            <MSButton
+              value="確定"
+              variant="outlined"
+              color="success"
+              onClick={() =>setIsShowPlaceOrderDialog(false)}
+            />
+          </div>
+        }
+      />
     </OrderWrapper>
   )
 })
+
+// setSearchQueryUrl(`?type=${filterOrderEnums.status}shipOrderStatus=${shipOrderStatus}&callGoodsStatus=${callGoodsStatus}&lastShipOrderDateStatus=${lastShipOrderDateStatus}`)

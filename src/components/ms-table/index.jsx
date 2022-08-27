@@ -13,7 +13,8 @@ export default function EnhancedTable(props) {
     headerCells = [],
     handleWarningAlert,
     title = '',
-    handleDeleteRow
+    handleDeleteRow,
+    alertContent
   } = props
 
   const [selected, setSelected] = React.useState([])
@@ -46,6 +47,7 @@ export default function EnhancedTable(props) {
         handleWarningAlert={handleWarningAlert}
         title={title}
         handleDeleteRow={handleDeleteRow}
+        alertContent={alertContent}
       />
       <TableContainer>
         <Table sx={{ minWidth: 200 }}>

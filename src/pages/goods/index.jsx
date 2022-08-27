@@ -84,6 +84,7 @@ export default memo(function Goods(props) {
             rows={goodsListState}
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
+            alertContent="確定要刪除該商品？"
           />
         </div>
       </ThemeProvider>

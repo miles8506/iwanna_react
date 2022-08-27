@@ -17,7 +17,8 @@ const MSToolbar = memo(function (props) {
     selected,
     setSelected,
     title,
-    handleDeleteRow
+    handleDeleteRow,
+    alertContent
   } = props
 
   const [isShowDialog, setIsShowDialog] = useState(false)
@@ -95,7 +96,7 @@ const MSToolbar = memo(function (props) {
       <MSDialog
         isShowDialog={isShowDialog}
         title="Warning"
-        content="確定要刪除該檔期種類？"
+        content={alertContent}
         footer={footer}
         fullWidth={true}
       />

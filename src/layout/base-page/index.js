@@ -16,7 +16,7 @@ const BaseLayout = memo((props) => {
     for (const child of children) {
       updatedState[child.props.slot] = child
     }
-    setSlots({ ...slots, ...updatedState })
+    setSlots({ ...updatedState })
   }, [children])
   return (
     <BasePageLayoutWrapper>

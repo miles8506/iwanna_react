@@ -9,6 +9,6 @@ export const filterOrderEnums = {
   status: 'status',
   factoryNumber: 'factoryNumber',
   goodsNumber: 'goodsNumber',
-  shopeeOrder: 'shopeeOrder',
+  orderNumber: 'orderNumber',
   buyerAccount: 'buyerAccount'
 }

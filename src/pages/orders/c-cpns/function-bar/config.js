@@ -10,6 +10,7 @@ export const callGoodsOptions = [
   { name: '已叫貨', id: '已叫貨' }
 ]
 export const lastShipOrderDateOptions = [
+  { name: 'All', id: -1 },
   { name: '早 -> 晚', id: 0 },
   { name: '晚 -> 早', id: 1 }
 ]

@@ -8,27 +8,26 @@ import MSButton from '@/components/ms-button'
 import MSDialog from '@/components/ms-dialog'
 
 const BaseDetail = memo((props) => {
-  const { orderDetail, changeShopeeOrderValue, confirmPlaceOrder } = props
+  const { orderDetail, changeOrderNumberValue, confirmPlaceOrder } = props
 
   const [isShowDialog, setIsShowDialog] = useState(false);
 
   return (
     <BaseDetailWrapper>
-      <div className='item'>訂單創建時間:
-        <span>{formateStampTime(orderDetail.id)}</span>
+      <div className='item'>
+        訂單創建時間: <span>{formateStampTime(orderDetail.id)}</span>
       </div>
-      <div className='item'>訂單編號:
-        <span>{orderDetail.orderNumber}</span>
+      <div className='item'>
+        訂單編號: <Input value={orderDetail.orderNumber} onChange={changeOrderNumberValue} />
       </div>
-      <div className='item'>蝦皮/IG訂單編號: <Input value={orderDetail.shopeeOrderNumber} onChange= {changeShopeeOrderValue} /></div>
-      <div className='item'>買家帳號:
-        <span>{orderDetail.buyerAccount}</span>
+      <div className='item'>
+        買家帳號: {orderDetail.buyerAccount}
       </div>
-      <div className='item'>最晚出貨日期:
-        <span>{formateStampTime(orderDetail.lastShipmentDate, 'YYYY/MM/DD')}</span>
+      <div className='item'>
+        最晚出貨日期: {formateStampTime(orderDetail.lastShipmentDate, 'YYYY/MM/DD')}
       </div>
-      <div className='item'>訂單總金額:
-        <span>{orderDetail.orderTotal}</span>
+      <div className='item'>
+        訂單總金額: {orderDetail.orderTotal}
       </div>
       <div className='item'>叫貨狀態:
         <span>{orderDetail.placeOrderStatus ? '已叫貨' : '未叫貨'}</span>

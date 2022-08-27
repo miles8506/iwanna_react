@@ -49,6 +49,7 @@ const Colors = (props) => {
             rows={colorList}
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
+            alertContent="確定要刪除該顏色？"
           />
         </div>
       </ThemeProvider>

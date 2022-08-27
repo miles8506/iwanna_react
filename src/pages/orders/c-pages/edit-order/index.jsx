@@ -7,7 +7,9 @@ import TextareaAutosize from '@mui/base/TextareaAutosize'
 import BasePageLayout from '@/layout/base-page'
 import BaseDetail from './c-cpns/base-detail'
 import MSButton from '@/components/ms-button'
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from '@mui/material/Checkbox'
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const EditOrder = memo((props) => {
   const { history } = props
@@ -22,10 +24,10 @@ const EditOrder = memo((props) => {
     })
   }, [iid])
 
-  const changeShopeeOrderValue = useCallback((e) => {
+  const changeOrderNumberValue = useCallback((e) => {
     setOrderDetail({
       ...orderDetail,
-      shopeeOrderNumber: e.target.value
+      orderNumber: e.target.value
     })
   }, [orderDetail])
 
@@ -60,11 +62,17 @@ const EditOrder = memo((props) => {
   }
 
   const submitOrder = async () => {
+    if (orderDetail.orderCurryStatus === 2) {
+      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 2 })
+      history.push('/orders')
+      return
+    }
+
     const res = orderDetail.orderList.some(item => item.status === false)
-    if (!res && orderDetail.orderCurryStatus === 0) {
-      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 1 })
+    if (res) {
+      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 0 })
     } else {
-      await requestUpdateOrder('orders', iid, { ...orderDetail })
+      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 1 })
     }
     history.push('/orders')
   }
@@ -80,11 +88,18 @@ const EditOrder = memo((props) => {
   return (
     <EditOrderWrapper>
       <BasePageLayout>
-        <div slot='header'>編輯訂單</div>
+        <div slot='header'>
+          <IconButton
+            onClick={() => history.push('/orders')}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+          <span style={{verticalAlign: 'middle'}}>編輯訂單</span>
+        </div>
         <div slot='body'>
           <BaseDetail
             orderDetail={orderDetail}
-            changeShopeeOrderValue={changeShopeeOrderValue}
+            changeOrderNumberValue={changeOrderNumberValue}
             confirmPlaceOrder={confirmPlaceOrder}
           />
           {

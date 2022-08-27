@@ -11,12 +11,13 @@ import AddOrderBody from './c-cpns/body'
 import OrderDialog from './c-cpns/order-dialog'
 import MSCustomAlert from '@/components/ms-custom-alert'
 import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined'
-import IconButton from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import MSButton from '@/components/ms-button'
 import dayjs from 'dayjs'
 
 const AddOrder = memo((props) => {
-  const { history } = props
+  const { history, location } = props
 
   const dispatch = useDispatch()
   const { sortList } = useSelector(state => ({
@@ -27,13 +28,6 @@ const AddOrder = memo((props) => {
     orderNumber: {
       iid: 0,
       name: '訂單編號',
-      status: true,
-      value: '',
-      message: ''
-    },
-    shopeeOrderNumber: {
-      iid:1,
-      name: '蝦皮訂單編號',
       status: true,
       value: '',
       message: ''
@@ -151,7 +145,7 @@ const AddOrder = memo((props) => {
 
   const submitOrder = async () => {
     if (orderList.length === 0) return
-    const { orderNumber, shopeeOrderNumber, buyerAccount } = baseOrdersDetailInput
+    const { orderNumber, buyerAccount } = baseOrdersDetailInput
     const orderTotal = orderList.reduce((previousVal, currentVal) => {
       return previousVal += Number(currentVal.goodsTotal)
     }, 0)
@@ -164,11 +158,14 @@ const AddOrder = memo((props) => {
       orderNumber: orderNumber.value,
       orderTotal,
       placeOrderStatus: false,
-      shopeeOrderNumber: shopeeOrderNumber.value,
       remark: remark.trim()
     }
     try {
       await requestAddOrder('orders', order.id + '', order)
+      // history.push({
+      //   pathname: '/orders',
+      //   search: location.search
+      // })
       history.push('/orders')
     } catch (err) {
       window.alert(err)
@@ -182,8 +179,13 @@ const AddOrder = memo((props) => {
   return (
     <AddOrderWrapper>
       <BasePageLayout>
-        <div slot='header' style={{fontSize: '24px', color: 'rgba(0,0,0,0.6)'}}>
-          新建訂單
+        <div slot='header' style={{ fontSize: '24px', color: 'rgba(0,0,0,0.6)' }}>
+          <IconButton
+            onClick={() => history.push('/orders')}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+          <span style={{verticalAlign: 'middle'}}>新建訂單</span>
         </div>
         <div slot='body'>
           <div className="add-order-icon">
@@ -223,7 +225,11 @@ const AddOrder = memo((props) => {
             value="cancel"
             variant="outlined"
             color="error"
-            onClick={e => history.push('/orders')}
+            // onClick={e => history.push({
+            //   pathname: '/orders',
+            //   search: location.search
+            // })}
+            onClick={() => history.push('/orders')}
           />
           <MSButton
             value="confirm"
