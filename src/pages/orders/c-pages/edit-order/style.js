@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 export const EditOrderWrapper = styled.div`
   height: 100%;
+  padding: 20px;
+  background-color: #dfc4b8;
 
   div[slot="header"] {
     font-size: 24px;

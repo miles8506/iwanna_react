@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { useCreateMUITheme } from '../../common/theme/mui-theme'
@@ -23,6 +23,8 @@ export default function Sorts(props) {
     }),
     shallowEqual
   )
+
+  const [page, setPage] = useState(0)
 
   const theme = useCreateMUITheme()
 
@@ -55,6 +57,8 @@ export default function Sorts(props) {
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
             alertContent="確定要刪除該檔期種類？"
+            page={page}
+            setPage={setPage}
           />
         </div>
       </ThemeProvider>

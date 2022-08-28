@@ -24,6 +24,7 @@ export default memo(function Goods(props) {
 
   const [filterValue, setFilterValue] = useState('All')
   const [goodsListState, setGoodsListState] = useState([]);
+  const [page, setPage] = useState(0)
 
   const theme = useCreateMUITheme()
 
@@ -85,6 +86,8 @@ export default memo(function Goods(props) {
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
             alertContent="確定要刪除該商品？"
+            page={page}
+            setPage={setPage}
           />
         </div>
       </ThemeProvider>
