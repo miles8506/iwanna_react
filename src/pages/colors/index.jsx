@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
 import { requestColorsAction } from '@/store/colors'
@@ -18,6 +18,8 @@ const Colors = (props) => {
   const { colorList } = useSelector(state => ({
     colorList: state.getIn(['colors', 'colorList'])
   }), shallowEqual)
+
+  const [page, setPage] = useState(0)
 
   const theme = useCreateMUITheme()
 
@@ -50,6 +52,8 @@ const Colors = (props) => {
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
             alertContent="確定要刪除該顏色？"
+            page={page}
+            setPage={setPage}
           />
         </div>
       </ThemeProvider>

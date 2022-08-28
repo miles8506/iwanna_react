@@ -12,9 +12,8 @@ import IconButton from '@mui/material/IconButton'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const EditOrder = memo((props) => {
-  const { history } = props
+  const { iid, handleOrderDialog } = props
 
-  const { iid } = props.match.params
   const [orderDetail, setOrderDetail] = useState(null);
 
   const getOrderDetail = useCallback(async () => {
@@ -63,18 +62,18 @@ const EditOrder = memo((props) => {
 
   const submitOrder = async () => {
     if (orderDetail.orderCurryStatus === 2) {
-      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 2 })
-      history.push('/orders')
+      await requestUpdateOrder('orders', iid.toString(), { ...orderDetail, orderCurryStatus: 2 })
+      handleOrderDialog()
       return
     }
 
     const res = orderDetail.orderList.some(item => item.status === false)
     if (res) {
-      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 0 })
+      await requestUpdateOrder('orders', iid.toString(), { ...orderDetail, orderCurryStatus: 0 })
     } else {
-      await requestUpdateOrder('orders', iid, { ...orderDetail, orderCurryStatus: 1 })
+      await requestUpdateOrder('orders', iid.toString(), { ...orderDetail, orderCurryStatus: 1 })
     }
-    history.push('/orders')
+    handleOrderDialog()
   }
 
   useEffect(() => {
@@ -90,7 +89,7 @@ const EditOrder = memo((props) => {
       <BasePageLayout>
         <div slot='header'>
           <IconButton
-            onClick={() => history.push('/orders')}
+            onClick={() => handleOrderDialog()}
           >
             <ArrowBackIosIcon />
           </IconButton>
@@ -138,7 +137,7 @@ const EditOrder = memo((props) => {
             value="cancel"
             variant="outlined"
             color="error"
-            onClick={e => history.push('/orders')}
+            onClick={() => handleOrderDialog()}
           />
           <MSButton
             value="confirm"

@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 export const AddOrderWrapper = styled.div`
   height: 100%;
+  padding: 20px;
+  background-color: #dfc4b8;
 
   div[slot="body"] {
     position: relative;
@@ -10,7 +12,7 @@ export const AddOrderWrapper = styled.div`
   .add-order-icon {
     position: fixed;
     top: 110px;
-    right: 30px;
+    right: 45px;
 
     .order-count {
       display: inline-block;

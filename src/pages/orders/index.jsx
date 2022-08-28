@@ -7,9 +7,8 @@ import { requestOrderListAction } from '@/store/order'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 import { requestDelOrder, requestUpdateOrder } from '@/service/order'
 import { filterOrderEnums } from '@/enums'
-import analysisQueryUrl from '@/utils/analysis'
-import objectToArray from '@/utils/objectToArray'
 
+import { useOrderSearchContext } from '@/context/use-order-search'
 import { ThemeProvider } from '@mui/material'
 import { OrderWrapper } from './style'
 import FunctionBar from './c-cpns/function-bar'
@@ -17,9 +16,12 @@ import MSTable from '@/components/ms-table'
 import MSButton from '@/components/ms-button'
 import ChatIcon from '@mui/icons-material/Chat'
 import MSDialog from '@/components/ms-dialog'
+import Dialog from '@mui/material/Dialog'
+import AddOrder from './c-pages/add-order'
+import EditOrder from './c-pages/edit-order'
 
 export default memo(function Order(props) {
-  const { history, location } = props
+  const { history } = props
 
   const dispatch = useDispatch()
   const { orderList } = useSelector(
@@ -29,11 +31,26 @@ export default memo(function Order(props) {
     shallowEqual
   )
 
+  const {
+    shipOrderStatus,
+    callGoodsStatus,
+    lastShipOrderDateStatus,
+    factoryNumber,
+    goodsNumber,
+    orderNumber,
+    buyerAccount,
+    filterType,
+    handleFilterType
+  } = useOrderSearchContext()
+
   const [orderListState, setOrderListState] = useState([])
   const [currentShipOrderGoods, setCurrentShipOrderGoods] = useState(null)
   const [isShowShipmentDialog, setIsShowShipmentDialog] = useState(false)
-  const [isShowPlaceOrderDialog, setIsShowPlaceOrderDialog] = useState(false);
-  // const [filterType, setFilterType] = useState(null);
+  const [isShowPlaceOrderDialog, setIsShowPlaceOrderDialog] = useState(false)
+  const [isShowAddOrderDialog, setIsShowAddOpenOrderDialog] = useState(false)
+  const [isShowEditOrderDialog, setIsShowOpenEditOrderDialog] = useState(false)
+  const [editOrderId, setEditOrderId] = useState(null)
+  const [page, setPage] = useState(0)
 
   const theme = useCreateMUITheme()
   const handleDeleteRow = async (delOrders, closeDialog) => {
@@ -44,12 +61,9 @@ export default memo(function Order(props) {
     closeDialog()
   }
   const handleEditOrder = (id) => {
-    history.push(`/orders/edit/${id}`)
+    setEditOrderId(id)
+    setIsShowOpenEditOrderDialog(true)
   }
-
-  // const getQueryUrl = () => {
-  //   `?type=status&shipOrderStatus=${}&callGoodsStatus=-1&lastShipOrderDateStatus=-1`
-  // }
 
   const handleShowDialog = (orderDetail) => {
     if (!orderDetail.placeOrderStatus) {
@@ -92,11 +106,12 @@ export default memo(function Order(props) {
     return <ChatIcon sx={{ fontSize: 25, color: '#d61515' }} color="disabled" />
   }
 
-  const filterSearch = (type, filterValues) => {
+  const filterSearch = (type, savePage = false) => {
+    handleFilterType(type)
+    !savePage && setPage(0)
+
     switch (type) {
       case filterOrderEnums.status:
-        const [shipOrderStatus, callGoodsStatus, lastShipOrderDateStatus] =
-          filterValues
         const statusResult = orderList
           .filter((item) => {
             if (shipOrderStatus === -1) {
@@ -123,41 +138,32 @@ export default memo(function Order(props) {
               return dayjs(b.lastShipmentDate).valueOf() - dayjs(a.lastShipmentDate).valueOf()
             }
           })
-        // setFilterType(filterOrderEnums.status)
         setOrderListState([...statusResult])
         break
       case filterOrderEnums.factoryNumber:
-        const [factoryNumber] = filterValues
         const factoryResult = orderList.filter(orderDetail => {
           for (const item of orderDetail.orderList) {
             if (item.factoryNum === factoryNumber.trim()) return true
           }
           return false
         })
-        // setFilterType(filterOrderEnums.factoryNumber)
         setOrderListState([...factoryResult])
         break
       case filterOrderEnums.goodsNumber:
-        const [goodsNumber] = filterValues
         const goodsNumberResult = orderList.filter(orderDetail => {
           for (const item of orderDetail.orderList) {
             if (item.goodsNum === goodsNumber.trim()) return true
           }
           return false
         })
-        // setFilterType(filterOrderEnums.goodsNumber)
         setOrderListState([...goodsNumberResult])
         break
       case filterOrderEnums.orderNumber:
-        const [orderNumber] = filterValues
         const orderNumberResult = orderList.filter(item => item.orderNumber === orderNumber.trim())
-        // setFilterType(filterOrderEnums.orderNumber)
         setOrderListState([...orderNumberResult])
         break
       case filterOrderEnums.buyerAccount:
-        const [buyerAccount] = filterValues
         const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount.trim())
-        // setFilterType(filterOrderEnums.buyerAccount)
         setOrderListState([...buyerAccountResult])
         break
       default:
@@ -167,12 +173,15 @@ export default memo(function Order(props) {
 
   const checkOrderStatus = () => currentShipOrderGoods?.orderList.some(item => item.status === false)
 
-  // const init = async () => {
-  //   await dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
-  //   if (!location.search) return
-  //   const { type, ...filterValue } = analysisQueryUrl(location.search)
-  //   filterSearch(type, objectToArray(filterValue))
-  // }
+  const handleCloseAddOrderDialog = async () => {
+    setIsShowAddOpenOrderDialog(false)
+    await dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
+  }
+
+  const handleCloseEditOrderDialog = async () => {
+    setIsShowOpenEditOrderDialog(false)
+    await dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
+  }
 
   useEffect(() => {
     dispatch(requestOrderListAction(controlButtonsJsx, remarkIcon))
@@ -180,6 +189,7 @@ export default memo(function Order(props) {
 
   useEffect(() => {
     setOrderListState([...orderList])
+    filterType && filterSearch(filterType, true)
   }, [orderList])
 
   return (
@@ -189,7 +199,7 @@ export default memo(function Order(props) {
           <FunctionBar
             history={history}
             filterSearch={filterSearch}
-            // searchQueryUrl={searchQueryUrl}
+            setOpenOrderDialog={setIsShowAddOpenOrderDialog}
           />
         </div>
         <div className="body">
@@ -199,6 +209,8 @@ export default memo(function Order(props) {
             headerCells={headerCells}
             handleDeleteRow={handleDeleteRow}
             alertContent="確定要刪除該訂單？"
+            page={page}
+            setPage={setPage}
           />
         </div>
       </ThemeProvider>
@@ -251,8 +263,25 @@ export default memo(function Order(props) {
           </div>
         }
       />
+      <Dialog
+        fullScreen
+        open={isShowAddOrderDialog}
+        onClose={() => handleCloseAddOrderDialog}
+      >
+        <AddOrder
+          handleOrderDialog={handleCloseAddOrderDialog}
+        />
+      </Dialog>
+      <Dialog
+        fullScreen
+        open={isShowEditOrderDialog}
+        onClose={() => handleCloseEditOrderDialog}
+      >
+        <EditOrder
+          iid={editOrderId}
+          handleOrderDialog={handleCloseEditOrderDialog}
+        />
+      </Dialog>
     </OrderWrapper>
   )
 })
-
-// setSearchQueryUrl(`?type=${filterOrderEnums.status}shipOrderStatus=${shipOrderStatus}&callGoodsStatus=${callGoodsStatus}&lastShipOrderDateStatus=${lastShipOrderDateStatus}`)

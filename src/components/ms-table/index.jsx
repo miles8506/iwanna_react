@@ -14,11 +14,12 @@ export default function EnhancedTable(props) {
     handleWarningAlert,
     title = '',
     handleDeleteRow,
-    alertContent
+    alertContent,
+    page,
+    setPage
   } = props
 
   const [selected, setSelected] = React.useState([])
-  const [page, setPage] = React.useState(0)
 
   const rowsPerPage = 20
 

@@ -1,5 +1,6 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
+import dayjs from 'dayjs'
 
 import { requestSortsAction } from '@/store/sorts/actionCreators'
 import { ALERT_DURATION } from '@/common/constants'
@@ -14,10 +15,9 @@ import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import MSButton from '@/components/ms-button'
-import dayjs from 'dayjs'
 
 const AddOrder = memo((props) => {
-  const { history, location } = props
+  const { handleOrderDialog } = props
 
   const dispatch = useDispatch()
   const { sortList } = useSelector(state => ({
@@ -162,11 +162,8 @@ const AddOrder = memo((props) => {
     }
     try {
       await requestAddOrder('orders', order.id + '', order)
-      // history.push({
-      //   pathname: '/orders',
-      //   search: location.search
-      // })
-      history.push('/orders')
+      // history.push('/orders')
+      handleOrderDialog(false)
     } catch (err) {
       window.alert(err)
     }
@@ -181,7 +178,7 @@ const AddOrder = memo((props) => {
       <BasePageLayout>
         <div slot='header' style={{ fontSize: '24px', color: 'rgba(0,0,0,0.6)' }}>
           <IconButton
-            onClick={() => history.push('/orders')}
+            onClick={() => handleOrderDialog(false)}
           >
             <ArrowBackIosIcon />
           </IconButton>
@@ -225,11 +222,7 @@ const AddOrder = memo((props) => {
             value="cancel"
             variant="outlined"
             color="error"
-            // onClick={e => history.push({
-            //   pathname: '/orders',
-            //   search: location.search
-            // })}
-            onClick={() => history.push('/orders')}
+            onClick={() => handleOrderDialog(false)}
           />
           <MSButton
             value="confirm"
