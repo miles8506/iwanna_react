@@ -50,7 +50,7 @@ export default memo(function Order(props) {
   const [isShowPlaceOrderDialog, setIsShowPlaceOrderDialog] = useState(false)
   const [isShowAddOrderDialog, setIsShowAddOpenOrderDialog] = useState(false)
   const [isShowEditOrderDialog, setIsShowOpenEditOrderDialog] = useState(false)
-  const [isShowPlaceOrderListDialog, setIsShowPlaceOrderListDialog] = useState(true)
+  const [isShowPlaceOrderListDialog, setIsShowPlaceOrderListDialog] = useState(false)
   const [editOrderId, setEditOrderId] = useState(null)
   const [page, setPage] = useState(0)
   const [remind, setRemind] = useState(null);
