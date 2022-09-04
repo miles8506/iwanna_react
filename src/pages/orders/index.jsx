@@ -19,6 +19,7 @@ import MSDialog from '@/components/ms-dialog'
 import Dialog from '@mui/material/Dialog'
 import AddOrder from './c-pages/add-order'
 import EditOrder from './c-pages/edit-order'
+import PlaceOrder from './c-pages/place-order-list'
 
 export default memo(function Order(props) {
   const { history } = props
@@ -49,8 +50,10 @@ export default memo(function Order(props) {
   const [isShowPlaceOrderDialog, setIsShowPlaceOrderDialog] = useState(false)
   const [isShowAddOrderDialog, setIsShowAddOpenOrderDialog] = useState(false)
   const [isShowEditOrderDialog, setIsShowOpenEditOrderDialog] = useState(false)
+  const [isShowPlaceOrderListDialog, setIsShowPlaceOrderListDialog] = useState(true)
   const [editOrderId, setEditOrderId] = useState(null)
   const [page, setPage] = useState(0)
+  const [remind, setRemind] = useState(null);
 
   const theme = useCreateMUITheme()
   const handleDeleteRow = async (delOrders, closeDialog) => {
@@ -62,6 +65,7 @@ export default memo(function Order(props) {
   }
   const handleEditOrder = (id) => {
     setEditOrderId(id)
+    setRemind(id)
     setIsShowOpenEditOrderDialog(true)
   }
 
@@ -200,6 +204,7 @@ export default memo(function Order(props) {
             history={history}
             filterSearch={filterSearch}
             setOpenOrderDialog={setIsShowAddOpenOrderDialog}
+            handlePlaceOrderDialog={setIsShowPlaceOrderListDialog}
           />
         </div>
         <div className="body">
@@ -211,6 +216,7 @@ export default memo(function Order(props) {
             alertContent="確定要刪除該訂單？"
             page={page}
             setPage={setPage}
+            remindStatus={remind}
           />
         </div>
       </ThemeProvider>
@@ -258,7 +264,7 @@ export default memo(function Order(props) {
               value="確定"
               variant="outlined"
               color="success"
-              onClick={() =>setIsShowPlaceOrderDialog(false)}
+              onClick={() => setIsShowPlaceOrderDialog(false)}
             />
           </div>
         }
@@ -280,6 +286,15 @@ export default memo(function Order(props) {
         <EditOrder
           iid={editOrderId}
           handleOrderDialog={handleCloseEditOrderDialog}
+        />
+      </Dialog>
+      <Dialog
+        fullScreen
+        open={isShowPlaceOrderListDialog}
+        onClose={() => setIsShowPlaceOrderListDialog}
+      >
+        <PlaceOrder
+          handlePlaceOrderDialog={setIsShowPlaceOrderListDialog}
         />
       </Dialog>
     </OrderWrapper>

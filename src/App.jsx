@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import store from './store'
 import { routes } from '@/router'
 
-import OrderSearchProvider from '@/context/use-order-search'
+import ContextProvider from '@/context'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
@@ -13,7 +13,7 @@ import NavList from './components/nav-list'
 export default function App() {
   return (
     <Provider store={store}>
-      <OrderSearchProvider>
+      <ContextProvider>
         <HashRouter>
           <AppWrapper>
             <NavList />
@@ -24,7 +24,7 @@ export default function App() {
             </MainWrapper>
           </AppWrapper>
         </HashRouter>
-      </OrderSearchProvider>
+      </ContextProvider>
     </Provider>
   )
 }

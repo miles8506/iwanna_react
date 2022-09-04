@@ -7,6 +7,7 @@ export const AddOrderWrapper = styled.div`
 
   div[slot="body"] {
     position: relative;
+    padding-bottom: 50px;
   }
 
   .add-order-icon {

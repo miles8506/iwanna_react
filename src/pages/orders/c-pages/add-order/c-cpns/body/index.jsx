@@ -4,6 +4,8 @@ import dayjs from 'dayjs'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import { requestOriginGoodsListAction } from '@/store/goods'
 import { checkEmptyString } from '@/utils/validate'
+import { headerCells } from './config'
+import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 
 import MSDatePicker from '@/components/ms-date-picker'
 import MSTextField from '@/components/ms-text-field'
@@ -11,18 +13,51 @@ import MSButton from '@/components/ms-button'
 import MSSelect from '@/components/ms-select'
 import TextareaAutosize from '@mui/base/TextareaAutosize'
 import { AddOrderBodyWrapper } from './style'
+import MSTable from '@/components/ms-table'
+import { ThemeProvider } from '@mui/material'
 
 const AddOrderBody = memo((props) => {
   const dispatch = useDispatch()
-  const { originGoodsList } = useSelector(state => ({
-    originGoodsList: state.getIn(['goods', 'originGoodsList'])
-  }), shallowEqual)
+  const { originGoodsList } = useSelector(
+    (state) => ({
+      originGoodsList: state.getIn(['goods', 'originGoodsList'])
+    }),
+    shallowEqual
+  )
 
-  const { baseOrdersDetailInput, setBaseOrderDetailInput, lastDateTime, setLastDateTime, sortSelect, setSortSelect, sortOptions, goodsName, setGoodsName,colorsSelect, setColorsSelect, sizesSelect, setSizesSelect, setIsShowAlert, setAlertStatus, pushOrderToOrderList, goodsFactoryNum, setGoodsFactoryNum,  goodsCount, setGoodsCount, remark, setRemark } = props
+  const {
+    baseOrdersDetailInput,
+    setBaseOrderDetailInput,
+    lastDateTime,
+    setLastDateTime,
+    sortSelect,
+    setSortSelect,
+    sortOptions,
+    goodsName,
+    setGoodsName,
+    colorsSelect,
+    setColorsSelect,
+    sizesSelect,
+    setSizesSelect,
+    setIsShowAlert,
+    setAlertStatus,
+    pushOrderToOrderList,
+    goodsFactoryNum,
+    setGoodsFactoryNum,
+    goodsCount,
+    setGoodsCount,
+    remark,
+    setRemark,
+    orderList,
+    handleDeleteRow
+  } = props
+
+  const theme = useCreateMUITheme()
 
   const [isShowMainWrapper, setIsShowMainWrapper] = useState(false)
   const [currentGoods, setCurrentGoods] = useState({})
   const [isSearchFactoryNum, setIsSearchFactoryNum] = useState(false)
+  const [page, setPage] = useState(0)
 
   const verifyBaseInfo = () => {
     let isShowMainOrderWrap = true
@@ -53,7 +88,11 @@ const AddOrderBody = memo((props) => {
     setBaseOrderDetailInput({ ...updateState })
 
     if (checkEmptyString(lastDateTime.value)) {
-      setLastDateTime({ ...lastDateTime, status: false, message: `${lastDateTime.name}不得為空` })
+      setLastDateTime({
+        ...lastDateTime,
+        status: false,
+        message: `${lastDateTime.name}不得為空`
+      })
       isShowMainOrderWrap = false
     } else {
       setLastDateTime({ ...lastDateTime, status: true, message: '' })
@@ -61,11 +100,14 @@ const AddOrderBody = memo((props) => {
     isShowMainOrderWrap && setIsShowMainWrapper(isShowMainOrderWrap)
   }
 
-  const filterCurrentGoodsList = (goodsList) => goodsList.filter(item => item.sort === sortSelect)
+  const filterCurrentGoodsList = (goodsList) =>
+    goodsList.filter((item) => item.sort === sortSelect)
 
-  const formatColorsOptions = (colors = []) => colors.map(item => Object.assign({}, { color: item }))
+  const formatColorsOptions = (colors = []) =>
+    colors.map((item) => Object.assign({}, { color: item }))
 
-  const formatSizesOptions = (sizes = []) => sizes.map(item => Object.assign({}, { size: item }))
+  const formatSizesOptions = (sizes = []) =>
+    sizes.map((item) => Object.assign({}, { size: item }))
 
   const handleOrder = () => {
     if (
@@ -84,7 +126,7 @@ const AddOrderBody = memo((props) => {
       return
     }
 
-    const { price, factoryNum, goodsNum } = currentGoods;
+    const { price, factoryNum, goodsNum } = currentGoods
     pushOrderToOrderList({
       id: dayjs().valueOf(),
       goodsName,
@@ -97,13 +139,17 @@ const AddOrderBody = memo((props) => {
       factoryNum,
       goodsNum,
       goodsTotal: Number(price.suggestPrice) * Number(goodsCount.goodsCount.value),
-      remark
+      remark,
+      basePriceRMB: price.basePriceRMB,
+      basePriceTW: price.basePriceTW
     })
     setCurrentGoods({})
   }
 
   const searchGoods = () => {
-    const result = originGoodsList.find(item => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value)
+    const result = originGoodsList.find(
+      (item) => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value
+    )
     if (!result) {
       setGoodsFactoryNum({
         goodsFactoryNum: {
@@ -134,7 +180,9 @@ const AddOrderBody = memo((props) => {
     }
 
     if (isSearchFactoryNum) {
-      const result = originGoodsList.find(item => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value)
+      const result = originGoodsList.find(
+        (item) => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value
+      )
       result && setGoodsName(result.goodsName)
       setIsSearchFactoryNum(false)
     } else {
@@ -148,7 +196,9 @@ const AddOrderBody = memo((props) => {
 
   useEffect(() => {
     if (goodsName.trim() !== '') {
-      const res = originGoodsList.find(item => item.goodsName === goodsName && item.sort === sortSelect)
+      const res = originGoodsList.find(
+        (item) => item.goodsName === goodsName && item.sort === sortSelect
+      )
       setCurrentGoods({ ...res })
       setColorsSelect('')
       setSizesSelect('')
@@ -166,15 +216,6 @@ const AddOrderBody = memo((props) => {
         helperText={baseOrdersDetailInput.orderNumber.message}
         disabled={isShowMainWrapper}
       />
-      {/* <MSTextField
-        iid={baseOrdersDetailInput.shopeeOrderNumber.iid}
-        label={baseOrdersDetailInput.shopeeOrderNumber.name}
-        detail={baseOrdersDetailInput}
-        setValue={setBaseOrderDetailInput}
-        status={baseOrdersDetailInput.shopeeOrderNumber.status}
-        helperText={baseOrdersDetailInput.shopeeOrderNumber.message}
-        disabled={isShowMainWrapper}
-      /> */}
       <MSTextField
         iid={baseOrdersDetailInput.buyerAccount.iid}
         label={baseOrdersDetailInput.buyerAccount.name}
@@ -198,80 +239,87 @@ const AddOrderBody = memo((props) => {
           disabled={isShowMainWrapper}
         />
       </div>
-      {
-        isShowMainWrapper && (
-          <>
-            <div className="factory-num-search">
-              <MSTextField
-                iid={goodsFactoryNum.goodsFactoryNum.iid}
-                label={goodsFactoryNum.goodsFactoryNum.name}
-                detail={goodsFactoryNum}
-                setValue={setGoodsFactoryNum}
-                status={goodsFactoryNum.goodsFactoryNum.status}
-                helperText={goodsFactoryNum.goodsFactoryNum.message}
-                required={false}
-              />
-              <MSButton
-                value="Search"
-                style={{ height: '35px' }}
-                onClick={searchGoods}
-              />
-            </div>
-            <MSSelect
-              value={sortSelect}
-              setValue={setSortSelect}
-              options={sortOptions}
-              label='檔期種類'
-              renderKey="sort"
-            />
-            <MSSelect
-              value={goodsName}
-              setValue={setGoodsName}
-              options={filterCurrentGoodsList(originGoodsList)}
-              label='商品名稱'
-              renderKey="goodsName"
-              idName="factoryNum"
-            />
-            <MSSelect
-              value={colorsSelect}
-              setValue={setColorsSelect}
-              options={formatColorsOptions(currentGoods?.colors)}
-              label='顏色'
-              renderKey="color"
-            />
-            <MSSelect
-              value={sizesSelect}
-              setValue={setSizesSelect}
-              options={formatSizesOptions(currentGoods?.sizes)}
-              label='尺寸'
-              renderKey="size"
-            />
+      {isShowMainWrapper && (
+        <>
+          <div className="factory-num-search">
             <MSTextField
-              iid={goodsCount.goodsCount.iid}
-              label={goodsCount.goodsCount.name}
-              detail={goodsCount}
-              setValue={setGoodsCount}
-              status={goodsCount.goodsCount.status}
-              helperText={goodsCount.goodsCount.message}
+              iid={goodsFactoryNum.goodsFactoryNum.iid}
+              label={goodsFactoryNum.goodsFactoryNum.name}
+              detail={goodsFactoryNum}
+              setValue={setGoodsFactoryNum}
+              status={goodsFactoryNum.goodsFactoryNum.status}
+              helperText={goodsFactoryNum.goodsFactoryNum.message}
               required={false}
-              type="number"
             />
-            <TextareaAutosize
-              placeholder="remark"
-              style={{ width: '35%', height: '100px', resize: 'none' }}
-              onChange={e => setRemark(e.target.value)}
-              value={remark}
+            <MSButton
+              value="Search"
+              style={{ height: '35px' }}
+              onClick={searchGoods}
             />
-            <div className="add-order-btn">
-              <MSButton
-                value="Add Order"
-                color="info"
-                onClick={handleOrder}
-              />
-            </div>
-          </>
-        )
-      }
+          </div>
+          <MSSelect
+            value={sortSelect}
+            setValue={setSortSelect}
+            options={sortOptions}
+            label="檔期種類"
+            renderKey="sort"
+          />
+          <MSSelect
+            value={goodsName}
+            setValue={setGoodsName}
+            options={filterCurrentGoodsList(originGoodsList)}
+            label="商品名稱"
+            renderKey="goodsName"
+            idName="factoryNum"
+          />
+          <MSSelect
+            value={colorsSelect}
+            setValue={setColorsSelect}
+            options={formatColorsOptions(currentGoods?.colors)}
+            label="顏色"
+            renderKey="color"
+          />
+          <MSSelect
+            value={sizesSelect}
+            setValue={setSizesSelect}
+            options={formatSizesOptions(currentGoods?.sizes)}
+            label="尺寸"
+            renderKey="size"
+          />
+          <MSTextField
+            iid={goodsCount.goodsCount.iid}
+            label={goodsCount.goodsCount.name}
+            detail={goodsCount}
+            setValue={setGoodsCount}
+            status={goodsCount.goodsCount.status}
+            helperText={goodsCount.goodsCount.message}
+            required={false}
+            type="number"
+          />
+          <TextareaAutosize
+            placeholder="remark"
+            style={{ width: '35%', height: '100px', resize: 'none' }}
+            onChange={(e) => setRemark(e.target.value)}
+            value={remark}
+          />
+          <div className="add-order-btn">
+            <MSButton value="Add Order" color="info" onClick={handleOrder} />
+          </div>
+          <ThemeProvider theme={theme}>
+            <MSTable
+              title="Order List"
+              rows={orderList}
+              headerCells={headerCells}
+              handleDeleteRow={handleDeleteRow}
+              alertContent="確定要刪除該商品嗎？"
+              page={page}
+              setPage={setPage}
+              styleBottom="90px"
+              styleRight="35px"
+            />
+          </ThemeProvider>
+        </>
+      )}
     </AddOrderBodyWrapper>
   )
 })

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
 import {
   shipOrderOptions,
@@ -14,7 +14,7 @@ import MSOnceSelect from '@/components/ms-once-select'
 import CustomInput from '../custom-input'
 
 const FunctionBar = memo((props) => {
-  const { history, filterSearch, setOpenOrderDialog } = props
+  const { history, filterSearch, setOpenOrderDialog, handlePlaceOrderDialog } = props
 
   const {
     shipOrderStatus,
@@ -134,7 +134,7 @@ const FunctionBar = memo((props) => {
         />
         <MSButton
           value="待叫貨清單"
-          onClick={() => history.push('/orders/placeOrderList')}
+          onClick={() => handlePlaceOrderDialog(true)}
           style={{ width: '100%', marginTop: '10px' }}
         />
       </div>

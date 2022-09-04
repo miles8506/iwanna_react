@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 
 const AddGood = memo((props) => {
-  const { history } = props
+  const { handleAddGoodsDialog } = props
 
   const dispatch = useDispatch()
   const { sortList, colorList } = useSelector(state => ({
@@ -157,7 +157,7 @@ const AddGood = memo((props) => {
           }
         }
         await requestAddGood('goods', data.factoryNum, data)
-        history.push('/goods')
+        handleAddGoodsDialog()
       } catch (err) {
         window.alert('error message: ' + err)
         setAlertStatus({ status: 'error', message: err })
@@ -182,7 +182,7 @@ const AddGood = memo((props) => {
       <BaseLayout>
         <div slot="header" style={{ fontSize: '24px' }}>
           <IconButton
-            onClick={() => history.push('/goods')}
+            onClick={handleAddGoodsDialog}
           >
             <ArrowBackIosIcon />
           </IconButton>
@@ -209,7 +209,7 @@ const AddGood = memo((props) => {
             variant="outlined"
             color="error"
             value="cancel"
-            onClick={() => history.push('/goods')}
+            onClick={handleAddGoodsDialog}
           />
           <MSButton
             variant="outlined"

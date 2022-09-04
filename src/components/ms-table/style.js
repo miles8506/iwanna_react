@@ -9,9 +9,15 @@ const MSTableWrapper = styled.div`
 
   .MuiTablePagination-root {
     position: fixed;
-    bottom: 15px;
-    left: 0;
-    right: 0;
+    bottom: ${(props) => props.customStyle.styleBottom ? props.customStyle.styleBottom : '15px'};
+    left: ${(props) => props.customStyle.styleLeft ? props.customStyle.styleLeft : '0px'};
+    right: ${(props) => props.customStyle.styleRight ? props.customStyle.styleRight : '0px'};
+  }
+
+  .MuiTableBody-root {
+    tr[aria-checked=true] {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 `
 
@@ -27,9 +33,9 @@ const StyledTableCell = MUIstyled(TableCell)(({ theme }) => ({
 }))
 
 const StyledTableRow = MUIstyled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
-  },
+  // '&:nth-of-type(odd)': {
+  //   backgroundColor: theme.palette.action.hover
+  // },
   // hide last border
   '&:last-child td, &:last-child th': {
     border: 0
