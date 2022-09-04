@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 
-import { headerCells } from './config'
+// import { headerCells } from '../body/config'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 
 import { ThemeProvider } from '@mui/material'
@@ -28,7 +28,7 @@ const OrderDialog = memo((props) => {
   };
 
   return (
-    <OrderDialogWrapper style={{backgroundColor: 'red'}}>
+    <OrderDialogWrapper>
       <ThemeProvider theme={theme}>
         <Dialog
           fullScreen
@@ -49,12 +49,12 @@ const OrderDialog = memo((props) => {
             </Toolbar>
           </AppBar>
           <List sx={{ flex: 1, padding: '30px', backgroundColor: '#f1f1f1' }}>
-            <MSTable
+            {/* <MSTable
               title="Order List"
               rows={orderList}
               headerCells={headerCells}
               handleDeleteRow={delOrder}
-            ></MSTable>
+            ></MSTable> */}
           </List>
         </Dialog>
       </ThemeProvider>

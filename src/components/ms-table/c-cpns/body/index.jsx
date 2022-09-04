@@ -5,7 +5,7 @@ import { StyledTableRow } from '../../style'
 import MSCheckbox from '../../../ms-checkbox'
 
 const MSBody = memo((props) => {
-  const { rows, headerCells, page, rowsPerPage, selected, setSelected } =
+  const { rows, headerCells, page, rowsPerPage, selected, setSelected, remindStatus } =
     props.payload
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id)
@@ -40,7 +40,7 @@ const MSBody = memo((props) => {
             <StyledTableRow
               hover
               role="checkbox"
-              aria-checked={isItemSelected}
+              aria-checked={row.id === remindStatus}
               tabIndex={-1}
               key={row.id}
               selected={isItemSelected}

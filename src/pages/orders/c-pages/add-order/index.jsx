@@ -9,9 +9,7 @@ import { requestAddOrder } from '@/service/order/index'
 import { AddOrderWrapper } from './style'
 import BasePageLayout from '@/layout/base-page'
 import AddOrderBody from './c-cpns/body'
-import OrderDialog from './c-cpns/order-dialog'
 import MSCustomAlert from '@/components/ms-custom-alert'
-import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import MSButton from '@/components/ms-button'
@@ -20,9 +18,12 @@ const AddOrder = memo((props) => {
   const { handleOrderDialog } = props
 
   const dispatch = useDispatch()
-  const { sortList } = useSelector(state => ({
-    sortList: state.getIn(['sorts', 'sortList'])
-  }), shallowEqual)
+  const { sortList } = useSelector(
+    (state) => ({
+      sortList: state.getIn(['sorts', 'sortList'])
+    }),
+    shallowEqual
+  )
 
   const [baseOrdersDetailInput, setBaseOrderDetailInput] = useState({
     orderNumber: {
@@ -38,7 +39,7 @@ const AddOrder = memo((props) => {
       status: true,
       value: '',
       message: ''
-    },
+    }
   })
 
   const [lastDateTime, setLastDateTime] = useState({
@@ -55,8 +56,8 @@ const AddOrder = memo((props) => {
       status: true,
       value: '',
       message: ''
-    },
-  });
+    }
+  })
 
   const [goodsCount, setGoodsCount] = useState({
     goodsCount: {
@@ -65,22 +66,23 @@ const AddOrder = memo((props) => {
       status: true,
       value: '',
       message: ''
-    },
-  });
+    }
+  })
 
   const [goodsName, setGoodsName] = useState('')
   const [sortSelect, setSortSelect] = useState('')
   const [colorsSelect, setColorsSelect] = useState('')
   const [sizesSelect, setSizesSelect] = useState('')
-  const [remark, setRemark] = useState('');
+  const [remark, setRemark] = useState('')
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertStatus, setAlertStatus] = useState({
     status: 'warning',
     message: ''
   })
   const [orderList, setOrderList] = useState([])
-  const [openDialog, setOpenDialog] = useState(false)
-  const [orderCount, setOrderCount] = useState(0)
+  // const [page, setPage] = useState(0)
+  // const [openDialog, setOpenDialog] = useState(false)
+  // const [orderCount, setOrderCount] = useState(0)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
@@ -88,13 +90,13 @@ const AddOrder = memo((props) => {
     setIsShowAlert(false)
   }
 
-  const handleDialog = () => {
-    setOpenDialog(true)
-  }
+  // const handleDialog = () => {
+  //   setOpenDialog(true)
+  // }
 
   const addOrderToOrderCart = (order) => {
     setOrderList([...orderList, order])
-    setOrderCount(orderCount + 1)
+    // setOrderCount(orderCount + 1)
   }
 
   const resetForm = () => {
@@ -134,12 +136,13 @@ const AddOrder = memo((props) => {
   // in cart order
   const delOrder = (delOrders, closeDialog) => {
     const copyOrderList = [...orderList]
-    delOrders.forEach(item => {
-      const targetIndex = copyOrderList.findIndex(orderItem => orderItem.id === item)
+    delOrders.forEach((item) => {
+      const targetIndex = copyOrderList.findIndex(
+        (orderItem) => orderItem.id === item
+      )
       copyOrderList.splice(targetIndex, 1)
     })
     setOrderList([...copyOrderList])
-    setOrderCount(copyOrderList.length)
     closeDialog()
   }
 
@@ -147,7 +150,7 @@ const AddOrder = memo((props) => {
     if (orderList.length === 0) return
     const { orderNumber, buyerAccount } = baseOrdersDetailInput
     const orderTotal = orderList.reduce((previousVal, currentVal) => {
-      return previousVal += Number(currentVal.goodsTotal)
+      return (previousVal += Number(currentVal.goodsTotal))
     }, 0)
     const order = {
       id: dayjs().valueOf(),
@@ -162,7 +165,6 @@ const AddOrder = memo((props) => {
     }
     try {
       await requestAddOrder('orders', order.id + '', order)
-      // history.push('/orders')
       handleOrderDialog(false)
     } catch (err) {
       window.alert(err)
@@ -176,21 +178,16 @@ const AddOrder = memo((props) => {
   return (
     <AddOrderWrapper>
       <BasePageLayout>
-        <div slot='header' style={{ fontSize: '24px', color: 'rgba(0,0,0,0.6)' }}>
-          <IconButton
-            onClick={() => handleOrderDialog(false)}
-          >
+        <div
+          slot="header"
+          style={{ fontSize: '24px', color: 'rgba(0,0,0,0.6)' }}
+        >
+          <IconButton onClick={() => handleOrderDialog(false)}>
             <ArrowBackIosIcon />
           </IconButton>
-          <span style={{verticalAlign: 'middle'}}>新建訂單</span>
+          <span style={{ verticalAlign: 'middle' }}>新建訂單</span>
         </div>
-        <div slot='body'>
-          <div className="add-order-icon">
-            <IconButton onClick={handleDialog}>
-              <span className='order-count'>{ orderCount }</span>
-              <ViewListOutlinedIcon sx={{ fontSize: 35 }} color="action"/>
-            </IconButton>
-          </div>
+        <div slot="body">
           <AddOrderBody
             baseOrdersDetailInput={baseOrdersDetailInput}
             setBaseOrderDetailInput={setBaseOrderDetailInput}
@@ -214,9 +211,11 @@ const AddOrder = memo((props) => {
             setGoodsCount={setGoodsCount}
             remark={remark}
             setRemark={setRemark}
+            orderList={orderList}
+            handleDeleteRow={delOrder}
           />
         </div>
-        <div slot='footer'>
+        <div slot="footer">
           <MSButton
             style={{ marginRight: '10px' }}
             value="cancel"
@@ -240,14 +239,8 @@ const AddOrder = memo((props) => {
         severity={alertStatus.status}
         sx={{ width: '100%' }}
       >
-        { alertStatus.message }
+        {alertStatus.message}
       </MSCustomAlert>
-      <OrderDialog
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        orderList={orderList}
-        delOrder={delOrder}
-      />
     </AddOrderWrapper>
   )
 })

@@ -16,7 +16,11 @@ export default function EnhancedTable(props) {
     handleDeleteRow,
     alertContent,
     page,
-    setPage
+    setPage,
+    styleBottom,
+    styleRight,
+    styleLeft,
+    remindStatus
   } = props
 
   const [selected, setSelected] = React.useState([])
@@ -40,7 +44,12 @@ export default function EnhancedTable(props) {
   }, [setPage, setSelected])
 
   return (
-    <MSTableWrapper>
+    <MSTableWrapper customStyle={{
+      styleBottom,
+      styleRight,
+      styleLeft
+    }}
+    >
       <MSToolbar
         numSelected={selected.length}
         selected={selected}
@@ -65,7 +74,8 @@ export default function EnhancedTable(props) {
               page,
               rowsPerPage,
               selected,
-              setSelected
+              setSelected,
+              remindStatus
             }}
           />
         </Table>

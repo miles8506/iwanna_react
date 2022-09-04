@@ -4,6 +4,7 @@ export const AddOrderBodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px 0;
+  position: relative;
 
   .factory-num-search {
     display: flex;
