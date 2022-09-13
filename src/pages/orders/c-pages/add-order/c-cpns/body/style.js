@@ -26,4 +26,11 @@ export const AddOrderBodyWrapper = styled.div`
       color: #4a4a4a;
     }
   }
+
+  .add-order-total {
+    position: absolute;
+    left: 0;
+    bottom: -40px;
+    color: #545454;
+  }
 `

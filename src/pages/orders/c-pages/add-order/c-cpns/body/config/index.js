@@ -3,7 +3,7 @@ export const headerCells = [
     id: 'goodsName',
     numeric: false,
     label: '商品名稱',
-    minWidth: 300
+    width: 500
   },
   {
     id: 'colors',
