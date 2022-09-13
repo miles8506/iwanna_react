@@ -71,7 +71,7 @@ const PlaceOrderList = (props) => {
     const sheet = workbook.addWorksheet('待叫貨清單')
     const rows = []
     for (const item of placeOrderList) {
-      rows.push([`${item.factoryNum}  ${item.sizes}  ${item.colors}  ${item.count}`])
+      rows.push([`${item.factoryNum}  ${item.sizes}  ${item.colors}  *${item.count}`])
     }
     sheet.addTable({
       name: 'placeOrderTable',

@@ -80,19 +80,12 @@ const AddOrder = memo((props) => {
     message: ''
   })
   const [orderList, setOrderList] = useState([])
-  // const [page, setPage] = useState(0)
-  // const [openDialog, setOpenDialog] = useState(false)
-  // const [orderCount, setOrderCount] = useState(0)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
     setAlertStatus({ status: 'warning', message: '' })
     setIsShowAlert(false)
   }
-
-  // const handleDialog = () => {
-  //   setOpenDialog(true)
-  // }
 
   const addOrderToOrderCart = (order) => {
     setOrderList([...orderList, order])

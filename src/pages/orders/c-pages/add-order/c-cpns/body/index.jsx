@@ -58,6 +58,7 @@ const AddOrderBody = memo((props) => {
   const [currentGoods, setCurrentGoods] = useState({})
   const [isSearchFactoryNum, setIsSearchFactoryNum] = useState(false)
   const [page, setPage] = useState(0)
+  const [orderTotal, setOrderTotal] = useState(0);
 
   const verifyBaseInfo = () => {
     let isShowMainOrderWrap = true
@@ -138,7 +139,7 @@ const AddOrderBody = memo((props) => {
       count: goodsCount.goodsCount.value,
       factoryNum,
       goodsNum,
-      goodsTotal: Number(price.suggestPrice) * Number(goodsCount.goodsCount.value),
+      goodsTotal: Number(price.officialPrice) * Number(goodsCount.goodsCount.value),
       remark,
       basePriceRMB: price.basePriceRMB,
       basePriceTW: price.basePriceTW
@@ -148,7 +149,7 @@ const AddOrderBody = memo((props) => {
 
   const searchGoods = () => {
     const result = originGoodsList.find(
-      (item) => item.goodsNum === goodsFactoryNum.goodsFactoryNum.value
+      (item) => item.goodsNum === (goodsFactoryNum.goodsFactoryNum.value).trim()
     )
     if (!result) {
       setGoodsFactoryNum({
@@ -204,6 +205,11 @@ const AddOrderBody = memo((props) => {
       setSizesSelect('')
     }
   }, [goodsName])
+
+  useEffect(() => {
+    const total = orderList.reduce((prev, current) => prev += current.goodsTotal, 0)
+    setOrderTotal(total)
+  }, [orderList])
 
   return (
     <AddOrderBodyWrapper>
@@ -318,6 +324,7 @@ const AddOrderBody = memo((props) => {
               styleRight="35px"
             />
           </ThemeProvider>
+          <h2 className='add-order-total'>訂單總金額: {orderTotal}</h2>
         </>
       )}
     </AddOrderBodyWrapper>
