@@ -148,8 +148,11 @@ const AddOrderBody = memo((props) => {
   }
 
   const searchGoods = () => {
+    // 判斷是否商品名稱為 '商品名稱 商品貨號'
+    const goodsFactoryNumArray = (goodsFactoryNum.goodsFactoryNum.value).trim().split(' ')
+    const goodsFactoryNumVal = goodsFactoryNumArray.length > 1 ? goodsFactoryNumArray[1].trim() : goodsFactoryNumArray[0].trim()
     const result = originGoodsList.find(
-      (item) => item.goodsNum === (goodsFactoryNum.goodsFactoryNum.value).trim()
+      (item) => item.goodsNum === goodsFactoryNumVal
     )
     if (!result) {
       setGoodsFactoryNum({
