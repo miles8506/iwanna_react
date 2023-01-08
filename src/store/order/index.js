@@ -1,2 +1,2 @@
 export { reducer } from './reducer'
-export { requestOrderListAction } from './actionCreators'
+export { requestOrderListAction, orderCurryStatusEnum } from './actionCreators'

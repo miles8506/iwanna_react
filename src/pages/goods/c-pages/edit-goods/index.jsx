@@ -62,6 +62,7 @@ const EditGood = memo((props) => {
       value: ''
     },
     officialPrice: {
+      iid: 7,
       name: '售價',
       status: true,
       value: ''

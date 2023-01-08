@@ -8,6 +8,8 @@ const Sorts = React.lazy(_ => import('@/pages/sorts'))
 const AddSort = React.lazy(_ => import('@/pages/sorts/c-pages/add-sort'))
 const Colors = React.lazy(_ => import('@/pages/colors'))
 const AddColor = React.lazy(_ => import('@/pages/colors/c-pages/add-color'))
+const CanningMessage = React.lazy(_ => import('@/pages/canning-message'))
+const AddCanningMessage = React.lazy(_ => import('@/pages/canning-message/c-pages/add-canning-message'))
 
 export const routes = [
   {
@@ -46,5 +48,15 @@ export const routes = [
   {
     path: '/colors/add',
     component: AddColor
+  },
+  {
+    path: '/canning-message',
+    exact: true,
+    component: CanningMessage
+  },
+  {
+    path: '/canning-message/add',
+    exact: true,
+    component: AddCanningMessage
   }
 ]

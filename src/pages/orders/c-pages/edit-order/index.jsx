@@ -1,6 +1,8 @@
-import React, { memo, useEffect, useState, useCallback } from 'react'
+import React, { memo, useEffect, useState, useCallback, Fragment } from 'react'
 
 import { requestGetOrder, requestUpdateOrder } from '@/service/order'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux'
+import { requestCanningMessage } from '@/store/canning-message'
 
 import { EditOrderWrapper } from './style'
 import TextareaAutosize from '@mui/base/TextareaAutosize'
@@ -10,9 +12,18 @@ import MSButton from '@/components/ms-button'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import Tooltip from '@mui/material/Tooltip';
 
 const EditOrder = memo((props) => {
   const { iid, handleOrderDialog } = props
+
+  const dispatch = useDispatch()
+  const { canningMessageList } = useSelector(
+    (state) => ({
+      canningMessageList: state.getIn(['canningMessage', 'canningMessageList'])
+    }),
+    shallowEqual
+  )
 
   const [orderDetail, setOrderDetail] = useState(null);
 
@@ -40,6 +51,17 @@ const EditOrder = memo((props) => {
       orderList: [...shallowCopyOrderDetail]
     })
   }, [orderDetail])
+
+  const handleCanningMessage = (val, id) => {
+    const targetIndex = orderDetail.orderList.findIndex(item => item.id === id)
+    const targetGoods = orderDetail.orderList.find(item => item.id === id)
+    const shallowCopyOrderDetail = orderDetail.orderList
+    shallowCopyOrderDetail.splice(targetIndex, 1, { ...targetGoods, remark: targetGoods.remark += val })
+    setOrderDetail({
+      ...orderDetail,
+      orderList: [...shallowCopyOrderDetail]
+    })
+  }
 
   const confirmPlaceOrder = (setIsShowDialog) => {
     setOrderDetail({
@@ -79,6 +101,11 @@ const EditOrder = memo((props) => {
   useEffect(() => {
     getOrderDetail()
   }, [getOrderDetail])
+
+
+  useEffect(() => {
+    dispatch(requestCanningMessage())
+  }, [dispatch])
 
   if (!orderDetail) {
     return <div>No Data</div>
@@ -121,11 +148,26 @@ const EditOrder = memo((props) => {
                   <div className='item'>顏色: <span>{item.colors}</span></div>
                   <div className='item'>數量: <span>{item.count}</span></div>
                   <div className='item'>價錢: <span>{item.goodsTotal}</span></div>
-                  <TextareaAutosize
-                    style={{ width: '35%', height: '100px', resize: 'none' }}
-                    value={item.remark}
-                    onChange={(e) => changeAreaValue(e, item.id)}
-                  />
+                  <div className="remark-area">
+                    <TextareaAutosize
+                      style={{ width: '35%', minHeight: '100px', resize: 'none' }}
+                      value={item.remark}
+                      onChange={(e) => changeAreaValue(e, item.id)}
+                    />
+                    <div className="canning-message-list">
+                      {
+                        canningMessageList.map(canItem => (
+                          <Fragment key={canItem.id}>
+                            <Tooltip title={canItem.message} placement="right">
+                              <div className="message-item" onClick={() =>  handleCanningMessage(canItem.message, item.id)}>
+                                {canItem.message}
+                              </div>
+                            </Tooltip>
+                          </Fragment>
+                        ))
+                      }
+                    </div>
+                  </div>
                 </div>
               )
             })

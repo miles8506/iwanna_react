@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo, useState, useEffect, Fragment } from 'react'
 
 import dayjs from 'dayjs'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
@@ -6,6 +6,7 @@ import { requestOriginGoodsListAction } from '@/store/goods'
 import { checkEmptyString } from '@/utils/validate'
 import { headerCells } from './config'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
+import { requestCanningMessage } from '@/store/canning-message'
 
 import MSDatePicker from '@/components/ms-date-picker'
 import MSTextField from '@/components/ms-text-field'
@@ -15,12 +16,14 @@ import TextareaAutosize from '@mui/base/TextareaAutosize'
 import { AddOrderBodyWrapper } from './style'
 import MSTable from '@/components/ms-table'
 import { ThemeProvider } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip';
 
 const AddOrderBody = memo((props) => {
   const dispatch = useDispatch()
-  const { originGoodsList } = useSelector(
+  const { originGoodsList, canningMessageList } = useSelector(
     (state) => ({
-      originGoodsList: state.getIn(['goods', 'originGoodsList'])
+      originGoodsList: state.getIn(['goods', 'originGoodsList']),
+      canningMessageList: state.getIn(['canningMessage', 'canningMessageList'])
     }),
     shallowEqual
   )
@@ -178,6 +181,10 @@ const AddOrderBody = memo((props) => {
     }
   }
 
+  const handleCanningMessage = (val) => {
+    setRemark(prev => prev += val)
+  }
+
   useEffect(() => {
     if (sortSelect.trim() === '') {
       dispatch(requestOriginGoodsListAction())
@@ -213,6 +220,10 @@ const AddOrderBody = memo((props) => {
     const total = orderList.reduce((prev, current) => prev += current.goodsTotal, 0)
     setOrderTotal(total)
   }, [orderList])
+
+  useEffect(() => {
+    dispatch(requestCanningMessage())
+  }, [dispatch])
 
   return (
     <AddOrderBodyWrapper>
@@ -305,12 +316,27 @@ const AddOrderBody = memo((props) => {
             required={false}
             type="number"
           />
-          <TextareaAutosize
-            placeholder="remark"
-            style={{ width: '35%', height: '100px', resize: 'none' }}
-            onChange={(e) => setRemark(e.target.value)}
-            value={remark}
-          />
+          <div className="remark-area">
+            <TextareaAutosize
+              placeholder="remark"
+              style={{ width: '35%', minHeight: '100px', resize: 'none' }}
+              onChange={(e) => setRemark(e.target.value)}
+              value={remark}
+            />
+            <div className="canning-message-list">
+              {
+                canningMessageList.map(item => (
+                  <Fragment key={item.id}>
+                    <Tooltip title={item.message} placement="right">
+                      <div className="message-item" onClick={() => handleCanningMessage(item.message)}>
+                        {item.message}
+                      </div>
+                    </Tooltip>
+                  </Fragment>
+                ))
+              }
+            </div>
+          </div>
           <div className="add-order-btn">
             <MSButton value="Add Order" color="info" onClick={handleOrder} />
           </div>

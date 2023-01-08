@@ -3,7 +3,7 @@ import { GET_ORDER_LIST } from './constants'
 import dayjs from 'dayjs'
 
 // enum
-const orderCurryStatusEnum = {
+export const orderCurryStatusEnum = {
   0: '未出貨',
   1: '可出貨',
   2: '已出貨'

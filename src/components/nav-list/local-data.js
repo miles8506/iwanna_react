@@ -18,5 +18,9 @@ export const navList = [
   {
     path: '/colors',
     name: '顏色列表'
+  },
+  {
+    path: '/canning-message',
+    name: '罐頭訊息列表'
   }
 ]

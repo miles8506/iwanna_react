@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import dayjs from 'dayjs'
 
 import { headerCells } from './config'
-import { requestOrderListAction } from '@/store/order'
+import { requestOrderListAction, orderCurryStatusEnum } from '@/store/order'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 import { requestDelOrder, requestUpdateOrder } from '@/service/order'
 import { filterOrderEnums } from '@/enums'
@@ -142,32 +142,50 @@ export default memo(function Order(props) {
               return dayjs(b.lastShipmentDate).valueOf() - dayjs(a.lastShipmentDate).valueOf()
             }
           })
+          .map((item, index) => ({
+            ...item,
+            index: index + 1
+          }))
         setOrderListState([...statusResult])
         break
       case filterOrderEnums.factoryNumber:
         const factoryResult = orderList.filter(orderDetail => {
+          if (orderDetail.orderCurryStatus !== orderCurryStatusEnum[0]) return false
           for (const item of orderDetail.orderList) {
-            if (item.factoryNum === factoryNumber.trim()) return true
+            return item.factoryNum === factoryNumber.trim()
           }
           return false
-        })
+        }).map((item, index) => ({
+          ...item,
+          index: index + 1
+        }))
         setOrderListState([...factoryResult])
         break
       case filterOrderEnums.goodsNumber:
         const goodsNumberResult = orderList.filter(orderDetail => {
+          if (orderDetail.orderCurryStatus !== orderCurryStatusEnum[0]) return false
           for (const item of orderDetail.orderList) {
             if (item.goodsNum === goodsNumber.trim()) return true
           }
           return false
-        })
+        }).map((item, index) => ({
+          ...item,
+          index: index + 1
+        }))
         setOrderListState([...goodsNumberResult])
         break
       case filterOrderEnums.orderNumber:
-        const orderNumberResult = orderList.filter(item => item.orderNumber === orderNumber.trim())
+        const orderNumberResult = orderList.filter(item => item.orderNumber === orderNumber.trim()).map((item, index) => ({
+          ...item,
+          index: index + 1
+        }))
         setOrderListState([...orderNumberResult])
         break
       case filterOrderEnums.buyerAccount:
-        const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount.trim())
+        const buyerAccountResult = orderList.filter(item => item.buyerAccount === buyerAccount.trim()).map((item, index) => ({
+          ...item,
+          index: index + 1
+        }))
         setOrderListState([...buyerAccountResult])
         break
       default:
