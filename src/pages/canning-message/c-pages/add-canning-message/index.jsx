@@ -21,8 +21,7 @@ const AddCanningMessage = memo((props) => {
     const isSomeMessage = allMessage.docs.some(item => item.data().message === messageVal)
 
     if (isSomeMessage) return setWarnMessage('罐頭訊息已重複，請輸入其他罐頭訊息')
-
-    const timeStamp = String.toString(getCurrentTimeStamp())
+    const timeStamp = getCurrentTimeStamp().toString()
     await requestAddCanningMessage('cans', timeStamp, { id: timeStamp, message: messageVal })
     history.push('/canning-message')
   }
