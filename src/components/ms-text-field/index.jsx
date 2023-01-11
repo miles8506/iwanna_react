@@ -3,7 +3,16 @@ import React from 'react'
 import { MSTextFieldWrapper, StyledInput } from './style'
 
 const MSTextField = (props) => {
-  const { setValue, detail = [], status, iid, children, required = true, ...elseProps } = props
+  const {
+    setValue,
+    detail = [],
+    status,
+    iid,
+    children,
+    required = true,
+    verifyText = null,
+    ...elseProps
+  } = props
 
   const findKey = (detail) => {
     for (const key in detail) {
@@ -15,7 +24,11 @@ const MSTextField = (props) => {
   const changeDetail = (e, iid) => {
     const key = findKey(detail)
     const target = detail[key]
-    setValue({ ...detail, [key]: { ...target, value: e.target.value } })
+    if (verifyText) {
+      setValue({ ...detail, [key]: { ...target, value: verifyText(e.target.value) } })
+    } else {
+      setValue({ ...detail, [key]: { ...target, value: e.target.value } })
+    }
   }
   return (
     <MSTextFieldWrapper>

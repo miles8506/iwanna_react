@@ -7,6 +7,7 @@ import { checkEmptyString } from '@/utils/validate'
 import { headerCells } from './config'
 import { useCreateMUITheme } from '@/common/theme/mui-theme.js'
 import { requestCanningMessage } from '@/store/canning-message'
+import { verifyBuyerText } from '@/utils/validate'
 
 import MSDatePicker from '@/components/ms-date-picker'
 import MSTextField from '@/components/ms-text-field'
@@ -244,6 +245,7 @@ const AddOrderBody = memo((props) => {
         status={baseOrdersDetailInput.buyerAccount.status}
         helperText={baseOrdersDetailInput.buyerAccount.message}
         disabled={isShowMainWrapper}
+        verifyText={verifyBuyerText}
       />
       <MSDatePicker
         label={lastDateTime.name}

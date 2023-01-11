@@ -64,7 +64,7 @@ const AddOrder = memo((props) => {
       iid: 0,
       name: '數量',
       status: true,
-      value: '',
+      value: 1,
       message: ''
     }
   })
@@ -111,7 +111,7 @@ const AddOrder = memo((props) => {
       goodsCount: {
         ...goodsCount.goodsCount,
         status: true,
-        value: '',
+        value: 1,
         message: ''
       }
     })
