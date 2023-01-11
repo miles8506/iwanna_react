@@ -4,7 +4,7 @@ export function checkEmptyString(val) {
 
 export function verifyBuyerText(text) {
   const rgx = /[^a-zA-Z0-9_.]/g
-  let copyText = text.replace(/[\u4e00-\u9fa5\d]/g, '')
+  let copyText = text.replace(/[\u4E00-\u9FA5]+/g, '').trim()
   if (rgx.test(text)) {
     for (const item of text) {
       if (rgx.test(item)) {
