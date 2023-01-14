@@ -80,6 +80,7 @@ const AddOrder = memo((props) => {
     message: ''
   })
   const [orderList, setOrderList] = useState([])
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return
@@ -141,6 +142,7 @@ const AddOrder = memo((props) => {
 
   const submitOrder = async () => {
     if (orderList.length === 0) return
+    setIsDisabled(true)
     const { orderNumber, buyerAccount } = baseOrdersDetailInput
     const orderTotal = orderList.reduce((previousVal, currentVal) => {
       return (previousVal += Number(currentVal.goodsTotal))
@@ -221,6 +223,7 @@ const AddOrder = memo((props) => {
             variant="outlined"
             color="success"
             onClick={submitOrder}
+            disabled={isDisabled}
           />
         </div>
       </BasePageLayout>

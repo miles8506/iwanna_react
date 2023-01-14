@@ -212,8 +212,8 @@ const AddOrderBody = memo((props) => {
         (item) => item.goodsName === goodsName && item.sort === sortSelect
       )
       setCurrentGoods({ ...res })
-      setColorsSelect('')
-      setSizesSelect('')
+      res?.colors.length === 1 ? setColorsSelect(res.colors[0]) : setColorsSelect('')
+      res?.sizes.length === 1 ? setSizesSelect(res.sizes[0]) : setSizesSelect('')
     }
   }, [goodsName])
 

@@ -25,7 +25,8 @@ const EditOrder = memo((props) => {
     shallowEqual
   )
 
-  const [orderDetail, setOrderDetail] = useState(null);
+  const [orderDetail, setOrderDetail] = useState(null)
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const getOrderDetail = useCallback(async () => {
     const res = await requestGetOrder('orders', 'id', '==', Number(iid))
@@ -83,6 +84,7 @@ const EditOrder = memo((props) => {
   }
 
   const submitOrder = async () => {
+    setIsDisabled(true)
     if (orderDetail.orderCurryStatus === 2) {
       await requestUpdateOrder('orders', iid.toString(), { ...orderDetail, orderCurryStatus: 2 })
       handleOrderDialog()
@@ -186,6 +188,7 @@ const EditOrder = memo((props) => {
             variant="outlined"
             color="success"
             onClick={submitOrder}
+            disabled={isDisabled}
           />
         </div>
       </BasePageLayout>

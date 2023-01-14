@@ -151,10 +151,7 @@ export default memo(function Order(props) {
       case filterOrderEnums.factoryNumber:
         const factoryResult = orderList.filter(orderDetail => {
           if (orderDetail.orderCurryStatus !== orderCurryStatusEnum[0]) return false
-          for (const item of orderDetail.orderList) {
-            return item.factoryNum === factoryNumber.trim()
-          }
-          return false
+          return orderDetail.orderList.some(item => item.factoryNum === factoryNumber.trim())
         }).map((item, index) => ({
           ...item,
           index: index + 1
@@ -163,11 +160,8 @@ export default memo(function Order(props) {
         break
       case filterOrderEnums.goodsNumber:
         const goodsNumberResult = orderList.filter(orderDetail => {
-          if (orderDetail.orderCurryStatus !== orderCurryStatusEnum[0]) return false
-          for (const item of orderDetail.orderList) {
-            if (item.goodsNum === goodsNumber.trim()) return true
-          }
-          return false
+          if (orderDetail.orderCurryStatus === orderCurryStatusEnum[0]) return true
+          return orderDetail.orderList.some(item => item.goodsNum === goodsNumber.trim())
         }).map((item, index) => ({
           ...item,
           index: index + 1
