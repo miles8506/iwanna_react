@@ -61,6 +61,7 @@ const MSBody = memo((props) => {
                     align="left"
                     key={item.id}
                     sx={{ width: item.width, minWidth: item.minWidth }}
+                    past-due={row.pastDueAlert}
                   >
                     <div style={
                       {

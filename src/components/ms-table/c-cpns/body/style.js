@@ -4,11 +4,13 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 
 const StyledTableBody = MUIstyled(TableBody)(({ theme }) => ({}))
 
-const StyledTableCell = MUIstyled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.root}`]: {
-    color: '#545454',
-    padding: '10px'
+const StyledTableCell = MUIstyled(TableCell)((row) => {
+  return {
+    [`&.${tableCellClasses.root}`]: {
+      color: row['past-due'],
+      padding: '10px'
+    }
   }
-}))
+})
 
 export { StyledTableBody, StyledTableCell }

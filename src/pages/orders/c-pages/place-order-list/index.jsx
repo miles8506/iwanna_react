@@ -73,16 +73,25 @@ const PlaceOrderList = (props) => {
     for (const item of placeOrderList) {
       rows.push([`${item.factoryNum}  ${item.sizes}  ${item.colors}  *${item.count}`])
     }
+    rows.push([`人民幣總金額：${RMBTotal}`], [`台幣總金額：${TWTotal}`])
     sheet.addTable({
       name: 'placeOrderTable',
       ref: 'A1',
       columns: [
         {
-          name: '月_日_'
+          name: '月_日_',
         }
       ],
       rows,
     })
+    sheet.getCell('A1').font = {
+      color: { rgba: '#000' },
+    }
+    sheet.getCell('A1').fill = {
+      type: 'pattern',
+      fgColor:{ rgba: '#fff' },
+      bgColor: {rgba: '#fff' }
+    }
     const res = await workbook.xlsx.writeBuffer()
     const aEl = document.createElement('a')
     const blobData = new Blob([res], {

@@ -26,10 +26,15 @@ export const EditOrderWrapper = styled.div`
   }
 
   .remark-area {
+    position: relative;
     display: flex;
     gap: 0 20px;
 
     .canning-message-list {
+      position: absolute;
+      top: 0;
+      left: 350px;
+      transform: translateY(-50%);
       width: 300px;
       height: 200px;
       padding: 10px;
