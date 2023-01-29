@@ -33,7 +33,7 @@ export const EditOrderWrapper = styled.div`
     .canning-message-list {
       position: absolute;
       top: 0;
-      left: 350px;
+      left: 38%;
       transform: translateY(-50%);
       width: 300px;
       height: 200px;
