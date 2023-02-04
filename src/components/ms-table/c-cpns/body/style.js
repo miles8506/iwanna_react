@@ -7,7 +7,6 @@ const StyledTableBody = MUIstyled(TableBody)(({ theme }) => ({}))
 const StyledTableCell = MUIstyled(TableCell)((row) => {
   return {
     [`&.${tableCellClasses.root}`]: {
-      color: row['past-due'],
       padding: '10px'
     }
   }

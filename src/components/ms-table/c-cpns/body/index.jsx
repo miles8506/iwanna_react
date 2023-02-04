@@ -60,8 +60,11 @@ const MSBody = memo((props) => {
                   <StyledTableCell
                     align="left"
                     key={item.id}
-                    sx={{ width: item.width, minWidth: item.minWidth }}
-                    past-due={row.pastDueAlert}
+                    sx={{
+                      width: item.width,
+                      minWidth: item.minWidth,
+                      color: item.id === 'orderNumber' ? row.pastDueAlert : '#545454'
+                    }}
                   >
                     <div style={
                       {
