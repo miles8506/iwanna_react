@@ -47,7 +47,11 @@ export default function Goods() {
     closeDialog()
   }
 
-  const onFilterGoodsList = () => {
+  const handleSearchClick = async () => {
+    await dispatch(requestGoodListAction(controlButton))
+  }
+
+  const onFilterGoodsList = async () => {
     if (filterValue === 'All') {
       setGoodsListState([...goodsList])
       return
@@ -91,7 +95,7 @@ export default function Goods() {
             <MSButton
               value="Search"
               className="search-btn"
-              onClick={onFilterGoodsList}
+              onClick={handleSearchClick}
             />
           </div>
           <MSButton

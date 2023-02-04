@@ -43,6 +43,7 @@ export function requestGoodListAction(controlButton) {
         }
         container.push({ ...obj, control: controlButton(obj.id) })
       })
+      container.sort((a, b) => a.goodsNum - b.goodsNum)
       dispatch(getGoodListAction(container))
     } catch (err) {
       window.alert(new Error(err))
