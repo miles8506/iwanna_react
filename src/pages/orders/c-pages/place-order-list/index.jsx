@@ -60,9 +60,11 @@ const PlaceOrderList = (props) => {
 
   const handleRMBTotal = useCallback(() => {
     let total = 0;
+
     for (const item of placeOrderList) {
-      total += (item.basePriceRMB * item.count)
+      total = (item.basePriceRMB * item.count + Number(total)).toFixed(1)
     }
+
     return total
   }, [placeOrderList])
 

@@ -148,7 +148,7 @@ const EditOrder = memo((props) => {
                   <div className='item'>商品貨號: <span>{item.goodsNum}</span></div>
                   <div className='item'>尺寸: <span>{item.sizes}</span></div>
                   <div className='item'>顏色: <span>{item.colors}</span></div>
-                  <div className='item'>數量: <span>{item.count}</span></div>
+                  <div className='item'>數量: <span style={{ color: item.count > 1 ? 'red' : '' }}>{item.count}</span></div>
                   <div className='item'>價錢: <span>{item.goodsTotal}</span></div>
                   <div className="remark-area">
                     <TextareaAutosize

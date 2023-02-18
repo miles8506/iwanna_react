@@ -1,24 +1,48 @@
 import React, { memo, useState } from 'react'
 
 import { formateStampTime } from '@/utils/time'
+import { ALERT_DURATION } from '@/common/constants'
+import copyText from '@/utils/useCopyText'
 
 import { BaseDetailWrapper } from './style'
 import Input from '@mui/material/Input'
 import MSButton from '@/components/ms-button'
 import MSDialog from '@/components/ms-dialog'
+import MSCustomAlert from '@/components/ms-custom-alert'
 
 const BaseDetail = memo((props) => {
   const { orderDetail, changeOrderNumberValue, confirmPlaceOrder } = props
 
-  const [isShowDialog, setIsShowDialog] = useState(false);
+  const [isShowDialog, setIsShowDialog] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
 
+  const copyOrderNumber = () => {
+    copyText('.order-number > input')
+    setIsShowAlert(true)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return
+    setIsShowAlert(false)
+  }
   return (
     <BaseDetailWrapper>
+      <MSCustomAlert
+        open={isShowAlert}
+        autoHideDuration={ALERT_DURATION}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleClose}
+        severity="info"
+        sx={{ width: '100%' }}
+      >
+        訂單編號已複製。
+      </MSCustomAlert>
       <div className='item'>
         訂單創建時間: <span>{formateStampTime(orderDetail.id)}</span>
       </div>
       <div className='item'>
-        訂單編號: <Input value={orderDetail.orderNumber} onChange={changeOrderNumberValue} />
+        訂單編號: <Input value={orderDetail.orderNumber} onChange={changeOrderNumberValue} className="order-number" />
+        <MSButton value="複製" style={{ marginLeft: '10px' }} onClick={copyOrderNumber} />
       </div>
       <div className='item'>
         買家帳號: {orderDetail.buyerAccount}
