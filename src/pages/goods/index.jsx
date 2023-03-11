@@ -56,7 +56,9 @@ export default function Goods() {
       setGoodsListState([...goodsList])
       return
     }
-    setGoodsListState([...goodsList.filter(item => item.sort === filterValue)])
+    setGoodsListState([...goodsList.filter(item => item.sort === filterValue)
+      .sort((a, b) => a.goodsNum.replace(/\*/g, '') - b.goodsNum.replace(/\*/g, ''))
+    ])
   }
 
   const handleAddGoodsDialog = async () => {
