@@ -49,6 +49,7 @@ export default function Goods() {
 
   const handleSearchClick = async () => {
     await dispatch(requestGoodListAction(controlButton))
+    setPage(0)
   }
 
   const onFilterGoodsList = async () => {
