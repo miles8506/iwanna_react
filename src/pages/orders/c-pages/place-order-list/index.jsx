@@ -151,7 +151,7 @@ const PlaceOrderList = (props) => {
                   <div className="size-value" style={{width: '10%'}}>{ item.sizes }</div>
                   <div className="color-value" style={{width: '10%'}}>{item.colors}</div>
                   <div className="count-value" style={{width: '10%'}}>{item.count}</div>
-                  <div className="origin-price-value" style={{width: '10%'}}>{'¥' + (item.basePriceRMB * item.count)}</div>
+                  <div className="origin-price-value" style={{width: '10%'}}>{'¥' + Number(item.basePriceRMB * item.count).toFixed(1)}</div>
                   <div className="goods-name-value" style={{width: '25%'}}>{item.goodsName}</div>
                   <div className="goods-number-value" style={{width: '10%'}}>{item.goodsNum}</div>
                   <div className="nt-value" style={{width: '10%'}}>{ '$' + (item.basePriceTW * item.count)}</div>
